@@ -29,9 +29,28 @@ independently. This prevents corruption, manipulation, or broken references.
 | HASH3_RESEARCH_PACKAGE | article + sources combined |
 | HASH4_TOKEN_METADATA | token identity (id, value, type, date) |
 
+## Movie catalog
+
+Film entries are stored in [`catalog/movies.json`](catalog/movies.json).
+Each entry lists the title, year, and one or more archive.org source links.
+
+To add a new film, append an object to that array:
+
+```json
+{
+  "title": "My Film",
+  "year": 1990,
+  "sources": [
+    { "label": "1080p", "url": "https://archive.org/details/..." }
+  ]
+}
+```
+
 ## File layout
 
 ```
+catalog/
+  movies.json
 tokens/
   token_1054/
     article.md
