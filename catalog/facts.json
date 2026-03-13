@@ -380,5 +380,31 @@
       "offset_seconds": 2400,
       "fact": "Home VHS recording — 'time-shifting' — was declared legal by the US Supreme Court in the landmark 1984 Sony v. Universal City Studios ('Betamax') case, opening the door for millions of Americans to tape their favorite shows."
     }
+  ],
+  "Kootie Pie Rocks (Remastered & Uncut HD)": [
+    {
+      "offset_seconds": 30,
+      "fact": "'Kootie Pie Rocks' is an episode of The Adventures of Super Mario Bros. 3, the 1990 animated series based on the NES game — 'Kootie Pie' was the cartoon's name for Wendy O. Koopa, one of Bowser's seven Koopalings."
+    },
+    {
+      "offset_seconds": 240,
+      "fact": "Super Mario Bros. 3 was released in North America in February 1990 and sold 17 million copies — the accompanying animated series aired the same year as part of the Saturday morning DIC/Nintendo partnership."
+    },
+    {
+      "offset_seconds": 600,
+      "fact": "The Koopalings — Morton, Roy, Wendy, Iggy, Larry, Lemmy, and Ludwig — were named after musicians including Iggy Pop, Roy Orbison, and Ludwig van Beethoven, though Nintendo later distanced itself from these connections."
+    },
+    {
+      "offset_seconds": 1080,
+      "fact": "DIC Entertainment produced the Mario animated series in partnership with Nintendo — DIC was also behind Inspector Gadget, The Real Ghostbusters, and Sonic the Hedgehog, making it one of the most prolific cartoon studios of the late 1980s–90s."
+    },
+    {
+      "offset_seconds": 1500,
+      "fact": "The 'remastered and uncut' label on archival cartoon uploads typically means the episode has been upscaled or color-corrected, and that syndication cuts made to fit commercial breaks have been restored to the original broadcast length."
+    },
+    {
+      "offset_seconds": 1980,
+      "fact": "Super Mario Bros. 3 introduced the world map overworld, suit power-ups like Tanooki and Frog, and the Koopalings as world bosses — it is widely considered one of the greatest NES games ever made and was featured in the film The Wizard (1989)."
+    }
   ]
 }
