@@ -3,47 +3,48 @@
 # C13B0 Cart — Mario's Wheel Of Fortune · Spin Engine
 # ═══════════════════════════════════════════════════════════════════════
 #
+# Two-layer token system:
+#   1. Spin → system token → treasury/queue/  (pending_release)
+#   2. Hourly claim → moves token from queue → treasury/archive + wallet
+#
+# Token growth:
+#   🌱 Seed → 🔬 Research → 🛠️ Prototype → 📚 Historical Record
+#
 # Usage:
-#   ./run_spin.sh [--wallet WALLET_ID] [--skip-cooldown]
+#   ./run_spin.sh                          # spin only
+#   ./run_spin.sh --claim                  # spin + claim queued token
+#   ./run_spin.sh --wallet w_abc123
+#   ./run_spin.sh --skip-cooldown          # for testing
 #
-# What this does:
-#   1. Generates entropy for the spin
-#   2. Selects a wheel segment
-#   3. Calls research_writer.py to create research article + token file
-#   4. Updates wallet and ledger
-#   5. Commits and pushes to repo (requires GHP_SECRET or git credentials)
-#
-# Safety:
-#   This script NEVER mines cryptocurrency, holds wallets, performs
-#   trading, or interacts with any financial markets.
-#   All tokens represent: research work · system growth · symbolic energy.
+# Safety: never mines crypto · never trades · never touches markets.
+# All tokens represent research work · system growth · symbolic energy.
 # ═══════════════════════════════════════════════════════════════════════
 
 set -euo pipefail
 
-# ── Config ─────────────────────────────────────────────────────────────
 STAMP=$(date -u +"%Y%m%d_%H%M%S")
 DATE_LABEL=$(date -u +"%Y-%m-%d %H:%M:%S UTC")
 SKIP_COOLDOWN=""
+DO_CLAIM=false
+WALLET_ID=""
 
 # ── Parse args ─────────────────────────────────────────────────────────
-WALLET_ID=""
 while [[ $# -gt 0 ]]; do
   case "$1" in
     --wallet)        WALLET_ID="$2"; shift 2 ;;
     --skip-cooldown) SKIP_COOLDOWN="--skip-cooldown"; shift ;;
+    --claim)         DO_CLAIM=true; shift ;;
     *) echo "Unknown option: $1" >&2; exit 1 ;;
   esac
 done
 
-# ── Wallet: auto-generate if not provided ──────────────────────────────
+# ── Wallet: persistent local ID ────────────────────────────────────────
+WALLET_FILE=".wallet_id"
 if [[ -z "$WALLET_ID" ]]; then
-  # Use a persistent wallet file so the same user keeps their history
-  WALLET_FILE=".wallet_id"
   if [[ -f "$WALLET_FILE" ]]; then
     WALLET_ID=$(cat "$WALLET_FILE")
   else
-    WALLET_ID="w_$(date +%s%N | sha256sum | head -c 12)"
+    WALLET_ID="w_$(dd if=/dev/urandom bs=6 count=1 2>/dev/null | sha256sum | head -c 12)"
     echo "$WALLET_ID" > "$WALLET_FILE"
     echo "🆕 New wallet created: $WALLET_ID"
   fi
@@ -55,7 +56,7 @@ echo "🕒 $DATE_LABEL"
 echo "🎒 Wallet: $WALLET_ID"
 echo "═══════════════════════════════════════════════════════════"
 
-# ── Wheel segments (must match mario-wheel/config.json) ───────────────
+# ── Wheel segments (mirrors mario-wheel/config.json) ───────────────────
 SEGMENTS=(
   "Mushroom:Silver:1"
   "Super Star:Wraith:50"
@@ -71,25 +72,21 @@ SEGMENTS=(
   "1-Up:Gold:15"
 )
 
-# ── Generate entropy and pick segment ─────────────────────────────────
-ENTROPY=$(awk 'BEGIN { srand(); printf "%.6f", rand() }')
+# ── Generate entropy + pick segment ───────────────────────────────────
+ENTROPY=$(od -An -N4 -tu4 < /dev/urandom | tr -d ' \n')
 N=${#SEGMENTS[@]}
-IDX=$(awk -v n="$N" -v e="$ENTROPY" 'BEGIN { srand(e * 999983); print int(rand() * n) }')
+IDX=$(( ENTROPY % N ))
 CHOSEN="${SEGMENTS[$IDX]}"
-
 IFS=':' read -r SEG_LABEL SEG_TIER SEG_VALUE <<< "$CHOSEN"
 
 echo ""
 echo "🎰 Spinning…"
-echo ""
 echo "   Entropy:  $ENTROPY"
-echo "   Segment:  $SEG_LABEL"
-echo "   Tier:     $SEG_TIER"
-echo "   Value:    ×$SEG_VALUE"
+echo "   Segment:  $SEG_LABEL  ($SEG_TIER · ×$SEG_VALUE)"
 echo ""
 
-# ── Run the research writer ────────────────────────────────────────────
-python3 research_writer.py \
+# ── Mint spin token → treasury/queue/ ─────────────────────────────────
+python3 research_writer.py spin \
   --segment "$SEG_LABEL" \
   --tier    "$SEG_TIER" \
   --value   "$SEG_VALUE" \
@@ -97,43 +94,54 @@ python3 research_writer.py \
   --stamp   "$STAMP" \
   $SKIP_COOLDOWN
 
+# ── Optionally claim next queued token (1/hr) ──────────────────────────
+if [[ "$DO_CLAIM" == true ]]; then
+  echo ""
+  echo "⬇️  Claiming next queued token…"
+  python3 research_writer.py claim \
+    --wallet "$WALLET_ID" \
+    $SKIP_COOLDOWN || true
+fi
+
 # ── Commit to repo using GHP_SECRET ───────────────────────────────────
 if [[ -n "${GHP_SECRET:-}" ]]; then
-  # Configure git with the GHP token when running in CI
   REMOTE_URL=$(git remote get-url origin)
   REPO_PATH="${REMOTE_URL#https://github.com/}"
   REPO_PATH="${REPO_PATH%.git}"
   git remote set-url origin "https://x-access-token:${GHP_SECRET}@github.com/${REPO_PATH}.git"
 fi
 
-# Stage and commit only the token/research/wallet/spin artefacts
 git add \
-  "tokens/hourly/token_${STAMP}.json" \
-  "tokens/research/token_${STAMP}.md" \
-  "research/article_${STAMP}.md" \
+  "treasury/queue/" \
+  "treasury/archive/" \
+  "research/articles/" \
+  "tokens/user/" \
+  "tokens/spins/" \
   "wallets/${WALLET_ID}.json" \
-  "spins/last_${WALLET_ID}.json" \
+  "state/" \
   "ledger/treasury.json" \
   2>/dev/null || true
 
-# Check if there is anything staged
 if git diff --cached --quiet; then
-  echo "ℹ️  Nothing to commit (possibly blocked by cooldown)."
+  echo "ℹ️  Nothing to commit."
   exit 0
 fi
 
 TIER_EMOJI="🥈"
 [[ "$SEG_TIER" == "Gold"   ]] && TIER_EMOJI="🥇"
 [[ "$SEG_TIER" == "Wraith" ]] && TIER_EMOJI="👻"
+[[ "$SEG_TIER" == "Lose"   ]] && TIER_EMOJI="💀"
 
-git commit -m "${TIER_EMOJI} Mario Wheel Spin Token ${STAMP}" \
-  -m "Segment: ${SEG_LABEL} | Tier: ${SEG_TIER} | ×${SEG_VALUE}" \
-  -m "Wallet: ${WALLET_ID}"
+git commit \
+  -m "${TIER_EMOJI} Mario Wheel Spin Token ${STAMP}" \
+  -m "🧱 Spin Token Generated | 🍄 Research Created | ⭐ Wheel Spin" \
+  -m "Segment: ${SEG_LABEL} | Tier: ${SEG_TIER} | ×${SEG_VALUE} | Wallet: ${WALLET_ID}"
 
 git push origin HEAD
 
 echo ""
-echo "✅ Token committed and pushed."
-echo "   🧱 Spin Token Generated: token_${STAMP}"
-echo "   🍄 Research Created:    research/article_${STAMP}.md"
+echo "✅ Committed and pushed."
+echo "   🧱 Spin Token Generated:  token_${STAMP}"
+echo "   🍄 Research Created:      research/articles/article_${STAMP}.md"
 echo "   ⭐ Wheel Spin complete!"
+echo "   🏦 Token in treasury queue — claim with: ./run_spin.sh --claim"

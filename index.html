@@ -560,6 +560,222 @@
     .gc-label { font-weight: 600; color: var(--text); font-size: .72rem; line-height: 1.3; word-break: break-word; }
     .gc-tier  { margin: .3rem auto .2rem; border-radius: 8px; padding: .1em .45em; font-size: .7rem; font-weight: 700; display: inline-block; }
     .gc-date  { color: var(--muted); font-size: .68rem; margin-top: .15rem; }
+
+    /* ── Two-column main layout (writer + wheel) ───────────────────── */
+    .wheel-main-grid {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 1.5rem;
+      margin-bottom: 1.5rem;
+      align-items: start;
+    }
+    @media (max-width: 820px) { .wheel-main-grid { grid-template-columns: 1fr; } }
+
+    .spin-panel {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      gap: 1rem;
+    }
+    .spin-panel-note { font-size: .75rem; color: var(--muted); text-align: center; margin-top: -.3rem; }
+
+    /* ── Research Writer Panel ─────────────────────────────────────── */
+    .research-writer-panel {
+      background: var(--surface);
+      border: 1px solid var(--border);
+      border-radius: var(--radius);
+      padding: 1.25rem;
+      display: flex;
+      flex-direction: column;
+      gap: .75rem;
+    }
+    .rwp-title { font-size: 1.05rem; font-weight: 700; color: var(--accent); margin: 0; }
+    .rwp-desc  { font-size: .82rem; color: var(--muted); margin: 0; line-height: 1.5; }
+    .rwp-seed-hint {
+      background: var(--bg);
+      border: 1px solid var(--border);
+      border-radius: 6px;
+      padding: .5rem .75rem;
+      font-size: .78rem;
+      color: var(--muted);
+      line-height: 1.6;
+    }
+    .rwp-seed-hint strong { color: var(--text); }
+    .rwp-input {
+      background: var(--bg);
+      border: 1px solid var(--border);
+      border-radius: 6px;
+      color: var(--text);
+      padding: .55rem .75rem;
+      font-size: .88rem;
+      width: 100%;
+    }
+    .rwp-input:focus { outline: none; border-color: var(--accent2); }
+    .rwp-textarea {
+      background: var(--bg);
+      border: 1px solid var(--border);
+      border-radius: 6px;
+      color: var(--text);
+      padding: .6rem .75rem;
+      font-size: .85rem;
+      resize: vertical;
+      min-height: 110px;
+      width: 100%;
+      font-family: inherit;
+      line-height: 1.55;
+    }
+    .rwp-textarea:focus { outline: none; border-color: var(--accent2); }
+    .print-token-btn {
+      background: linear-gradient(135deg, #27ae60, #1a8a4a);
+      color: #fff;
+      border: none;
+      border-radius: 8px;
+      padding: .65rem 1.2rem;
+      font-size: .95rem;
+      font-weight: 700;
+      cursor: pointer;
+      transition: transform .12s, box-shadow .12s;
+    }
+    .print-token-btn:hover:not(:disabled) { transform: translateY(-1px); box-shadow: 0 4px 14px rgba(39,174,96,.35); }
+    .print-token-btn:disabled { opacity: .55; cursor: not-allowed; }
+    .print-feedback {
+      background: var(--bg);
+      border: 1px solid #27ae60;
+      border-radius: 6px;
+      padding: .5rem .75rem;
+      font-size: .82rem;
+      color: #2ecc71;
+      display: none;
+    }
+    .print-feedback.visible { display: block; }
+
+    /* ── Wallet Panel extended ─────────────────────────────────────── */
+    .wallet-panel { flex-wrap: wrap; }
+    .wallet-badges { display: flex; gap: .4rem; flex-wrap: wrap; margin-left: auto; }
+    .badge-queued   { background: var(--border);  color: var(--text); }
+    .badge-archived { background: #2d0d55; color: #c39bd3; }
+
+    /* ── Treasury / Queue Panel ────────────────────────────────────── */
+    .treasury-panel {
+      background: var(--surface);
+      border: 1px solid var(--border);
+      border-radius: var(--radius);
+      padding: 1.25rem;
+      margin-bottom: 1.5rem;
+    }
+    .treasury-panel-title {
+      font-size: 1.05rem;
+      font-weight: 700;
+      color: var(--accent);
+      margin: 0 0 .9rem;
+      display: flex;
+      align-items: center;
+      gap: .5rem;
+      flex-wrap: wrap;
+    }
+    .treasury-stats-row {
+      display: flex;
+      gap: .7rem;
+      flex-wrap: wrap;
+      margin-bottom: 1rem;
+    }
+    .tstat {
+      background: var(--bg);
+      border: 1px solid var(--border);
+      border-radius: 6px;
+      padding: .4rem .85rem;
+      text-align: center;
+      min-width: 72px;
+    }
+    .tstat-label { font-size: .7rem; color: var(--muted); display: block; margin-bottom: .1rem; }
+    .tstat-value { font-size: 1.15rem; font-weight: 700; color: var(--accent); }
+    .queue-list {
+      display: flex;
+      flex-direction: column;
+      gap: .4rem;
+      max-height: 175px;
+      overflow-y: auto;
+      margin-bottom: 1rem;
+      scrollbar-width: thin;
+    }
+    .queue-item {
+      background: var(--bg);
+      border: 1px solid var(--border);
+      border-radius: 7px;
+      padding: .5rem .9rem;
+      display: flex;
+      align-items: center;
+      gap: .6rem;
+      font-size: .82rem;
+    }
+    .qi-icon  { font-size: 1rem; flex-shrink: 0; }
+    .qi-id    { color: var(--accent); font-weight: 600; font-size: .77rem; min-width: 135px; }
+    .qi-meta  { color: var(--muted); font-size: .76rem; flex: 1; overflow: hidden; white-space: nowrap; text-overflow: ellipsis; }
+    .qi-status { border-radius: 8px; padding: .12em .5em; font-size: .7rem; font-weight: 700; background: #0d2a55; color: #3b8eff; white-space: nowrap; }
+    .qi-status.released { background: #0d3320; color: #2ecc71; }
+    .claim-btn {
+      background: linear-gradient(135deg, #f0b429, #c98b00);
+      color: #04101f;
+      border: none;
+      border-radius: 8px;
+      padding: .65rem 1.6rem;
+      font-size: 1rem;
+      font-weight: 800;
+      cursor: pointer;
+      transition: transform .12s, box-shadow .12s;
+    }
+    .claim-btn:hover:not(:disabled) { transform: translateY(-1px); box-shadow: 0 4px 14px rgba(240,180,41,.4); }
+    .claim-btn:disabled { opacity: .5; cursor: not-allowed; }
+    .claim-sub { font-size: .78rem; color: var(--muted); margin-top: .45rem; }
+
+    /* ── Gallery (3-tab) ───────────────────────────────────────────── */
+    .wheel-gallery {
+      background: var(--surface);
+      border: 1px solid var(--border);
+      border-radius: var(--radius);
+      padding: 1.25rem;
+    }
+    .wheel-gallery-title { font-size: 1.05rem; font-weight: 700; color: var(--accent); margin: 0 0 1rem; }
+    .gallery-tabs-nav {
+      display: flex;
+      border-bottom: 1px solid var(--border);
+      margin-bottom: 1rem;
+      overflow-x: auto;
+      scrollbar-width: none;
+    }
+    .gtab-btn {
+      background: none;
+      border: none;
+      border-bottom: 2px solid transparent;
+      color: var(--muted);
+      padding: .45rem 1rem;
+      font-size: .82rem;
+      cursor: pointer;
+      white-space: nowrap;
+      transition: color .15s;
+    }
+    .gtab-btn:hover { color: var(--text); }
+    .gtab-btn.active { color: var(--accent); border-bottom-color: var(--accent); font-weight: 700; }
+    .gallery-tab-panel { display: none; }
+    .gallery-tab-panel.active { display: block; }
+    .research-card {
+      background: var(--bg);
+      border: 1px solid var(--border);
+      border-radius: 8px;
+      padding: .75rem 1rem;
+      margin-bottom: .5rem;
+    }
+    .rc-header { display: flex; align-items: center; gap: .6rem; margin-bottom: .3rem; flex-wrap: wrap; }
+    .rc-emoji  { font-size: 1.1rem; flex-shrink: 0; }
+    .rc-title  { font-weight: 700; color: var(--text); font-size: .87rem; flex: 1; }
+    .rc-stage  { border-radius: 8px; padding: .12em .55em; font-size: .7rem; font-weight: 700; white-space: nowrap; }
+    .stage-seed      { background: #0d1e38; color: #3b8eff; }
+    .stage-research  { background: #0d3320; color: #2ecc71; }
+    .stage-prototype { background: #3d1a00; color: #f0b429; }
+    .stage-archived  { background: #2d0d55; color: #c39bd3; }
+    .rc-meta    { color: var(--muted); font-size: .75rem; display: flex; gap: .55rem; flex-wrap: wrap; margin-bottom: .3rem; }
+    .rc-preview { color: var(--muted); font-size: .79rem; line-height: 1.5;
+                  overflow: hidden; display: -webkit-box; -webkit-line-clamp: 2; -webkit-box-orient: vertical; }
   </style>
 </head>
 <body>
@@ -1299,61 +1515,120 @@
 
   <div class="wheel-page">
 
-    <!-- ── Wallet Panel ─────────────────────────────────────────── -->
+    <!-- ── Wallet Bar ───────────────────────────────────────────── -->
     <div class="wallet-panel">
       <div class="wallet-info">
         <span class="wallet-label">🎒 Wallet</span>
         <code id="walletId" class="wallet-id">—</code>
         <span id="tokenCountBadge" class="token-count-badge">0 tokens</span>
       </div>
-      <div id="cooldownInfo" class="cooldown-info" hidden>
-        ⏳ Next spin available in: <strong id="cooldownTimer">—</strong>
+      <div class="wallet-badges">
+        <span id="queueCountBadge"   class="token-count-badge badge-queued">0 queued</span>
+        <span id="archiveCountBadge" class="token-count-badge badge-archived">0 archived</span>
+      </div>
+      <div id="claimCooldownInfo" class="cooldown-info" hidden>
+        ⬇️ Next claim in: <strong id="claimCooldownTimer">—</strong>
       </div>
     </div>
 
-    <!-- ── Header ──────────────────────────────────────────────── -->
+    <!-- ── Header ───────────────────────────────────────────────── -->
     <div class="wheel-header">
       <h2>🎡 Mario's Wheel Of Fortune</h2>
-      <p class="wheel-tagline">One research token per hour — spin, grow, build your treasury!</p>
+      <p class="wheel-tagline">One token = one project seed · Spin or write research · 1 token per hour</p>
     </div>
 
-    <!-- ── Spin Arena ───────────────────────────────────────────── -->
-    <div class="wheel-arena">
-      <div class="wheel-wrap">
-        <div class="wheel-pointer" aria-hidden="true">▼</div>
-        <canvas id="wheelCanvas" width="420" height="420"
-                aria-label="Mario's Wheel of Fortune spinning wheel"></canvas>
-      </div>
-      <button id="spinBtn" class="spin-btn" type="button">🎰 SPIN THE WHEEL!</button>
-      <div id="spinResult" class="spin-result hidden" role="status" aria-live="polite"></div>
-    </div><!-- /.wheel-arena -->
+    <!-- ── Main Grid: Research Writer (left) + Spin Arena (right) ── -->
+    <div class="wheel-main-grid">
 
-    <!-- ── Token Log + Research Gallery ───────────────────────── -->
-    <div class="wheel-bottom-grid">
-
-      <div class="token-log">
-        <h3>📦 Token Log
-          <small style="color:var(--muted);font-weight:400;font-size:.75rem;">
-            tokens/hourly/ · tokens/research/
-          </small>
-        </h3>
-        <div id="tokenList" class="token-list">
-          <p class="no-tokens">No tokens yet — spin the wheel to mint your first token!</p>
+      <!-- Research Writer -->
+      <div class="research-writer-panel">
+        <h3 class="rwp-title">✏️ Write Research → Print Token</h3>
+        <p class="rwp-desc">Write anything — an article, idea, prototype plan, or design note. Press <strong>Print Token</strong>. Your token enters the treasury queue and is released to your wallet once per hour.</p>
+        <div class="rwp-seed-hint">
+          <strong>Token Growth:</strong>
+          🌱 Seed &nbsp;→&nbsp; 🔬 Research &nbsp;→&nbsp; 🛠️ Prototype &nbsp;→&nbsp; 📚 Historical Record<br>
+          <span style="font-size:.73rem">Value comes from what grows out of the token, not the token itself.</span>
         </div>
+        <input  id="researchTopic"  class="rwp-input"    type="text"
+                placeholder="Topic or project title…" maxlength="140">
+        <textarea id="researchBody" class="rwp-textarea"
+                  placeholder="Write your research, idea, design note, or project description…"></textarea>
+        <button id="printTokenBtn" class="print-token-btn" type="button">
+          🖨️ Print Token → Treasury Queue
+        </button>
+        <div id="printFeedback" class="print-feedback"></div>
       </div>
 
-      <div class="spin-gallery">
-        <h3>🖼️ Research Gallery
-          <small style="color:var(--muted);font-weight:400;font-size:.75rem;">
-            recent spins · top articles
-          </small>
-        </h3>
-        <div id="galleryGrid" class="gallery-grid-wheel">
-          <p class="no-tokens">Gallery builds as you spin…</p>
+      <!-- Spin Arena -->
+      <div class="spin-panel">
+        <div class="wheel-wrap">
+          <div class="wheel-pointer" aria-hidden="true">▼</div>
+          <canvas id="wheelCanvas" width="420" height="420"
+                  aria-label="Mario's Wheel of Fortune spinning wheel"></canvas>
         </div>
+        <button id="spinBtn" class="spin-btn" type="button">🎰 SPIN THE WHEEL!</button>
+        <div id="spinResult" class="spin-result hidden" role="status" aria-live="polite"></div>
+        <p class="spin-panel-note">Each spin mints a system token → treasury queue</p>
       </div>
 
-    </div><!-- /.wheel-bottom-grid -->
+    </div><!-- /.wheel-main-grid -->
+
+    <!-- ── Treasury Queue ────────────────────────────────────────── -->
+    <div class="treasury-panel">
+      <h3 class="treasury-panel-title">
+        🏦 Treasury Queue
+        <small style="color:var(--muted);font-weight:400;font-size:.75rem">
+          tokens/user/ · tokens/spins/ · treasury/queue/
+        </small>
+      </h3>
+
+      <div class="treasury-stats-row">
+        <div class="tstat"><span class="tstat-label">Queued</span>   <span id="stat-queued"   class="tstat-value">0</span></div>
+        <div class="tstat"><span class="tstat-label">Wallet</span>   <span id="stat-wallet"   class="tstat-value">0</span></div>
+        <div class="tstat"><span class="tstat-label">Research</span> <span id="stat-research" class="tstat-value">0</span></div>
+        <div class="tstat"><span class="tstat-label">Archived</span> <span id="stat-archived" class="tstat-value">0</span></div>
+      </div>
+
+      <div id="queueList" class="queue-list">
+        <p class="no-tokens">Queue is empty — spin the wheel or print a research token!</p>
+      </div>
+
+      <button id="claimBtn" class="claim-btn" type="button" disabled>
+        ⬇️ Claim Token to Wallet
+      </button>
+      <p id="claimSub" class="claim-sub"></p>
+    </div><!-- /.treasury-panel -->
+
+    <!-- ── Gallery (4 tabs) ──────────────────────────────────────── -->
+    <div class="wheel-gallery">
+      <h3 class="wheel-gallery-title">
+        🖼️ Gallery
+        <small style="color:var(--muted);font-weight:400;font-size:.75rem">
+          research/ · tokens/ · treasury/archive/
+        </small>
+      </h3>
+
+      <nav class="gallery-tabs-nav" role="tablist">
+        <button class="gtab-btn active" role="tab" data-gtab="recent-research">🔬 Research</button>
+        <button class="gtab-btn"        role="tab" data-gtab="spin-tokens">🎰 Spin Tokens</button>
+        <button class="gtab-btn"        role="tab" data-gtab="treasury-archive">📚 Treasury</button>
+        <button class="gtab-btn"        role="tab" data-gtab="wallet-history">🎒 Wallet</button>
+      </nav>
+
+      <div id="gtab-recent-research"  class="gallery-tab-panel active">
+        <p class="no-tokens">Research articles appear here after printing a token…</p>
+      </div>
+      <div id="gtab-spin-tokens"       class="gallery-tab-panel">
+        <p class="no-tokens">Spin tokens appear here after spinning the wheel…</p>
+      </div>
+      <div id="gtab-treasury-archive"  class="gallery-tab-panel">
+        <p class="no-tokens">Treasury archive — tokens appear here after being claimed…</p>
+      </div>
+      <div id="gtab-wallet-history"    class="gallery-tab-panel">
+        <p class="no-tokens">Your claimed tokens appear here…</p>
+      </div>
+
+    </div><!-- /.wheel-gallery -->
 
   </div><!-- /.wheel-page -->
 
@@ -1411,8 +1686,10 @@
     });
   });
 
-  // ── Mario's Wheel of Fortune ───────────────────────────────────────
+  // ── Mario's Wheel of Fortune — Full Two-Layer Token Engine ────────
   (function () {
+
+    // ── Canvas setup ───────────────────────────────────────────────
     const canvas    = document.getElementById('wheelCanvas');
     if (!canvas) return;
     const ctx       = canvas.getContext('2d');
@@ -1420,10 +1697,17 @@
     const resultDiv = document.getElementById('spinResult');
 
     // ── Constants ──────────────────────────────────────────────────
-    const COOLDOWN_MS    = 60 * 60 * 1000;        // 1 hour
-    const LS_WALLET      = 'mwof_wallet_id';
-    const LS_TOKENS      = 'mwof_tokens';
-    const LS_LAST_SPIN   = 'mwof_last_spin_';      // + walletId
+    const HOUR_MS = 60 * 60 * 1000;   // 1 hour cooldown for both spin and claim
+
+    const LS = {
+      WALLET_ID : 'mwof_wallet_id',
+      WALLET    : 'mwof_wallet',           // { wallet, tokens[], research_created, spins_total }
+      QUEUE     : 'mwof_treasury_queue',   // pending token records
+      ARCHIVE   : 'mwof_treasury_archive', // released/archived token records
+      RESEARCH  : 'mwof_research',         // research article metadata
+      LAST_CLAIM: 'mwof_last_claim_',      // + walletId
+      LAST_SPIN : 'mwof_last_spin_',       // + walletId
+    };
 
     // ── Wheel segments ─────────────────────────────────────────────
     const SEGMENTS = [
@@ -1448,9 +1732,16 @@
       Lose:   { bg: '#e74c3c', fg: '#fff',    badge: '💀 Bust!'   },
     };
 
-    // tier → token_system.py type
-    const TIER_TYPE = { Silver: 'Research', Gold: 'Discovery', Wraith: 'Economic' };
+    const TIER_TYPE  = { Silver: 'Research', Gold: 'Discovery', Wraith: 'Economic' };
     const TYPE_EMOJI = { Research: '🧱', Discovery: '⭐', Economic: '💲', Archive: '📜' };
+
+    // Token growth stages (Seed → Research → Prototype → Historical Record)
+    const STAGES = {
+      seed:      { label: '🌱 Seed',      cls: 'stage-seed'      },
+      research:  { label: '🔬 Research',  cls: 'stage-research'  },
+      prototype: { label: '🛠️ Prototype', cls: 'stage-prototype' },
+      archived:  { label: '📚 Archived',  cls: 'stage-archived'  },
+    };
 
     const N   = SEGMENTS.length;
     const ARC = (2 * Math.PI) / N;
@@ -1461,352 +1752,490 @@
     let angle    = 0;
     let spinning = false;
     let velocity = 0;
-    let cooldownInterval = null;
 
-    // ── Wallet helpers ─────────────────────────────────────────────
+    // ── LocalStorage helpers ───────────────────────────────────────
+    const lsGet = (k, d) => { try { return JSON.parse(localStorage.getItem(k)) ?? d; } catch { return d; } };
+    const lsSet = (k, v) => localStorage.setItem(k, JSON.stringify(v));
+
     function getWalletId() {
-      let id = localStorage.getItem(LS_WALLET);
+      let id = localStorage.getItem(LS.WALLET_ID);
       if (!id) {
         id = 'w_' + Date.now().toString(36) + Math.random().toString(36).slice(2, 8);
-        localStorage.setItem(LS_WALLET, id);
+        localStorage.setItem(LS.WALLET_ID, id);
       }
       return id;
     }
 
-    function loadTokens() {
-      try { return JSON.parse(localStorage.getItem(LS_TOKENS) || '[]'); }
-      catch { return []; }
+    function getWallet() {
+      return lsGet(LS.WALLET, { wallet: getWalletId(), tokens: [], research_created: 0, spins_total: 0 });
     }
+    function saveWallet(w) { lsSet(LS.WALLET, w); }
 
-    function saveTokens(arr) {
-      localStorage.setItem(LS_TOKENS, JSON.stringify(arr));
-    }
-
-    function appendToken(tok) {
-      const arr = loadTokens();
-      arr.push(tok);
-      saveTokens(arr);
-    }
+    function getQueue()       { return lsGet(LS.QUEUE,    []); }
+    function saveQueue(q)     { lsSet(LS.QUEUE, q); }
+    function getArchive()     { return lsGet(LS.ARCHIVE,  []); }
+    function pushArchive(tok) { const a = getArchive(); a.push(tok); lsSet(LS.ARCHIVE, a); }
+    function getResearch()    { return lsGet(LS.RESEARCH, []); }
+    function pushResearch(r)  { const arr = getResearch(); arr.push(r); lsSet(LS.RESEARCH, arr); }
 
     // ── Cooldown helpers ───────────────────────────────────────────
-    function lastSpinMs() {
-      return parseInt(localStorage.getItem(LS_LAST_SPIN + getWalletId()) || '0', 10);
+    const msUntil = (key) =>
+      Math.max(0, HOUR_MS - (Date.now() - (parseInt(localStorage.getItem(key), 10) || 0)));
+    function markNow(key) { localStorage.setItem(key, String(Date.now())); }
+
+    function claimCooldownMs() { return msUntil(LS.LAST_CLAIM + getWalletId()); }
+    function spinCooldownMs()  { return msUntil(LS.LAST_SPIN  + getWalletId()); }
+
+    function fmtMs(ms) {
+      const h = Math.floor(ms / 3600000);
+      const m = Math.floor((ms % 3600000) / 60000);
+      const s = Math.floor((ms % 60000) / 1000);
+      return (h ? h + 'h ' : '') + String(m).padStart(2, '0') + 'm ' + String(s).padStart(2, '0') + 's';
     }
 
-    function recordSpin() {
-      localStorage.setItem(LS_LAST_SPIN + getWalletId(), String(Date.now()));
-    }
-
-    function cooldownRemaining() {
-      return Math.max(0, COOLDOWN_MS - (Date.now() - lastSpinMs()));
-    }
-
-    // ── SHA-256 via Web Crypto ─────────────────────────────────────
+    // ── SHA-256 via Web Crypto (mirrors token_system.py) ──────────
     async function sha256hex(text) {
       const buf = await crypto.subtle.digest('SHA-256', new TextEncoder().encode(text));
       return Array.from(new Uint8Array(buf)).map(b => b.toString(16).padStart(2, '0')).join('');
     }
 
-    // ── UI updates ─────────────────────────────────────────────────
-    function updateWalletPanel() {
-      const wid    = getWalletId();
-      const tokens = loadTokens();
-      document.getElementById('walletId').textContent = wid;
-      document.getElementById('tokenCountBadge').textContent =
-        tokens.length + ' token' + (tokens.length !== 1 ? 's' : '');
-
-      const rem  = cooldownRemaining();
-      const info = document.getElementById('cooldownInfo');
-      if (rem > 0) {
-        info.removeAttribute('hidden');
-        const h = Math.floor(rem / 3600000);
-        const m = Math.floor((rem % 3600000) / 60000);
-        const s = Math.floor((rem % 60000) / 1000);
-        document.getElementById('cooldownTimer').textContent =
-          (h ? h + 'h ' : '') + String(m).padStart(2, '0') + 'm ' + String(s).padStart(2, '0') + 's';
-        if (!spinning) {
-          spinBtn.disabled = true;
-          spinBtn.textContent = '⏳ Cooling down…';
-        }
-      } else {
-        info.setAttribute('hidden', '');
-        if (!spinning) {
-          spinBtn.disabled = false;
-          spinBtn.textContent = '🎰 SPIN THE WHEEL!';
-        }
-      }
-    }
-
-    // ── Draw wheel ─────────────────────────────────────────────────
-    function drawWheel() {
-      ctx.clearRect(0, 0, canvas.width, canvas.height);
-
-      for (let i = 0; i < N; i++) {
-        const seg   = SEGMENTS[i];
-        const start = angle + i * ARC;
-        const end   = start + ARC;
-
-        ctx.beginPath();
-        ctx.moveTo(CX, CY);
-        ctx.arc(CX, CY, R, start, end);
-        ctx.closePath();
-        ctx.fillStyle = seg.color;
-        ctx.fill();
-        ctx.strokeStyle = '#fff';
-        ctx.lineWidth   = 2;
-        ctx.stroke();
-
-        ctx.save();
-        ctx.translate(CX, CY);
-        ctx.rotate(start + ARC / 2);
-        ctx.textAlign    = 'right';
-        ctx.textBaseline = 'middle';
-        ctx.fillStyle    = '#fff';
-        ctx.shadowColor  = 'rgba(0,0,0,0.55)';
-        ctx.shadowBlur   = 3;
-
-        const parts = seg.label.split(' ');
-        const emo   = parts[0];
-        const name  = parts.slice(1).join(' ');
-
-        ctx.font = '16px system-ui';
-        ctx.fillText(emo, R - 8, 0);
-        ctx.font = 'bold 10px system-ui';
-        ctx.fillText(name, R - 28, 0);
-        ctx.restore();
-      }
-
-      // Outer ring
-      ctx.beginPath();
-      ctx.arc(CX, CY, R, 0, 2 * Math.PI);
-      ctx.strokeStyle = '#f0b429';
-      ctx.lineWidth   = 4;
-      ctx.stroke();
-
-      // Centre hub
-      ctx.beginPath();
-      ctx.arc(CX, CY, 26, 0, 2 * Math.PI);
-      ctx.fillStyle   = '#04101f';
-      ctx.fill();
-      ctx.strokeStyle = '#f0b429';
-      ctx.lineWidth   = 3;
-      ctx.stroke();
-
-      ctx.font         = '20px system-ui';
-      ctx.textAlign    = 'center';
-      ctx.textBaseline = 'middle';
-      ctx.shadowBlur   = 0;
-      ctx.fillStyle    = '#f0b429';
-      ctx.fillText('🎡', CX, CY);
-    }
-
-    // ── Determine result ───────────────────────────────────────────
-    function getResult() {
-      const norm = ((-Math.PI / 2 - angle) % (2 * Math.PI) + 2 * Math.PI) % (2 * Math.PI);
-      return SEGMENTS[Math.floor(norm / ARC) % N];
-    }
-
-    // ── Show result card ───────────────────────────────────────────
-    async function showResult(seg) {
-      const ts = TIER_STYLE[seg.tier];
-      resultDiv.innerHTML = `
-        <div class="result-badge" style="background:${ts.bg};color:${ts.fg}">${ts.badge}</div>
-        <div class="result-item">${seg.label}</div>
-        <div class="result-value">${seg.value > 0
-          ? '×' + seg.value + ' research multiplier'
-          : 'Better luck next spin!'}</div>
-      `;
-      resultDiv.classList.remove('hidden');
-      if (seg.value > 0) await mintToken(seg);
-    }
-
-    // ── Mint token (mirrors token_system.py 4-hash architecture) ──
-    async function mintToken(seg) {
+    // ── Build token record ─────────────────────────────────────────
+    async function buildToken(type, opts) {
       const now      = new Date();
       const ts       = now.toISOString();
-      const dateStr  = ts.slice(0, 10);
-      const stamp    = ts.replace(/[-:T]/g, '').slice(0, 15);   // 20260313_150000
-      const walletId = getWalletId();
-      const existing = loadTokens();
-      const id       = 1000 + existing.length + 1;
-      const type     = TIER_TYPE[seg.tier] || 'Archive';
-      const emoji    = TYPE_EMOJI[type] || '📜';
+      const stamp    = ts.replace(/[-:T.Z]/g, '').slice(0, 15);
+      const wid      = getWalletId();
+      const tokenId  = 'token_' + stamp;
+      const tokenType = type === 'spin_token' ? (TIER_TYPE[opts.seg.tier] || 'Archive') : 'Research';
+      const emoji     = TYPE_EMOJI[tokenType] || '📜';
 
-      const articleText = [
-        '# Spin Research Article: ' + seg.label,
-        '',
-        '| Field | Value |',
-        '|-------|-------|',
-        '| Tier | ' + seg.tier + ' |',
-        '| Multiplier | ×' + seg.value + ' |',
-        '| Token ID | token_' + stamp + ' |',
-        '| Wallet | ' + walletId + ' |',
-        '| Generated | ' + ts + ' |',
-        '| Source | Mario\'s Wheel Of Fortune |',
-        '',
-        '## Research Notes',
-        '',
-        'This token represents a research spin on Mario\'s Wheel Of Fortune.',
-        'Segment landed: **' + seg.label + '**.',
-        'Prize tier: **' + seg.tier + '** (×' + seg.value + ' multiplier).',
-        '',
-        '## Token Categories',
-        '',
-        '- 🥈 Silver tokens → Research (🧱) — foundational research work',
-        '- 🥇 Gold tokens   → Discovery (⭐) — notable findings',
-        '- 👻 Wraith tokens  → Economic (💲) — high-value insights',
-        '',
-        '## Integrity',
-        '',
-        'All tokens represent: research work · system growth · symbolic energy.',
-        'No cryptocurrency is mined, held, or traded.',
-      ].join('\n');
+      let articleTitle, articleText;
+      if (type === 'spin_token') {
+        const { seg } = opts;
+        articleTitle = 'Spin: ' + seg.label;
+        articleText  = [
+          '# Spin Research: ' + seg.label,
+          '',
+          '| Field | Value |', '|-------|-------|',
+          '| Tier | ' + seg.tier + ' |',
+          '| Multiplier | ×' + seg.value + ' |',
+          '| Token ID | ' + tokenId + ' |',
+          '| Wallet | ' + wid + ' |',
+          '| Generated | ' + ts + ' |',
+          '| Source | Mario\'s Wheel Of Fortune — Spin |',
+          '',
+          '## Token as Project Seed',
+          '',
+          'This spin token is a **blank research grant** — a container for future work.',
+          'Segment: **' + seg.label + '**. Tier: **' + seg.tier + '** (×' + seg.value + ').',
+          '',
+          '## Growth Path',
+          '1. 🌱 Seed — Token printed, enters treasury queue',
+          '2. 🔬 Research — Article or project attached',
+          '3. 🛠️ Prototype — Something built on this token',
+          '4. 📚 Historical Record — Archived in treasury library',
+          '',
+          'This system never mines crypto, holds wallets, or trades markets.',
+          'All tokens represent: research work · system growth · symbolic energy.',
+        ].join('\n');
+      } else {
+        const { topic, body } = opts;
+        articleTitle = topic || 'User Research';
+        articleText  = [
+          '# ' + (topic || 'Research Article'),
+          '',
+          '**Author Wallet:** ' + wid,
+          '**Token ID:** ' + tokenId,
+          '**Timestamp:** ' + ts,
+          '**Source:** Mario\'s Wheel Of Fortune — Research Writer',
+          '',
+          '---',
+          '',
+          body || '*(no content)*',
+          '',
+          '---',
+          '',
+          '## Token Philosophy',
+          '',
+          'One token = one project seed. Value comes from what grows out of it:',
+          '',
+          '```',
+          'Token → Research Article → Prototype / App / Item → Historical Record',
+          '```',
+        ].join('\n');
+      }
 
       const sourcesText = [
         'https://pewpi-infinity.github.io/Theater/',
         'https://github.com/www-infinity/Theater',
-        'https://archive.org/details/supermarioworldcartoon',
-        'source:Mario_Wheel_Spin',
+        'source:' + type,
         'generated:' + ts,
       ].join('\n');
 
-      const metadata = {
-        id,
-        token_id:    'token_' + stamp,
-        wallet:      walletId,
-        spin_time:   ts,
-        token_type:  type,
+      const preview = articleText.split('\n')
+        .filter(l => l.trim() && !l.startsWith('#') && !l.startsWith('|')
+                  && l.trim() !== '---' && l.trim() !== '```')
+        .slice(0, 2).join(' ').slice(0, 130);
+
+      const meta = {
+        token_id:       tokenId,
+        type,
+        author_wallet:  wid,
+        timestamp:      ts,
+        status:         'pending_release',
+        stage:          'seed',
+        token_type:     tokenType,
         emoji,
-        tier:        seg.tier,
-        value:       seg.value,
-        segment:     seg.label,
-        date:        dateStr,
-        source:      "Mario's Wheel Of Fortune",
-        research_file: 'research/article_' + stamp + '.md',
+        article_title:  articleTitle,
+        article_preview: preview,
+        research_file:  'research/articles/article_' + stamp + '.md',
+        ...(type === 'spin_token'
+          ? { segment: opts.seg.label, tier: opts.seg.tier, value: opts.seg.value,
+              entropy: Math.random().toFixed(6) }
+          : { topic: opts.topic }),
       };
 
       const [h1, h2, h3, h4] = await Promise.all([
         sha256hex(articleText),
         sha256hex(sourcesText),
         sha256hex(articleText + '\n' + sourcesText),
-        sha256hex(JSON.stringify(metadata)),
+        sha256hex(JSON.stringify(meta)),
       ]);
 
-      const hashes = {
-        HASH1_ARTICLE:          h1,
-        HASH2_SOURCES:          h2,
-        HASH3_RESEARCH_PACKAGE: h3,
-        HASH4_TOKEN_METADATA:   h4,
-      };
-
-      const tokenRecord = {
-        ...metadata,
-        hashes,
+      return {
+        ...meta,
+        hashes: {
+          HASH1_ARTICLE:          h1,
+          HASH2_SOURCES:          h2,
+          HASH3_RESEARCH_PACKAGE: h3,
+          HASH4_TOKEN_METADATA:   h4,
+        },
         'article.md':  articleText,
         'sources.txt': sourcesText,
       };
-
-      appendToken(tokenRecord);
-      renderTokenItem(tokenRecord);
-      renderGallery();
-      updateWalletPanel();
     }
 
-    // ── Render a single token row in the token log ─────────────────
-    function renderTokenItem(tok) {
-      const listEl   = document.getElementById('tokenList');
-      const noTokens = listEl.querySelector('.no-tokens');
-      if (noTokens) noTokens.remove();
-
-      const item = document.createElement('div');
-      item.className = 'token-item';
-      item.innerHTML = `
-        <div class="token-id">${tok.emoji} ${tok.token_id}</div>
-        <div class="token-meta">
-          <span class="token-type">${tok.token_type}</span>
-          <span class="token-tier tier-${tok.tier.toLowerCase()}">${tok.tier}</span>
-          <span class="token-val">×${tok.value}</span>
-          <span class="token-seg">${tok.segment}</span>
-        </div>
-        <button class="token-dl" type="button">⬇ ${tok.token_id}.json</button>
-      `;
-
-      item.querySelector('.token-dl').addEventListener('click', () => {
-        const blob = new Blob([JSON.stringify(tok, null, 2)], { type: 'application/json' });
-        const url  = URL.createObjectURL(blob);
-        Object.assign(document.createElement('a'), { href: url, download: tok.token_id + '.json' }).click();
-        URL.revokeObjectURL(url);
+    // ── Enqueue token → treasury queue ────────────────────────────
+    async function enqueue(type, opts) {
+      const record = await buildToken(type, opts);
+      const queue  = getQueue();
+      queue.push(record);
+      saveQueue(queue);
+      // Track research articles separately for gallery
+      pushResearch({
+        token_id:  record.token_id,
+        title:     record.article_title,
+        preview:   record.article_preview,
+        type:      record.type,
+        emoji:     record.emoji,
+        stage:     'seed',
+        timestamp: record.timestamp,
+        tier:      record.tier,
+        value:     record.value,
       });
-
-      listEl.insertBefore(item, listEl.firstChild);
+      return record;
     }
 
-    // ── Render gallery grid ────────────────────────────────────────
-    function renderGallery() {
-      const tokens  = loadTokens();
-      const gridEl  = document.getElementById('galleryGrid');
-      gridEl.innerHTML = '';
+    // ── Claim oldest pending token (1 per hour) ────────────────────
+    function claimToken() {
+      const queue = getQueue();
+      const idx   = queue.findIndex(t => t.status === 'pending_release');
+      if (idx === -1) return null;
 
-      if (!tokens.length) {
-        gridEl.innerHTML = '<p class="no-tokens">Gallery builds as you spin…</p>';
-        return;
+      const tok    = { ...queue[idx], status: 'released', stage: 'research' };
+      queue.splice(idx, 1);
+      saveQueue(queue);
+      pushArchive(tok);
+
+      const w = getWallet();
+      w.tokens.push({
+        token_id:   tok.token_id,
+        type:       tok.type,
+        stage:      'research',
+        emoji:      tok.emoji,
+        title:      tok.article_title,
+        claimed_at: new Date().toISOString(),
+      });
+      saveWallet(w);
+      markNow(LS.LAST_CLAIM + getWalletId());
+      return tok;
+    }
+
+    // ── HTML escape ────────────────────────────────────────────────
+    function esc(s) {
+      return String(s || '').replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;').replace(/"/g,'&quot;');
+    }
+
+    function stageTag(stage) {
+      const st = STAGES[stage] || STAGES.seed;
+      return '<span class="rc-stage ' + st.cls + '">' + st.label + '</span>';
+    }
+
+    // ── Update all stats + controls ────────────────────────────────
+    function updateUI() {
+      const wid     = getWalletId();
+      const wallet  = getWallet();
+      const queue   = getQueue();
+      const archive = getArchive();
+      const research = getResearch();
+      const claimed = wallet.tokens?.length ?? 0;
+      const queued  = queue.filter(t => t.status === 'pending_release').length;
+
+      // Wallet bar
+      document.getElementById('walletId').textContent         = wid;
+      document.getElementById('tokenCountBadge').textContent  = claimed + ' token' + (claimed !== 1 ? 's' : '');
+      document.getElementById('queueCountBadge').textContent  = queued + ' queued';
+      document.getElementById('archiveCountBadge').textContent = archive.length + ' archived';
+
+      // Treasury stats
+      setEl('stat-queued',   queued);
+      setEl('stat-wallet',   claimed);
+      setEl('stat-research', research.length);
+      setEl('stat-archived', archive.length);
+
+      // Claim button
+      const claimRem = claimCooldownMs();
+      const canClaim = claimRem === 0 && queued > 0;
+      const claimBtn = document.getElementById('claimBtn');
+      const claimSub = document.getElementById('claimSub');
+      const claimInfo = document.getElementById('claimCooldownInfo');
+      claimBtn.disabled = !canClaim;
+
+      if (queued === 0) {
+        claimSub.textContent = 'Queue is empty — spin the wheel or write research!';
+        claimInfo.setAttribute('hidden', '');
+      } else if (claimRem > 0) {
+        claimSub.textContent = queued + ' token(s) ready — claim opens in ' + fmtMs(claimRem);
+        document.getElementById('claimCooldownTimer').textContent = fmtMs(claimRem);
+        claimInfo.removeAttribute('hidden');
+      } else {
+        claimSub.textContent = queued + ' token(s) ready to claim!';
+        claimInfo.setAttribute('hidden', '');
       }
 
-      tokens.slice(-12).reverse().forEach(tok => {
-        const card = document.createElement('div');
-        card.className = 'gallery-card';
-        card.innerHTML = `
-          <div class="gc-emoji">${tok.emoji}</div>
-          <div class="gc-label">${tok.segment.split(' ').slice(1).join(' ')}</div>
-          <div class="gc-tier tier-${tok.tier.toLowerCase()}">${tok.tier}</div>
-          <div class="gc-date">${tok.date}</div>
-        `;
-        gridEl.appendChild(card);
+      // Spin button
+      const spinRem = spinCooldownMs();
+      if (!spinning) {
+        spinBtn.disabled    = spinRem > 0;
+        spinBtn.textContent = spinRem > 0 ? '⏳ ' + fmtMs(spinRem) : '🎰 SPIN THE WHEEL!';
+      }
+    }
+
+    function setEl(id, val) { const e = document.getElementById(id); if (e) e.textContent = String(val); }
+
+    // ── Render queue list ──────────────────────────────────────────
+    function renderQueue() {
+      const queue  = getQueue();
+      const listEl = document.getElementById('queueList');
+      listEl.innerHTML = '';
+      if (!queue.length) {
+        listEl.innerHTML = '<p class="no-tokens">Queue is empty — spin or print a token!</p>';
+        return;
+      }
+      queue.slice(-8).reverse().forEach(tok => {
+        const div = document.createElement('div');
+        div.className = 'queue-item';
+        div.innerHTML =
+          '<span class="qi-icon">' + tok.emoji + '</span>' +
+          '<span class="qi-id">' + esc(tok.token_id) + '</span>' +
+          '<span class="qi-meta">' + esc(tok.type === 'spin_token' ? (tok.segment + ' · ' + tok.tier) : tok.article_title) + '</span>' +
+          '<span class="qi-status' + (tok.status === 'released' ? ' released' : '') + '">' +
+          (tok.status === 'released' ? '✓ released' : '⏳ queued') + '</span>';
+        listEl.appendChild(div);
       });
     }
 
-    // ── Restore stored tokens on page load ─────────────────────────
-    function restoreSession() {
-      const tokens = loadTokens();
-      if (!tokens.length) return;
-      const listEl = document.getElementById('tokenList');
-      listEl.querySelector('.no-tokens')?.remove();
-      tokens.slice(-10).reverse().forEach(t => renderTokenItem(t));
-      renderGallery();
+    // ── Render gallery tabs ────────────────────────────────────────
+    function renderGallery() {
+      renderResearchTab();
+      renderSpinsTab();
+      renderArchiveTab();
+      renderWalletTab();
+    }
+
+    function cardHtml(tok) {
+      return '<div class="research-card">' +
+        '<div class="rc-header"><span class="rc-emoji">' + tok.emoji + '</span>' +
+        '<span class="rc-title">' + esc(tok.title || tok.article_title || tok.token_id) + '</span>' +
+        stageTag(tok.stage) + '</div>' +
+        '<div class="rc-meta">' +
+        '<span>' + (tok.type === 'spin_token' ? '🎰 Spin' : '✏️ Research') + '</span>' +
+        '<span>' + (tok.timestamp || tok.claimed_at || '').slice(0, 10) + '</span>' +
+        (tok.tier ? '<span class="token-tier tier-' + tok.tier.toLowerCase() + '">' + tok.tier + '</span>' : '') +
+        '</div>' +
+        (tok.preview || tok.article_preview
+          ? '<div class="rc-preview">' + esc(tok.preview || tok.article_preview) + '</div>'
+          : '') +
+        '</div>';
+    }
+
+    function renderResearchTab() {
+      const items = getResearch().slice(-12).reverse();
+      const el = document.getElementById('gtab-recent-research');
+      el.innerHTML = items.length
+        ? items.map(r => cardHtml(r)).join('')
+        : '<p class="no-tokens">Research articles appear here after printing a token…</p>';
+    }
+
+    function renderSpinsTab() {
+      const items = getResearch().filter(r => r.type === 'spin_token').slice(-12).reverse();
+      const el = document.getElementById('gtab-spin-tokens');
+      el.innerHTML = items.length
+        ? items.map(r => cardHtml(r)).join('')
+        : '<p class="no-tokens">Spin tokens appear here after spinning the wheel…</p>';
+    }
+
+    function renderArchiveTab() {
+      const items = getArchive().slice(-12).reverse();
+      const el = document.getElementById('gtab-treasury-archive');
+      el.innerHTML = items.length
+        ? items.map(tok => cardHtml({ ...tok, title: tok.article_title, preview: tok.article_preview })).join('')
+        : '<p class="no-tokens">Treasury archive builds as tokens are claimed…</p>';
+    }
+
+    function renderWalletTab() {
+      const tokens = (getWallet().tokens || []).slice(-12).reverse();
+      const el = document.getElementById('gtab-wallet-history');
+      el.innerHTML = tokens.length
+        ? tokens.map(t => cardHtml(t)).join('')
+        : '<p class="no-tokens">Your claimed tokens appear here…</p>';
+    }
+
+    function refresh() { updateUI(); renderQueue(); renderGallery(); }
+
+    // ── Draw spinning wheel ────────────────────────────────────────
+    function drawWheel() {
+      ctx.clearRect(0, 0, canvas.width, canvas.height);
+      for (let i = 0; i < N; i++) {
+        const seg   = SEGMENTS[i];
+        const start = angle + i * ARC;
+        const end   = start + ARC;
+        ctx.beginPath(); ctx.moveTo(CX, CY); ctx.arc(CX, CY, R, start, end); ctx.closePath();
+        ctx.fillStyle = seg.color; ctx.fill();
+        ctx.strokeStyle = '#fff'; ctx.lineWidth = 2; ctx.stroke();
+        ctx.save(); ctx.translate(CX, CY); ctx.rotate(start + ARC / 2);
+        ctx.textAlign = 'right'; ctx.textBaseline = 'middle';
+        ctx.fillStyle = '#fff'; ctx.shadowColor = 'rgba(0,0,0,.55)'; ctx.shadowBlur = 3;
+        const parts = seg.label.split(' ');
+        ctx.font = '16px system-ui'; ctx.fillText(parts[0], R - 8, 0);
+        ctx.font = 'bold 10px system-ui'; ctx.fillText(parts.slice(1).join(' '), R - 28, 0);
+        ctx.restore();
+      }
+      ctx.beginPath(); ctx.arc(CX, CY, R, 0, 2 * Math.PI);
+      ctx.strokeStyle = '#f0b429'; ctx.lineWidth = 4; ctx.stroke();
+      ctx.beginPath(); ctx.arc(CX, CY, 26, 0, 2 * Math.PI);
+      ctx.fillStyle = '#04101f'; ctx.fill();
+      ctx.strokeStyle = '#f0b429'; ctx.lineWidth = 3; ctx.stroke();
+      ctx.font = '20px system-ui'; ctx.textAlign = 'center'; ctx.textBaseline = 'middle';
+      ctx.shadowBlur = 0; ctx.fillStyle = '#f0b429'; ctx.fillText('🎡', CX, CY);
+    }
+
+    function getSpinSegment() {
+      const norm = ((-Math.PI / 2 - angle) % (2 * Math.PI) + 2 * Math.PI) % (2 * Math.PI);
+      return SEGMENTS[Math.floor(norm / ARC) % N];
+    }
+
+    // ── Spin result display ────────────────────────────────────────
+    async function showSpinResult(seg) {
+      const ts = TIER_STYLE[seg.tier];
+      resultDiv.innerHTML =
+        '<div class="result-badge" style="background:' + ts.bg + ';color:' + ts.fg + '">' + ts.badge + '</div>' +
+        '<div class="result-item">' + seg.label + '</div>' +
+        '<div class="result-value">' + (seg.value > 0
+          ? '×' + seg.value + ' — added to treasury queue!'
+          : 'Better luck next spin!') + '</div>';
+      resultDiv.classList.remove('hidden');
+
+      if (seg.value > 0) {
+        await enqueue('spin_token', { seg });
+        const w = getWallet();
+        w.spins_total = (w.spins_total || 0) + 1;
+        saveWallet(w);
+        markNow(LS.LAST_SPIN + getWalletId());
+        refresh();
+      }
     }
 
     // ── Spin animation ─────────────────────────────────────────────
+    const MIN_ROTATIONS = 8;    // minimum full rotations per spin
+    const SPIN_VARIANCE = 5;    // random extra rotations added
+    const FRAMES_PER_SEC = 60;  // assumed frame rate for velocity calculation
+    const FRICTION = 0.984;     // deceleration factor per frame
+
     function spin() {
-      if (spinning || cooldownRemaining() > 0) return;
+      if (spinning || spinCooldownMs() > 0) return;
       spinning = true;
       spinBtn.disabled = true;
       resultDiv.classList.add('hidden');
-
-      velocity = (Math.random() * 5 + 8) * (2 * Math.PI) / 60;
-
-      function frame() {
+      velocity = (Math.random() * SPIN_VARIANCE + MIN_ROTATIONS) * (2 * Math.PI) / FRAMES_PER_SEC;
+      (function frame() {
         angle    += velocity;
-        velocity *= 0.984;
+        velocity *= FRICTION;
         drawWheel();
-        if (velocity > 0.003) {
-          requestAnimationFrame(frame);
-        } else {
-          spinning = false;
-          recordSpin();
-          updateWalletPanel();
-          showResult(getResult());
-        }
-      }
-      requestAnimationFrame(frame);
+        if (velocity > 0.003) { requestAnimationFrame(frame); }
+        else { spinning = false; showSpinResult(getSpinSegment()); }
+      }());
     }
+
+    // ── Print Token handler ────────────────────────────────────────
+    document.getElementById('printTokenBtn').addEventListener('click', async () => {
+      const topic    = document.getElementById('researchTopic').value.trim();
+      const body     = document.getElementById('researchBody').value.trim();
+      const btn      = document.getElementById('printTokenBtn');
+      const feedback = document.getElementById('printFeedback');
+
+      if (!topic && !body) {
+        feedback.textContent = '⚠️ Please enter a topic or write some research first.';
+        feedback.className = 'print-feedback visible';
+        return;
+      }
+      btn.disabled = true;
+      feedback.textContent = '⏳ Building 4-hash token…';
+      feedback.className = 'print-feedback visible';
+      try {
+        const record = await enqueue('user_research', { topic, body });
+        const w = getWallet();
+        w.research_created = (w.research_created || 0) + 1;
+        saveWallet(w);
+        feedback.textContent = '✅ ' + record.token_id + ' entered treasury queue! Claim it when your hour is up.';
+        document.getElementById('researchTopic').value = '';
+        document.getElementById('researchBody').value  = '';
+        refresh();
+      } catch (err) {
+        feedback.textContent = '❌ Error: ' + err.message;
+      } finally {
+        btn.disabled = false;
+      }
+    });
+
+    // ── Claim Token handler ────────────────────────────────────────
+    document.getElementById('claimBtn').addEventListener('click', () => {
+      const tok = claimToken();
+      if (!tok) return;
+      refresh();
+      const badge = document.getElementById('tokenCountBadge');
+      const orig  = badge.style.background;
+      badge.style.background = '#27ae60';
+      setTimeout(() => { badge.style.background = orig; }, 1200);
+    });
+
+    // ── Gallery tab switching ──────────────────────────────────────
+    document.querySelectorAll('.gtab-btn').forEach(btn => {
+      btn.addEventListener('click', () => {
+        document.querySelectorAll('.gtab-btn').forEach(b => b.classList.remove('active'));
+        document.querySelectorAll('.gallery-tab-panel').forEach(p => p.classList.remove('active'));
+        btn.classList.add('active');
+        document.getElementById('gtab-' + btn.dataset.gtab).classList.add('active');
+      });
+    });
 
     // ── Bootstrap ─────────────────────────────────────────────────
     spinBtn.addEventListener('click', spin);
-    updateWalletPanel();
-    restoreSession();
     drawWheel();
-    cooldownInterval = setInterval(updateWalletPanel, 1000);
+    refresh();
+    setInterval(updateUI, 1000);
   }());
+
 </script>
 
 </body>

@@ -59,7 +59,7 @@ jobs:
           echo "" >> "$GITHUB_STEP_SUMMARY"
           echo "| | |" >> "$GITHUB_STEP_SUMMARY"
           echo "|---|---|" >> "$GITHUB_STEP_SUMMARY"
-          LATEST=$(ls tokens/hourly/ | sort | tail -1 || echo "none")
+          LATEST=$(ls tokens/spins/ 2>/dev/null | sort | tail -1 || echo "none")
           echo "| Latest token | \`$LATEST\` |" >> "$GITHUB_STEP_SUMMARY"
           WALLET=$(ls wallets/ | head -1 | sed 's/\.json//' || echo "unknown")
           echo "| Wallet | \`$WALLET\` |" >> "$GITHUB_STEP_SUMMARY"
