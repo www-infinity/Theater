@@ -313,6 +313,174 @@
       .game-legend { padding: .8rem 1rem; gap: .45rem 1rem; font-size: .73rem; }
       .tab-btn { padding: .75rem 1rem; font-size: .8rem; }
     }
+
+    /* ── Mario's Wheel of Fortune ──────────────────────────────────── */
+    .wheel-page {
+      max-width: 960px;
+      margin: 0 auto;
+      padding: 2rem;
+    }
+    .wheel-header {
+      text-align: center;
+      margin-bottom: 2rem;
+    }
+    .wheel-header h2 {
+      font-size: 2rem;
+      color: var(--accent);
+    }
+    .wheel-tagline {
+      color: var(--muted);
+      font-size: .9rem;
+      margin-top: .4rem;
+    }
+    .wheel-arena {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      gap: 1.5rem;
+      margin-bottom: 2.5rem;
+    }
+    .wheel-wrap {
+      position: relative;
+      display: inline-block;
+    }
+    #wheelCanvas {
+      display: block;
+      max-width: 100%;
+      border-radius: 50%;
+      box-shadow: 0 0 32px rgba(240,180,41,0.25);
+    }
+    .wheel-pointer {
+      position: absolute;
+      top: -16px;
+      left: 50%;
+      transform: translateX(-50%);
+      font-size: 2.4rem;
+      color: var(--accent);
+      text-shadow: 0 0 10px rgba(240,180,41,0.8);
+      z-index: 10;
+      pointer-events: none;
+      line-height: 1;
+    }
+    .spin-btn {
+      background: linear-gradient(135deg, #e74c3c, #c0392b);
+      color: #fff;
+      border: none;
+      border-radius: 50px;
+      padding: .9rem 2.8rem;
+      font-size: 1.3rem;
+      font-weight: 800;
+      cursor: pointer;
+      letter-spacing: .05em;
+      box-shadow: 0 4px 16px rgba(231,76,60,0.4);
+      transition: transform .15s, box-shadow .15s;
+    }
+    .spin-btn:hover:not(:disabled) {
+      transform: translateY(-2px);
+      box-shadow: 0 6px 22px rgba(231,76,60,0.55);
+    }
+    .spin-btn:disabled {
+      opacity: .6;
+      cursor: not-allowed;
+    }
+    .spin-result {
+      background: var(--surface);
+      border: 1px solid var(--border);
+      border-radius: var(--radius);
+      padding: 1.2rem 2rem;
+      text-align: center;
+      min-width: 220px;
+      animation: fadeIn .3s ease;
+    }
+    @keyframes fadeIn { from { opacity: 0; transform: translateY(8px); } to { opacity: 1; transform: none; } }
+    .spin-result.hidden { display: none; }
+    .result-badge {
+      display: inline-block;
+      border-radius: 20px;
+      padding: .3em 1em;
+      font-weight: 700;
+      font-size: 1.1rem;
+      margin-bottom: .5rem;
+    }
+    .result-item {
+      font-size: 1.5rem;
+      margin: .3rem 0;
+    }
+    .result-value {
+      color: var(--accent);
+      font-weight: 600;
+      font-size: .95rem;
+      margin-top: .25rem;
+    }
+    .token-log {
+      background: var(--surface);
+      border: 1px solid var(--border);
+      border-radius: var(--radius);
+      padding: 1.5rem;
+    }
+    .token-log h3 {
+      color: var(--accent);
+      margin-bottom: 1rem;
+      font-size: 1.1rem;
+    }
+    .token-list {
+      display: flex;
+      flex-direction: column;
+      gap: .6rem;
+      max-height: 380px;
+      overflow-y: auto;
+      scrollbar-width: thin;
+    }
+    .no-tokens {
+      color: var(--muted);
+      font-style: italic;
+      font-size: .9rem;
+    }
+    .token-item {
+      background: var(--bg);
+      border: 1px solid var(--border);
+      border-radius: 8px;
+      padding: .7rem 1rem;
+      display: flex;
+      align-items: center;
+      gap: .8rem;
+      flex-wrap: wrap;
+      font-size: .85rem;
+    }
+    .token-id {
+      font-weight: 700;
+      color: var(--accent);
+      min-width: 100px;
+    }
+    .token-meta {
+      flex: 1;
+      display: flex;
+      gap: .5rem;
+      flex-wrap: wrap;
+      align-items: center;
+    }
+    .token-type  { color: var(--muted); }
+    .token-tier  { border-radius: 10px; padding: .15em .6em; font-weight: 600; font-size: .78rem; }
+    .tier-silver { background: #95a5a6; color: #2c3e50; }
+    .tier-gold   { background: #f39c12; color: #fff; }
+    .tier-wraith { background: #9b59b6; color: #fff; }
+    .token-val   { color: var(--accent2); font-weight: 600; }
+    .token-seg   { color: var(--text); }
+    .token-dl {
+      background: var(--border);
+      color: var(--text);
+      border: none;
+      border-radius: 6px;
+      padding: .3em .7em;
+      font-size: .78rem;
+      cursor: pointer;
+      white-space: nowrap;
+    }
+    .token-dl:hover { background: var(--accent2); color: #fff; }
+    @media (max-width: 480px) {
+      .wheel-page { padding: 1rem; }
+      .spin-btn { font-size: 1.1rem; padding: .8rem 2rem; }
+    }
   </style>
 </head>
 <body>
@@ -343,6 +511,7 @@
   <button class="tab-btn"        role="tab" aria-selected="false" aria-controls="captain-n-s3"      data-tab="captain-n-s3">🎮 Captain N: The Game Master</button>
   <button class="tab-btn"        role="tab" aria-selected="false" aria-controls="tmnt"              data-tab="tmnt">🐢 TMNT</button>
   <button class="tab-btn"        role="tab" aria-selected="false" aria-controls="featured-video"    data-tab="featured-video">📺 Featured Video</button>
+  <button class="tab-btn"        role="tab" aria-selected="false" aria-controls="marios-wheel"      data-tab="marios-wheel">🎡 Mario's Wheel</button>
 </nav>
 
 <main id="gallery">
@@ -1044,6 +1213,43 @@
   </div><!-- /.gallery (featured) -->
 </section><!-- /#featured-video -->
 
+<!-- ═══════════════════════════════════════════════════════════════════
+     🎡 MARIO'S WHEEL OF FORTUNE
+     ═══════════════════════════════════════════════════════════════════ -->
+<section class="show-section" id="marios-wheel" role="tabpanel">
+
+  <div class="wheel-page">
+
+    <div class="wheel-header">
+      <h2>🎡 Mario's Wheel Of Fortune</h2>
+      <p class="wheel-tagline">Spin the wheel — every turn mints a research token for the treasury!</p>
+    </div>
+
+    <div class="wheel-arena">
+
+      <div class="wheel-wrap">
+        <div class="wheel-pointer" aria-hidden="true">▼</div>
+        <canvas id="wheelCanvas" width="420" height="420"
+                aria-label="Mario's Wheel of Fortune spinning wheel"></canvas>
+      </div>
+
+      <button id="spinBtn" class="spin-btn" type="button">🎰 SPIN THE WHEEL!</button>
+
+      <div id="spinResult" class="spin-result hidden" role="status" aria-live="polite"></div>
+
+    </div><!-- /.wheel-arena -->
+
+    <div class="token-log">
+      <h3>📦 Session Token Log <small style="color:var(--muted);font-weight:400;font-size:.8rem;">(stored in <code>tokens/token_&lt;id&gt;/</code>)</small></h3>
+      <div id="tokenList" class="token-list">
+        <p class="no-tokens">No tokens yet — spin the wheel to mint your first token!</p>
+      </div>
+    </div><!-- /.token-log -->
+
+  </div><!-- /.wheel-page -->
+
+</section><!-- /#marios-wheel -->
+
 </main>
 
 <footer>
@@ -1095,6 +1301,253 @@
       }
     });
   });
+
+  // ── Mario's Wheel of Fortune ───────────────────────────────────────
+  (function () {
+    const canvas  = document.getElementById('wheelCanvas');
+    if (!canvas) return;
+    const ctx     = canvas.getContext('2d');
+    const spinBtn = document.getElementById('spinBtn');
+    const resultDiv = document.getElementById('spinResult');
+
+    // Wheel segments: label, prize tier, value multiplier, fill colour
+    const SEGMENTS = [
+      { label: '🍄 Mushroom',    tier: 'Silver', value:  1, color: '#e74c3c' },
+      { label: '🌟 Super Star',  tier: 'Wraith', value: 50, color: '#9b59b6' },
+      { label: '🪙 100 Coins',   tier: 'Silver', value:  2, color: '#d4a017' },
+      { label: '🔥 Fire Flower', tier: 'Silver', value:  3, color: '#e67e22' },
+      { label: '🐢 Koopa Shell', tier: 'Silver', value:  1, color: '#27ae60' },
+      { label: '⚡ Thunder',     tier: 'Gold',   value: 10, color: '#f1c40f' },
+      { label: '👑 Princess',    tier: 'Gold',   value: 20, color: '#d63384' },
+      { label: '💀 Bowser',      tier: 'Lose',   value:  0, color: '#2c3e50' },
+      { label: '🦖 Yoshi',       tier: 'Gold',   value:  5, color: '#2ecc71' },
+      { label: '🍃 Cape Leaf',   tier: 'Silver', value:  2, color: '#1abc9c' },
+      { label: '🏆 Grand Prize', tier: 'Wraith', value:100, color: '#8e44ad' },
+      { label: '🎮 1-Up',        tier: 'Gold',   value: 15, color: '#3498db' },
+    ];
+
+    const TIER_STYLE = {
+      Silver: { bg: '#bdc3c7', fg: '#2c3e50', badge: '🥈 Silver' },
+      Gold:   { bg: '#f39c12', fg: '#fff',    badge: '🥇 Gold'   },
+      Wraith: { bg: '#9b59b6', fg: '#fff',    badge: '👻 Wraith'  },
+      Lose:   { bg: '#e74c3c', fg: '#fff',    badge: '💀 Bust!'   },
+    };
+
+    // Map prize tier → token type (matches token_system.py)
+    const TIER_TO_TOKEN_TYPE = {
+      Silver: 'Research',
+      Gold:   'Discovery',
+      Wraith: 'Economic',
+    };
+
+    const N    = SEGMENTS.length;
+    const ARC  = (2 * Math.PI) / N;
+    const CX   = canvas.width / 2;
+    const CY   = canvas.height / 2;
+    const R    = CX - 12;
+
+    let angle    = 0;
+    let spinning = false;
+    let velocity = 0;
+    let tokenSeq = 0;
+
+    // ── SHA-256 via Web Crypto ─────────────────────────────────────
+    async function sha256hex(text) {
+      const buf = await crypto.subtle.digest('SHA-256', new TextEncoder().encode(text));
+      return Array.from(new Uint8Array(buf)).map(b => b.toString(16).padStart(2, '0')).join('');
+    }
+
+    // ── Draw wheel ─────────────────────────────────────────────────
+    function drawWheel() {
+      ctx.clearRect(0, 0, canvas.width, canvas.height);
+
+      for (let i = 0; i < N; i++) {
+        const seg   = SEGMENTS[i];
+        const start = angle + i * ARC;
+        const end   = start + ARC;
+
+        // Segment fill
+        ctx.beginPath();
+        ctx.moveTo(CX, CY);
+        ctx.arc(CX, CY, R, start, end);
+        ctx.closePath();
+        ctx.fillStyle = seg.color;
+        ctx.fill();
+        ctx.strokeStyle = '#fff';
+        ctx.lineWidth   = 2;
+        ctx.stroke();
+
+        // Label text (emoji + short name)
+        ctx.save();
+        ctx.translate(CX, CY);
+        ctx.rotate(start + ARC / 2);
+        ctx.textAlign    = 'right';
+        ctx.textBaseline = 'middle';
+        ctx.fillStyle    = '#fff';
+        ctx.shadowColor  = 'rgba(0,0,0,0.55)';
+        ctx.shadowBlur   = 3;
+
+        const parts = seg.label.split(' ');
+        const emoji = parts[0];
+        const name  = parts.slice(1).join(' ');
+
+        ctx.font = '16px system-ui';
+        ctx.fillText(emoji, R - 8, 0);
+        ctx.font = 'bold 10px system-ui';
+        ctx.fillText(name, R - 28, 0);
+        ctx.restore();
+      }
+
+      // Outer ring
+      ctx.beginPath();
+      ctx.arc(CX, CY, R, 0, 2 * Math.PI);
+      ctx.strokeStyle = '#f0b429';
+      ctx.lineWidth   = 4;
+      ctx.stroke();
+
+      // Centre hub
+      ctx.beginPath();
+      ctx.arc(CX, CY, 26, 0, 2 * Math.PI);
+      ctx.fillStyle   = '#04101f';
+      ctx.fill();
+      ctx.strokeStyle = '#f0b429';
+      ctx.lineWidth   = 3;
+      ctx.stroke();
+
+      ctx.font         = '20px system-ui';
+      ctx.textAlign    = 'center';
+      ctx.textBaseline = 'middle';
+      ctx.shadowBlur   = 0;
+      ctx.fillText('🎡', CX, CY);
+    }
+
+    // ── Determine which segment is under the top pointer ──────────
+    function getResult() {
+      // Pointer sits at canvas top → angle = -π/2 in canvas coords
+      const pointerAngle = -Math.PI / 2;
+      const norm = ((pointerAngle - angle) % (2 * Math.PI) + 2 * Math.PI) % (2 * Math.PI);
+      return SEGMENTS[Math.floor(norm / ARC) % N];
+    }
+
+    // ── Display result + mint token ────────────────────────────────
+    async function showResult(seg) {
+      const tier = TIER_STYLE[seg.tier];
+      resultDiv.innerHTML = `
+        <div class="result-badge" style="background:${tier.bg};color:${tier.fg}">${tier.badge}</div>
+        <div class="result-item">${seg.label}</div>
+        <div class="result-value">${seg.value > 0 ? '×' + seg.value + ' multiplier' : 'Better luck next spin!'}</div>
+      `;
+      resultDiv.classList.remove('hidden');
+
+      if (seg.value > 0) await mintToken(seg);
+    }
+
+    // ── Mint a research token (mirrors token_system.py structure) ──
+    async function mintToken(seg) {
+      tokenSeq++;
+      const id       = 1000 + tokenSeq;
+      const now      = new Date();
+      const ts       = now.toISOString();
+      const dateStr  = ts.slice(0, 10);
+      const type     = TIER_TO_TOKEN_TYPE[seg.tier] || 'Archive';
+      const emojis   = { Research: '🧱', Discovery: '⭐', Economic: '💲', Archive: '📜' };
+      const emoji    = emojis[type] || '📜';
+
+      const articleText = [
+        `# Spin Token: ${seg.label}`,
+        '',
+        `Tier: ${seg.tier}`,
+        `Multiplier: ×${seg.value}`,
+        `Generated: ${ts}`,
+        '',
+        '## Research Notes',
+        `Mario's Wheel Of Fortune — spin #${tokenSeq}.`,
+        `Segment landed: **${seg.label}**.`,
+        `Prize tier: **${seg.tier}**. Value multiplier: ×${seg.value}.`,
+      ].join('\n');
+
+      const sourcesText = [
+        'https://github.com/www-infinity/Theater',
+        'https://archive.org/details/supermarioworldcartoon',
+        `generated:${ts}`,
+      ].join('\n');
+
+      const metadata = { id, value: seg.value, type, emoji, date: dateStr, tier: seg.tier, segment: seg.label };
+
+      const [h1, h2, h3, h4] = await Promise.all([
+        sha256hex(articleText),
+        sha256hex(sourcesText),
+        sha256hex(articleText + '\n' + sourcesText),
+        sha256hex(JSON.stringify(metadata)),
+      ]);
+
+      const hashes = {
+        HASH1_ARTICLE:           h1,
+        HASH2_SOURCES:           h2,
+        HASH3_RESEARCH_PACKAGE:  h3,
+        HASH4_TOKEN_METADATA:    h4,
+      };
+
+      // Render in token log
+      const listEl   = document.getElementById('tokenList');
+      const noTokens = listEl.querySelector('.no-tokens');
+      if (noTokens) noTokens.remove();
+
+      const item = document.createElement('div');
+      item.className = 'token-item';
+      item.innerHTML = `
+        <div class="token-id">${emoji} token_${id}</div>
+        <div class="token-meta">
+          <span class="token-type">${type}</span>
+          <span class="token-tier tier-${seg.tier.toLowerCase()}">${seg.tier}</span>
+          <span class="token-val">×${seg.value}</span>
+          <span class="token-seg">${seg.label}</span>
+        </div>
+        <button class="token-dl" type="button" data-id="${id}">⬇ token_${id}.json</button>
+      `;
+
+      // Download handler — produces the same folder structure as token_system.py
+      const bundle = { 'article.md': articleText, 'sources.txt': sourcesText, metadata, hashes };
+      item.querySelector('.token-dl').addEventListener('click', () => {
+        const blob = new Blob([JSON.stringify(bundle, null, 2)], { type: 'application/json' });
+        const url  = URL.createObjectURL(blob);
+        const a    = Object.assign(document.createElement('a'), { href: url, download: `token_${id}.json` });
+        a.click();
+        URL.revokeObjectURL(url);
+      });
+
+      listEl.insertBefore(item, listEl.firstChild);
+    }
+
+    // ── Spin animation ─────────────────────────────────────────────
+    function spin() {
+      if (spinning) return;
+      spinning = true;
+      spinBtn.disabled = true;
+      resultDiv.classList.add('hidden');
+
+      // 8–13 full rotations + random extra
+      velocity = (Math.random() * 5 + 8) * (2 * Math.PI) / 60;
+
+      function frame() {
+        angle    += velocity;
+        velocity *= 0.984;          // friction
+        drawWheel();
+
+        if (velocity > 0.003) {
+          requestAnimationFrame(frame);
+        } else {
+          spinning = false;
+          spinBtn.disabled = false;
+          showResult(getResult());
+        }
+      }
+      requestAnimationFrame(frame);
+    }
+
+    spinBtn.addEventListener('click', spin);
+    drawWheel();
+  }());
 </script>
 
 </body>
