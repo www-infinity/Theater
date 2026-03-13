@@ -3,18 +3,18 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Theater — Video Gallery</title>
+  <title>Omni Theater — Video Gallery</title>
   <style>
     *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
 
     :root {
-      --bg:        #0e0e0e;
-      --surface:   #1a1a1a;
-      --border:    #2e2e2e;
-      --accent:    #e8a020;
-      --accent2:   #d04040;
-      --text:      #e8e0d4;
-      --muted:     #8a8070;
+      --bg:        #04101f;
+      --surface:   #0b1e36;
+      --border:    #163356;
+      --accent:    #f0b429;
+      --accent2:   #3b8eff;
+      --text:      #d8e8f8;
+      --muted:     #6a90b8;
       --radius:    10px;
     }
 
@@ -27,7 +27,7 @@
 
     /* ── Header ─────────────────────────────────────────────────────── */
     header {
-      background: linear-gradient(135deg, #111 0%, #1c1408 100%);
+      background: linear-gradient(135deg, #061428 0%, #0d2a55 60%, #0a1e40 100%);
       border-bottom: 2px solid var(--accent);
       padding: 2.5rem 2rem 2rem;
       text-align: center;
@@ -221,17 +221,56 @@
       .episode-info { padding: .8rem .9rem 1rem; }
       .show-header { padding: .9rem 1rem; }
     }
+
+    /* ── Gamification legend ─────────────────────────────────────────── */
+    .game-legend {
+      background: var(--surface);
+      border-bottom: 1px solid var(--border);
+      padding: .9rem 2rem;
+      display: flex;
+      flex-wrap: wrap;
+      gap: .55rem 1.4rem;
+      justify-content: center;
+      font-size: .78rem;
+      color: var(--text);
+    }
+
+    .game-legend-item {
+      display: flex;
+      align-items: center;
+      gap: .35em;
+      white-space: nowrap;
+    }
+
+    .game-legend-item .gl-icon { font-size: 1em; line-height: 1; }
+    .game-legend-item .gl-label { color: var(--muted); }
+    .game-legend-item .gl-desc { font-weight: 600; }
+
+    @media (max-width: 600px) {
+      .game-legend { padding: .8rem 1rem; gap: .45rem 1rem; font-size: .73rem; }
+    }
   </style>
 </head>
 <body>
 
 <header>
   <div class="marquee-wrap">
-    <span class="theater-icon">🎬</span>Theater
+    <span class="theater-icon">🎬</span>Omni Theater
   </div>
   <h1>Video Gallery</h1>
   <p class="tagline">Public-domain archive · Each episode in its own viewer · Queued in broadcast order</p>
 </header>
+
+<nav class="game-legend" aria-label="Omni Theater legend">
+  <div class="game-legend-item" aria-label="Watch and Earn"><span class="gl-icon">🟡</span><span class="gl-desc">Watch &amp; Earn</span></div>
+  <div class="game-legend-item" aria-label="Play Game and Collect"><span class="gl-icon">🎮</span><span class="gl-desc">Play Game &amp; Collect</span></div>
+  <div class="game-legend-item"><span class="gl-icon">♣️♦️♥️♠️</span><span class="gl-label">Level Up =</span><span class="gl-desc">Page Stages</span></div>
+  <div class="game-legend-item"><span class="gl-icon">⭐</span><span class="gl-desc">Stars</span><span class="gl-label">= trending boost</span></div>
+  <div class="game-legend-item"><span class="gl-icon">🍄</span><span class="gl-desc">Mushroom</span><span class="gl-label">= doubles research</span></div>
+  <div class="game-legend-item"><span class="gl-icon">🏆</span><span class="gl-desc">High Points</span><span class="gl-label">= unlocks new games</span></div>
+  <div class="game-legend-item"><span class="gl-icon">👾</span><span class="gl-desc">Guys Stomped Out</span><span class="gl-label">= bugs fixed</span></div>
+  <div class="game-legend-item"><span class="gl-icon">⚪</span><span class="gl-desc">Warps</span><span class="gl-label">= spending / clone exit</span></div>
+</nav>
 
 <main id="gallery">
 
@@ -789,16 +828,70 @@
   </div><!-- /.gallery (Captain N S3) -->
 </section><!-- /#captain-n-s3 -->
 
+<!-- ═══════════════════════════════════════════════════════════════════
+     SHOW: The Legend of Zelda (1989)
+═══════════════════════════════════════════════════════════════════ -->
+<section class="show-section" id="legend-of-zelda">
+  <div class="show-header">
+    <div class="show-header-left">
+      <h2 class="show-title">
+        The Legend of Zelda <span class="show-year">(1989)</span>
+      </h2>
+      <div class="show-sub">
+        <span class="badge">13 episodes</span>
+        <span>Season 1 · NBC Saturday morning · DIC Entertainment × Nintendo</span>
+      </div>
+    </div>
+    <a class="source-link"
+       href="https://archive.org/details/the-legend-of-zelda-ep.-13-the-moblins-are-revolting-480p-dvdrip_202502"
+       target="_blank" rel="noopener">
+      archive.org collection ↗
+    </a>
+  </div>
+
+  <div class="gallery">
+
+    <!-- Episode 13 -->
+    <article class="episode-card" id="zelda-ep13">
+      <div class="player-wrap">
+        <iframe
+          src="https://archive.org/embed/the-legend-of-zelda-ep.-13-the-moblins-are-revolting-480p-dvdrip_202502"
+          allowfullscreen
+          title="The Legend of Zelda – Episode 13: The Moblins Are Revolting"
+        ></iframe>
+      </div>
+      <div class="episode-info">
+        <div class="episode-num">Episode 13 — Series Finale</div>
+        <div class="episode-title">The Moblins Are Revolting</div>
+        <div class="episode-meta">
+          <span>1989</span><span class="dot">·</span>
+          <span>DIC Entertainment</span><span class="dot">·</span>
+          <span>NBC</span><span class="dot">·</span>
+          <span>Series finale</span>
+        </div>
+        <a class="episode-link"
+           href="https://archive.org/details/the-legend-of-zelda-ep.-13-the-moblins-are-revolting-480p-dvdrip_202502"
+           target="_blank" rel="noopener">
+          View on archive.org ↗
+        </a>
+      </div>
+    </article>
+
+  </div><!-- /.gallery (Zelda) -->
+</section><!-- /#legend-of-zelda -->
+
 </main>
 
 <footer>
   <p>
-    🎬 <strong>Theater</strong> · Public-domain archive curation project
+    🎬 <strong>Omni Theater</strong> · Public-domain archive curation project
   </p>
   <p style="margin-top:.5rem">
     <a href="https://archive.org/details/supermarioworldcartoon" target="_blank" rel="noopener">Super Mario World (1991)</a>
     &nbsp;·&nbsp;
     <a href="https://archive.org/details/captain-n-the-game-master-season-3-avi" target="_blank" rel="noopener">Captain N: The Game Master S3 (1991)</a>
+    &nbsp;·&nbsp;
+    <a href="https://archive.org/details/the-legend-of-zelda-ep.-13-the-moblins-are-revolting-480p-dvdrip_202502" target="_blank" rel="noopener">The Legend of Zelda (1989)</a>
   </p>
 </footer>
 
