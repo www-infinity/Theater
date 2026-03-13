@@ -172,5 +172,68 @@
         "url": "https://archive.org/details/kootie-pie-rocks-remastered-and-uncut-hd-15"
       }
     ]
+  },
+  {
+    "title": "Super Mario World (Animated Series, 1991)",
+    "year": 1991,
+    "type": "animation",
+    "sources": [
+      {
+        "label": "archive.org (all 13 episodes)",
+        "url": "https://archive.org/details/supermarioworldcartoon"
+      },
+      {
+        "label": "Ep 01 – Fire Sale",
+        "url": "https://archive.org/details/supermarioworldcartoon/Super+Mario+World+-+01+-+Fire+Sale.mp4"
+      },
+      {
+        "label": "Ep 02 – The Wheel Thing",
+        "url": "https://archive.org/details/supermarioworldcartoon/Super+Mario+World+-+02+-+The+Wheel+Thing.mp4"
+      },
+      {
+        "label": "Ep 03 – Send in the Clown",
+        "url": "https://archive.org/details/supermarioworldcartoon/Super+Mario+World+-+03+-+Send+in+the+Clown.mp4"
+      },
+      {
+        "label": "Ep 04 – Ghosts R Us",
+        "url": "https://archive.org/details/supermarioworldcartoon/Super+Mario+World+-+04+-+Ghosts+R+Us.mp4"
+      },
+      {
+        "label": "Ep 05 – The Night Before Cave Christmas",
+        "url": "https://archive.org/details/supermarioworldcartoon/Super+Mario+World+-+05+-+The+Night+Before+Cave+Christmas.mp4"
+      },
+      {
+        "label": "Ep 06 – King Scoopa Koopa",
+        "url": "https://archive.org/details/supermarioworldcartoon/Super+Mario+World+-+06+-+King+Scoopa+Koopa.mp4"
+      },
+      {
+        "label": "Ep 07 – Born To Ride",
+        "url": "https://archive.org/details/supermarioworldcartoon/Super+Mario+World+-+07+-+Born+To+Ride.mp4"
+      },
+      {
+        "label": "Ep 08 – Party Line",
+        "url": "https://archive.org/details/supermarioworldcartoon/Super+Mario+World+-+08+-+Party+Line.mp4"
+      },
+      {
+        "label": "Ep 09 – Gopher Bash",
+        "url": "https://archive.org/details/supermarioworldcartoon/Super+Mario+World+-+09+-+Gopher+Bash.mp4"
+      },
+      {
+        "label": "Ep 10 – Rock TV",
+        "url": "https://archive.org/details/supermarioworldcartoon/Super+Mario+World+-+10+-+Rock+TV.mp4"
+      },
+      {
+        "label": "Ep 11 – The Yoshi Shuffle",
+        "url": "https://archive.org/details/supermarioworldcartoon/Super+Mario+World+-+11+-+The+Yoshi+Shuffle.mp4"
+      },
+      {
+        "label": "Ep 12 – A Little Learning",
+        "url": "https://archive.org/details/supermarioworldcartoon/Super+Mario+World+-+12+-+A+Little+Learning.mp4"
+      },
+      {
+        "label": "Ep 13 – Mama Luigi",
+        "url": "https://archive.org/details/supermarioworldcartoon/Super+Mario+World+-+13+-+Mama+Luigi.mp4"
+      }
+    ]
   }
 ]

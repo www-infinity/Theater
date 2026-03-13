@@ -406,5 +406,31 @@
       "offset_seconds": 1980,
       "fact": "Super Mario Bros. 3 introduced the world map overworld, suit power-ups like Tanooki and Frog, and the Koopalings as world bosses — it is widely considered one of the greatest NES games ever made and was featured in the film The Wizard (1989)."
     }
+  ],
+  "Super Mario World (Animated Series, 1991)": [
+    {
+      "offset_seconds": 30,
+      "fact": "Super Mario World (the animated series) premiered on NBC on September 14, 1991, as part of the Saturday morning lineup — it was the third Mario cartoon produced by DiC Entertainment after The Super Mario Bros. Super Show! and The Adventures of Super Mario Bros. 3."
+    },
+    {
+      "offset_seconds": 240,
+      "fact": "The series is set in Dinosaur Land, mirroring the SNES game released in North America in August 1991 — the same month production wrapped — making it one of the most simultaneous game-to-TV adaptations Nintendo ever produced."
+    },
+    {
+      "offset_seconds": 600,
+      "fact": "Yoshi makes his animated debut in this series — voiced by Andrew Sabiston — marking the first time audiences heard the dinosaur speak. In the SNES game, Yoshi communicates only through text bubbles."
+    },
+    {
+      "offset_seconds": 1080,
+      "fact": "The final episode, 'Mama Luigi' (ep. 13), became an enormous internet meme in the 2000s–2010s for its dramatic flashback narration style and Luigi's line 'That's Mama Luigi to you, Mario!' — it remains one of the most-quoted Saturday morning cartoon moments online."
+    },
+    {
+      "offset_seconds": 1500,
+      "fact": "DiC Entertainment's three Mario series aired consecutively from 1989–1991 — The Super Mario Bros. Super Show! (1989), The Adventures of Super Mario Bros. 3 (1990), and Super Mario World (1991) — each timed to accompany a new flagship Nintendo game release."
+    },
+    {
+      "offset_seconds": 1980,
+      "fact": "NBC's Saturday morning block in 1991 was a battleground: CBS had Garfield, ABC had Chip 'n Dale Rescue Rangers and DuckTales reruns — Mario's move to NBC that year reflected DiC's deal to supply multiple shows to the network simultaneously."
+    }
   ]
 }
