@@ -46,11 +46,76 @@ To add a new film, append an object to that array:
 }
 ```
 
+## Watch Buddy
+
+An interactive AI companion that watches movies **with** you.
+
+* Pops trivia facts at timed intervals during playback
+* Answers any question by searching **DuckDuckGo** in real time
+* No API key required
+
+```bash
+# Start a watch session
+python watch_buddy.py "Cartoon Network VHS Tapes"
+python watch_buddy.py "PT-03 Monster of Mexico"
+
+# List available movies
+python watch_buddy.py --list
+```
+
+While watching, you can type:
+
+| Input | What happens |
+|-------|--------------|
+| Any question (or ends with `?`) | DuckDuckGo search |
+| `search <topic>` | Explicit DuckDuckGo lookup |
+| `facts` | List all pre-loaded facts for the movie |
+| `time` | Show elapsed playback time |
+| `help` | Show all commands |
+| `quit` | End the session |
+
+Facts are stored in [`catalog/facts.json`](catalog/facts.json) — add a new
+key matching the movie title to load facts for any film.
+
+## Audio Repair Tool
+
+Fixes common audio problems in old or degraded recordings using FFmpeg.
+
+**Requires:** [FFmpeg](https://ffmpeg.org/download.html) on your PATH.
+
+```bash
+# Fix audio directly from archive.org (downloads automatically)
+python audio_repair.py https://archive.org/details/pt-03-Monster-of-Mexico
+
+# Fix a local file
+python audio_repair.py my_movie.mp4
+
+# Extra boost for very quiet recordings
+python audio_repair.py my_movie.mp4 --boost 12
+
+# Audio-only output
+python audio_repair.py my_movie.mp4 --audio-only
+
+# Preview the FFmpeg command without running it
+python audio_repair.py my_movie.mp4 --dry-run
+```
+
+The repair pipeline applies five stages in order:
+
+| Stage | Filter | Purpose |
+|-------|--------|---------|
+| 1 | High-pass (≤ 80 Hz) | Remove low-frequency rumble / hum |
+| 2 | Low-pass (≥ 10 kHz) | Soften high-frequency tape hiss |
+| 3 | Dynamic compressor | Lift quiet passages, tame loud peaks |
+| 4 | Loudness normalise | EBU R128 broadcast-standard levels |
+| 5 | Volume boost (+6 dB) | Explicit amplification for very quiet sources |
+
 ## File layout
 
 ```
 catalog/
-  movies.json
+  movies.json   — film catalog with archive.org links
+  facts.json    — per-movie timed trivia facts
 tokens/
   token_1054/
     article.md
@@ -59,7 +124,9 @@ tokens/
     hashes.json
 ledger/
   treasury.json
-token_system.py
+audio_repair.py — audio fix tool
+watch_buddy.py  — interactive AI watch companion
+token_system.py — C13B0 token system
 ```
 
 ## Quick start

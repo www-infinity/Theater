@@ -32,5 +32,16 @@
         "url": "https://archive.org/details/cartoon-network-vhs-tapes"
       }
     ]
+  },
+  {
+    "title": "PT-03 Monster of Mexico",
+    "year": null,
+    "audio_notes": "Original recording has degraded/low audio — run audio_repair.py before watching.",
+    "sources": [
+      {
+        "label": "archive.org",
+        "url": "https://archive.org/details/pt-03-Monster-of-Mexico"
+      }
+    ]
   }
 ]

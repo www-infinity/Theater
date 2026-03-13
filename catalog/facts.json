@@ -68,5 +68,31 @@
       "offset_seconds": 2100,
       "fact": "The Cartoon Network branding team in the 1990s was famous for irreverent, self-aware bumpers and ads — a style that influenced a generation of designers."
     }
+  ],
+  "PT-03 Monster of Mexico": [
+    {
+      "offset_seconds": 30,
+      "fact": "'Monster of Mexico' belongs to a tradition of American B-movies shot on location in Mexico during the 1950s–60s, when cheap production costs attracted Hollywood producers south of the border."
+    },
+    {
+      "offset_seconds": 300,
+      "fact": "Many low-budget creature features of this era were filmed quickly — sometimes in under two weeks — to cash in on the drive-in theater boom of the 1950s."
+    },
+    {
+      "offset_seconds": 720,
+      "fact": "Drive-in theaters peaked in popularity in the late 1950s with over 4,000 screens across the US — cheap double-features like this one were their bread and butter."
+    },
+    {
+      "offset_seconds": 1200,
+      "fact": "The 'PT' prefix in the archive identifier likely stands for 'Public Domain Treasure' — a common tag used by archive.org uploaders to denote copyright-free films."
+    },
+    {
+      "offset_seconds": 1800,
+      "fact": "Mexican horror cinema ('cine de terror mexicano') had its own golden age in the 1950s–70s, producing iconic luchador-vs-monster films featuring wrestlers like El Santo."
+    },
+    {
+      "offset_seconds": 2400,
+      "fact": "Audio degradation on recordings like this one is usually caused by magnetic tape binder breakdown — a process called 'sticky shed syndrome' — which causes dropouts and muffled sound."
+    }
   ]
 }
