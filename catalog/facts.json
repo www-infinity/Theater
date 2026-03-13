@@ -432,5 +432,31 @@
       "offset_seconds": 1980,
       "fact": "NBC's Saturday morning block in 1991 was a battleground: CBS had Garfield, ABC had Chip 'n Dale Rescue Rangers and DuckTales reruns — Mario's move to NBC that year reflected DiC's deal to supply multiple shows to the network simultaneously."
     }
+  ],
+  "Captain N: The Game Master (Season 3, 1991)": [
+    {
+      "offset_seconds": 30,
+      "fact": "Captain N: The Game Master premiered on NBC on September 9, 1989 — the show's title character, Kevin Keene, is pulled into a TV set and lands in Videoland, a world made up of Nintendo game universes, making it one of the earliest live-action/animated Nintendo crossover productions."
+    },
+    {
+      "offset_seconds": 300,
+      "fact": "Season 3 (1991) was the final season of Captain N and ran as a shorter run of 7 episodes — the series was cancelled after this season, ending a three-year run that coincided almost exactly with the NES era's peak popularity in North America."
+    },
+    {
+      "offset_seconds": 720,
+      "fact": "Castlevania's Simon Belmont was a regular cast member on Captain N, though his portrayal — as a vain, cowardly adventurer obsessed with his appearance — was widely criticized by fans of the games as wildly inaccurate to the stoic monster-hunter of the NES originals."
+    },
+    {
+      "offset_seconds": 1080,
+      "fact": "Tetris, featured in S03E04 'Totally Tetrisized', was one of the best-selling Game Boy games of all time — Nintendo bundled it with the original Game Boy in North America in 1989, selling over 35 million copies. The Soviet-made puzzle game became a global phenomenon almost overnight."
+    },
+    {
+      "offset_seconds": 1500,
+      "fact": "Mega Man's appearance in Captain N was controversial among fans — the show depicted him as small, green-tinted, and speaking in a high-pitched voice, nothing like the blue robot hero of the Capcom games. Capcom had no creative control over the DiC adaptation."
+    },
+    {
+      "offset_seconds": 1980,
+      "fact": "Captain N aired as part of NBC's Saturday morning block alongside Super Mario World in 1991 — DiC Entertainment produced both shows simultaneously, making Nintendo the dominant force in NBC's entire Saturday morning lineup that season."
+    }
   ]
 }

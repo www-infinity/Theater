@@ -235,5 +235,44 @@
         "url": "https://archive.org/details/supermarioworldcartoon/Super+Mario+World+-+13+-+Mama+Luigi.mp4"
       }
     ]
+  },
+  {
+    "title": "Captain N: The Game Master (Season 3, 1991)",
+    "year": 1991,
+    "type": "animation",
+    "sources": [
+      {
+        "label": "archive.org (all 7 episodes)",
+        "url": "https://archive.org/details/captain-n-the-game-master-season-3-avi"
+      },
+      {
+        "label": "S03E01 – Misadventures in Robin Hood Woods",
+        "url": "https://archive.org/details/captain-n-the-game-master-season-3-avi/Captain+N+The+Game+Master+-+S03E01+-+Misadventures+in+Robin+Hood+Woods+.avi"
+      },
+      {
+        "label": "S03E02 – Pursuit of the Magic Hoop",
+        "url": "https://archive.org/details/captain-n-the-game-master-season-3-avi/Captain+N+The+Game+Master+-+S03E02+-+Pursuit+of+the+Magic+Hoop+.avi"
+      },
+      {
+        "label": "S03E03 – Return to Castlevania",
+        "url": "https://archive.org/details/captain-n-the-game-master-season-3-avi/Captain+N+The+Game+Master+-+S03E03+-+Return+to+Castlevania+.avi"
+      },
+      {
+        "label": "S03E04 – Totally Tetrisized",
+        "url": "https://archive.org/details/captain-n-the-game-master-season-3-avi/Captain+N+The+Game+Master+-+S03E04+-+Totally+Tetrisized+.avi"
+      },
+      {
+        "label": "S03E05 – Battle of the Baseball Know-It-Alls",
+        "url": "https://archive.org/details/captain-n-the-game-master-season-3-avi/Captain+N+The+Game+Master+-+S03E05+-+Battle+of+the+Baseball+Know-It-Alls+.avi"
+      },
+      {
+        "label": "S03E06 – A Tale of Two Dogs",
+        "url": "https://archive.org/details/captain-n-the-game-master-season-3-avi/Captain+N+The+Game+Master+-+S03E06+-+A+Tale+of+Two+Dogs+.avi"
+      },
+      {
+        "label": "S03E07 – The Fractured Fantasy of Captain N",
+        "url": "https://archive.org/details/captain-n-the-game-master-season-3-avi/Captain+N+The+Game+Master+-+S03E07+-+The+Fractured+Fantasy+of+Captain+N+.avi"
+      }
+    ]
   }
 ]
