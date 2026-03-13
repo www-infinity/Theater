@@ -172,5 +172,109 @@
       "offset_seconds": 2400,
       "fact": "Archive.org hosts thousands of out-of-print and public domain animated programs that were never commercially released on home video — preserving animation history that might otherwise be lost."
     }
+  ],
+  ".hack//SIGN – Episode 01": [
+    {
+      "offset_seconds": 30,
+      "fact": ".hack//SIGN (2002) is set inside a fictional MMORPG called 'The World' — one of the first anime series to seriously explore being trapped in a virtual game, predating Sword Art Online by a decade."
+    },
+    {
+      "offset_seconds": 300,
+      "fact": ".hack was a massive multimedia franchise at launch: the anime, video games, manga, and novels were all released simultaneously in 2002, each telling a different part of the same story."
+    },
+    {
+      "offset_seconds": 720,
+      "fact": "The music for .hack//SIGN was composed by Yuki Kajiura, who later scored Sword Art Online, Puella Magi Madoka Magica, and Fate/Zero — her atmospheric style became her signature."
+    },
+    {
+      "offset_seconds": 1200,
+      "fact": "The protagonist Tsukasa is one of anime's earliest gender-ambiguous leads — their identity and backstory are slowly revealed across the series in a way that was considered groundbreaking for 2002."
+    },
+    {
+      "offset_seconds": 1800,
+      "fact": "The fictional game 'The World' in .hack was designed to look like a real MMO of the early 2000s — complete with loading screens, lag, and disconnections depicted as plot devices."
+    },
+    {
+      "offset_seconds": 2400,
+      "fact": ".hack//SIGN was directed by Koichi Mashimo at Bee Train studio, who deliberately made it slow-paced and dialogue-heavy — a conscious contrast to action-heavy shonen anime of the same period."
+    }
+  ],
+  "Transformers": [
+    {
+      "offset_seconds": 30,
+      "fact": "The original Transformers cartoon (1984) was developed to promote Hasbro's toy line — the toys themselves were imported from Japanese companies Takara and Diaclone and rebranded for Western markets."
+    },
+    {
+      "offset_seconds": 300,
+      "fact": "The Transformers' catchphrase 'More than meets the eye' was coined for the 1984 cartoon and has remained associated with the franchise for over 40 years."
+    },
+    {
+      "offset_seconds": 720,
+      "fact": "Many Transformers episodes were animated in Japan and South Korea — you can spot animation quality differences across episodes because multiple studios worked on them simultaneously."
+    },
+    {
+      "offset_seconds": 1200,
+      "fact": "The 1986 Transformers: The Movie shocked young fans by killing off Optimus Prime — one of the first times a beloved animated hero was permanently killed in a children's film."
+    },
+    {
+      "offset_seconds": 1800,
+      "fact": "Peter Cullen, the voice of Optimus Prime since 1984, based the character's voice on his brother Larry — a real-life Marine he described as 'strong but gentle.'"
+    },
+    {
+      "offset_seconds": 2400,
+      "fact": "Transformers: Generation 1 ran from 1984 to 1987 and produced 98 episodes — it spawned one of the most lucrative toy and media franchises in history, earning billions across all media."
+    }
+  ],
+  "Track 02-3": [
+    {
+      "offset_seconds": 30,
+      "fact": "Archive.org's audio collection contains over 14 million recordings — from 78 RPM shellac discs digitized in the 1990s to live concert recordings uploaded by fans in the 2020s."
+    },
+    {
+      "offset_seconds": 180,
+      "fact": "The 'track' naming convention dates to the vinyl LP era — albums were divided into Side A and Side B, with individual songs called 'tracks' after the physical grooves cut into the record."
+    },
+    {
+      "offset_seconds": 480,
+      "fact": "Audio preservation is a race against time — magnetic tape degrades at roughly 1–2% per year, and an estimated 50% of all recordings made before 1970 have already been lost forever."
+    },
+    {
+      "offset_seconds": 900,
+      "fact": "The MP3 format was patented in 1989 and became dominant by the late 1990s — its lossy compression discards frequencies the human ear is least sensitive to, shrinking files by up to 90%."
+    },
+    {
+      "offset_seconds": 1500,
+      "fact": "Archive.org's Live Music Archive hosts over 250,000 concert recordings — bands like the Grateful Dead and Phish explicitly allow fans to record and share their shows."
+    },
+    {
+      "offset_seconds": 2100,
+      "fact": "FLAC (Free Lossless Audio Codec), released in 2001, compresses audio without any quality loss — it is the preferred format for archival audio preservation because it perfectly reconstructs the original recording."
+    }
+  ],
+  "F-Zero / Shaman King & Kirby on Fox Box": [
+    {
+      "offset_seconds": 30,
+      "fact": "The Fox Box was a Saturday-morning programming block that aired on Fox from 2002 to 2005, replacing the earlier Fox Kids block — it was produced by 4Kids Entertainment and targeted at 6–11 year olds."
+    },
+    {
+      "offset_seconds": 360,
+      "fact": "F-Zero GP Legend (2003) was the animated adaptation of Nintendo's futuristic racing franchise — it aired as part of the Fox Box lineup alongside Sonic X, Teenage Mutant Ninja Turtles, and Shaman King."
+    },
+    {
+      "offset_seconds": 720,
+      "fact": "Shaman King is a manga by Hiroyuki Takei that ran in Weekly Shonen Jump from 1998 to 2004 — the Fox Box dub by 4Kids made significant edits to dialogue and removed references to death and religion."
+    },
+    {
+      "offset_seconds": 1200,
+      "fact": "Kirby: Right Back at Ya! (2001) was produced by Nintendo and Warpstar Inc. — it ran for 100 episodes and was one of the few Nintendo properties to receive a dedicated animated series."
+    },
+    {
+      "offset_seconds": 1800,
+      "fact": "4Kids Entertainment was notorious for heavily editing anime for American audiences — removing violence, changing food references, and adding dialogue to explain plot points considered too complex for children."
+    },
+    {
+      "offset_seconds": 2700,
+      "fact": "The Fox Box was rebranded as '4Kids TV' in 2005 and continued until 2008, when Fox cancelled the block entirely — it was one of the last major Saturday-morning cartoon programming blocks on US broadcast television."
+    }
   ]
 }

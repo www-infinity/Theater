@@ -361,7 +361,7 @@ def main() -> None:
         type=float,
         default=6.0,
         metavar="DB",
-        help="Extra volume boost in dB applied after normalisation (default: 6)",
+        help="Extra volume boost in dB applied after normalization (default: 6)",
     )
     parser.add_argument(
         "--highpass",

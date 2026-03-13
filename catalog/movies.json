@@ -106,5 +106,16 @@
         "url": "https://archive.org/details/track-02-3"
       }
     ]
+  },
+  {
+    "title": "F-Zero / Shaman King & Kirby on Fox Box",
+    "year": null,
+    "type": "animation",
+    "sources": [
+      {
+        "label": "archive.org",
+        "url": "https://archive.org/details/f-zero-shamn-king-and-kibry-on-fox-box"
+      }
+    ]
   }
 ]
