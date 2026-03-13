@@ -73,5 +73,38 @@
         "url": "https://archive.org/details/sonic-shaman-mucha-and-funker-cops"
       }
     ]
+  },
+  {
+    "title": ".hack//SIGN – Episode 01",
+    "year": 2002,
+    "type": "anime",
+    "sources": [
+      {
+        "label": "archive.org",
+        "url": "https://archive.org/details/hack-sign-01_202310"
+      }
+    ]
+  },
+  {
+    "title": "Transformers",
+    "year": null,
+    "type": "animation",
+    "sources": [
+      {
+        "label": "archive.org",
+        "url": "https://archive.org/details/Transformersanduntik"
+      }
+    ]
+  },
+  {
+    "title": "Track 02-3",
+    "year": null,
+    "type": "audio",
+    "sources": [
+      {
+        "label": "archive.org",
+        "url": "https://archive.org/details/track-02-3"
+      }
+    ]
   }
 ]
