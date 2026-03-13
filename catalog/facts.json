@@ -94,5 +94,83 @@
       "offset_seconds": 2400,
       "fact": "Audio degradation on recordings like this one is usually caused by magnetic tape binder breakdown — a process called 'sticky shed syndrome' — which causes dropouts and muffled sound."
     }
+  ],
+  "Flash Gordon: The Animated Movie": [
+    {
+      "offset_seconds": 30,
+      "fact": "Flash Gordon was created by Alex Raymond and first appeared as a comic strip on January 7, 1934 — originally conceived as a rival to the hugely popular Buck Rogers strip."
+    },
+    {
+      "offset_seconds": 360,
+      "fact": "The 1980 Flash Gordon animated film was produced by Filmation, the same studio behind He-Man and the Masters of the Universe and Fat Albert and the Cosby Kids."
+    },
+    {
+      "offset_seconds": 720,
+      "fact": "Flash Gordon's villain Ming the Merciless is one of the earliest and most influential sci-fi villains — he inspired countless tyrant characters in comics, film, and TV over the following decades."
+    },
+    {
+      "offset_seconds": 1200,
+      "fact": "The live-action 1980 Flash Gordon film (released the same year) featured a legendary soundtrack by the rock band Queen — one of the most iconic sci-fi film scores ever recorded."
+    },
+    {
+      "offset_seconds": 1800,
+      "fact": "Flash Gordon serials from the 1930s starring Buster Crabbe were a direct inspiration for George Lucas when he created Star Wars — Lucas originally tried to acquire the Flash Gordon film rights before creating his own universe."
+    },
+    {
+      "offset_seconds": 2400,
+      "fact": "Filmation's animation style in the 1980s was known for re-using character movement cells — a cost-saving technique called 'limited animation' that was pioneered by Hanna-Barbera in the late 1950s."
+    }
+  ],
+  "Batman on WB": [
+    {
+      "offset_seconds": 30,
+      "fact": "Batman first appeared in Detective Comics #27 in May 1939, created by artist Bob Kane and writer Bill Finger — though Finger's contribution went uncredited for decades."
+    },
+    {
+      "offset_seconds": 300,
+      "fact": "Batman: The Animated Series (1992), produced by Warner Bros., is widely considered the definitive animated version of Batman and won multiple Emmy Awards for Outstanding Animated Program."
+    },
+    {
+      "offset_seconds": 720,
+      "fact": "The WB Network (The WB) launched in 1995 and became famous for its Saturday morning animation block, which featured Batman alongside Superman, Batman Beyond, and Justice League."
+    },
+    {
+      "offset_seconds": 1200,
+      "fact": "Batman: The Animated Series introduced Harley Quinn — originally created by Paul Dini and Bruce Timm as a one-off character — who became so popular she was later made canon in DC Comics."
+    },
+    {
+      "offset_seconds": 1800,
+      "fact": "Kevin Conroy's voice performance as Batman in the WB animated series is so beloved that many fans consider him the definitive Batman — he voiced the character across hundreds of episodes and video games."
+    },
+    {
+      "offset_seconds": 2700,
+      "fact": "The WB Network merged with UPN in 2006 to form The CW — but the Batman animated legacy lives on through DC's ongoing direct-to-video animated film series."
+    }
+  ],
+  "Sonic / Shaman / Mucha & Funker Cops": [
+    {
+      "offset_seconds": 30,
+      "fact": "Sonic the Hedgehog debuted in 1991 as Sega's answer to Nintendo's Mario — his speed-based gameplay and attitude were deliberately designed to appeal to a cooler, older audience."
+    },
+    {
+      "offset_seconds": 300,
+      "fact": "Two Sonic cartoons aired in 1993: the lighthearted 'Adventures of Sonic the Hedgehog' and the darker 'Sonic the Hedgehog' (SatAM) — both ran simultaneously on different networks."
+    },
+    {
+      "offset_seconds": 720,
+      "fact": "A 'shaman' is a practitioner who reaches altered states of consciousness to interact with the spirit world — the role of shaman exists across dozens of unconnected indigenous cultures worldwide."
+    },
+    {
+      "offset_seconds": 1200,
+      "fact": "Jem and the Holograms (1985) popularized the 'music + action' animated format that later influenced shows mixing pop culture, music, and adventure storytelling in the late 1980s and 1990s."
+    },
+    {
+      "offset_seconds": 1800,
+      "fact": "The early 1990s saw an explosion of quirky, experimental animated shows on cable — Nickelodeon's Rugrats, Ren & Stimpy, and Doug all premiered in the same week in August 1991."
+    },
+    {
+      "offset_seconds": 2400,
+      "fact": "Archive.org hosts thousands of out-of-print and public domain animated programs that were never commercially released on home video — preserving animation history that might otherwise be lost."
+    }
   ]
 }

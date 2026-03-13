@@ -43,5 +43,35 @@
         "url": "https://archive.org/details/pt-03-Monster-of-Mexico"
       }
     ]
+  },
+  {
+    "title": "Flash Gordon: The Animated Movie",
+    "year": 1980,
+    "sources": [
+      {
+        "label": "archive.org",
+        "url": "https://archive.org/details/flash-gordon-animated-movie-1980"
+      }
+    ]
+  },
+  {
+    "title": "Batman on WB",
+    "year": null,
+    "sources": [
+      {
+        "label": "archive.org",
+        "url": "https://archive.org/details/batman-on-wb"
+      }
+    ]
+  },
+  {
+    "title": "Sonic / Shaman / Mucha & Funker Cops",
+    "year": null,
+    "sources": [
+      {
+        "label": "archive.org",
+        "url": "https://archive.org/details/sonic-shaman-mucha-and-funker-cops"
+      }
+    ]
   }
 ]

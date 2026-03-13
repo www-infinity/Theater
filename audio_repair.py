@@ -101,7 +101,7 @@ def _build_audio_filter(
             f"release={compressor_release}:"
             f"makeup=2dB"
         ),
-        # Stage 4: EBU R128 loudness normalisation
+        # Stage 4: EBU R128 loudness normalization
         (
             f"loudnorm="
             f"I={loudnorm_target}:"
@@ -304,7 +304,7 @@ def repair(
     print(f"      Stage 1 – High-pass filter      remove rumble ≤ {highpass_hz} Hz")
     print(f"      Stage 2 – Low-pass filter       soften hiss   ≥ {lowpass_hz} Hz")
     print( "      Stage 3 – Dynamic compressor    lift quiet passages")
-    print( "      Stage 4 – Loudness normalise    EBU R128 (-16 LUFS)")
+    print( "      Stage 4 – Loudness normalize    EBU R128 (-16 LUFS)")
     print(f"      Stage 5 – Volume boost          +{boost_db:.0f} dB amplification")
     print()
     print(f"  📥  Input : {local_input}")
