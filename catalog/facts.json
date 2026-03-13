@@ -276,5 +276,57 @@
       "offset_seconds": 2700,
       "fact": "The Fox Box was rebranded as '4Kids TV' in 2005 and continued until 2008, when Fox cancelled the block entirely — it was one of the last major Saturday-morning cartoon programming blocks on US broadcast television."
     }
+  ],
+  "Sonic X – Episode 62: The Secret of the Underground Valley": [
+    {
+      "offset_seconds": 30,
+      "fact": "Sonic X is a 78-episode anime series produced by TMS Entertainment that aired in Japan in 2003 — it was one of the first Sonic adaptations to transplant Sonic and friends into a modern human world."
+    },
+    {
+      "offset_seconds": 300,
+      "fact": "Episode 62 belongs to the Metarex arc — the third and final season of Sonic X — which shifted the action entirely to outer space and was considerably darker in tone than the earlier seasons."
+    },
+    {
+      "offset_seconds": 720,
+      "fact": "4Kids TV's recording of Sonic X made notable changes from the Japanese original: music was replaced, dialogue was lightened, and several scenes were edited or cut for US broadcast standards."
+    },
+    {
+      "offset_seconds": 1200,
+      "fact": "Sonic X's Japanese voice cast was led by Jun'ichi Kanemaru, who has voiced Sonic in almost every Japanese game and animated production since 1999 — one of the longest-running video game voice roles ever."
+    },
+    {
+      "offset_seconds": 1800,
+      "fact": "The 4Kids dub of Sonic X replaced the original Japanese score with an entirely new soundtrack — a common 4Kids practice that drew significant criticism from fans who preferred the original music."
+    },
+    {
+      "offset_seconds": 2400,
+      "fact": "Sonic X was one of the first major anime series to be released on DVD while still airing on TV — Funimation later re-released the series uncut with the original Japanese audio, restoring the edited content."
+    }
+  ],
+  "Turtles, Scrubs & NBC": [
+    {
+      "offset_seconds": 30,
+      "fact": "Teenage Mutant Ninja Turtles began as a self-published black-and-white comic by Kevin Eastman and Peter Laird in 1984 — printed in a run of just 3,000 copies, it became one of the most successful independent comics ever."
+    },
+    {
+      "offset_seconds": 300,
+      "fact": "The 1987 TMNT animated series softened the original gritty comic considerably — adding humor, the iconic pizza obsession, and color-coded bandanas to distinguish the four turtles from each other."
+    },
+    {
+      "offset_seconds": 720,
+      "fact": "Scrubs (2001–2010) was filmed primarily at the North Hollywood Medical Center, a decommissioned hospital — its unusual single-camera style and fantasy sequences were groundbreaking for medical sitcoms."
+    },
+    {
+      "offset_seconds": 1200,
+      "fact": "NBC's Saturday morning lineup in the 1990s included live-action shows like Saved by the Bell and California Dreams alongside animation — a deliberate move to attract older teens as cartoon audiences declined."
+    },
+    {
+      "offset_seconds": 1800,
+      "fact": "The 'must-see TV' era of NBC in the 1990s (Friends, Seinfeld, ER) made Thursday nights the most valuable advertising slot in US television — a dominance that lasted nearly two decades."
+    },
+    {
+      "offset_seconds": 2400,
+      "fact": "Archive.org recordings of broadcast TV preserve not just the shows but the original commercials and station IDs — making them invaluable time capsules of what it felt like to watch live television in a specific era."
+    }
   ]
 }

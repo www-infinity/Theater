@@ -117,5 +117,27 @@
         "url": "https://archive.org/details/f-zero-shamn-king-and-kibry-on-fox-box"
       }
     ]
+  },
+  {
+    "title": "Sonic X – Episode 62: The Secret of the Underground Valley",
+    "year": 2004,
+    "type": "anime",
+    "sources": [
+      {
+        "label": "4Kids TV recording",
+        "url": "https://archive.org/details/sonic-x-episode-62-the-secret-of-the-underground-valley-4-kids-tv-recording"
+      }
+    ]
+  },
+  {
+    "title": "Turtles, Scrubs & NBC",
+    "year": null,
+    "type": "animation",
+    "sources": [
+      {
+        "label": "archive.org",
+        "url": "https://archive.org/details/turtlesscrubsandnbc"
+      }
+    ]
   }
 ]

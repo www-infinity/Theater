@@ -159,6 +159,9 @@ def _parse_identifier(url_or_id: str) -> str:
 def _get_archive_metadata(identifier: str) -> dict:
     """Fetch item metadata from the archive.org API."""
     url = ARCHIVE_METADATA_API.format(identifier=identifier)
+    parsed = urllib.parse.urlparse(url)
+    if parsed.scheme not in ("http", "https"):
+        sys.exit(f"❌  Refusing to fetch metadata: unexpected URL scheme '{parsed.scheme}'.")
     print(f"  📡  Fetching metadata for '{identifier}'…")
     try:
         req = urllib.request.Request(
@@ -190,6 +193,9 @@ def _pick_best_file(files: list[dict]) -> dict | None:
 
 def _download_file(url: str, dest: Path) -> None:
     """Download *url* to *dest* with a progress indicator."""
+    parsed = urllib.parse.urlparse(url)
+    if parsed.scheme not in ("http", "https"):
+        sys.exit(f"❌  Refusing to download: unexpected URL scheme '{parsed.scheme}'.")
     print(f"  ⬇️   Downloading: {url}")
     req = urllib.request.Request(url, headers={"User-Agent": "TheaterAudioRepair/1.0"})
     try:
@@ -273,6 +279,11 @@ def repair(
         local_input = Path(source)
         if not local_input.exists():
             sys.exit(f"❌  File not found: {source}")
+        # Reject paths that look like they could cause shell injection via
+        # unusual characters (ffmpeg receives a list so no shell expansion
+        # occurs, but we defend in depth against unexpected inputs).
+        if not local_input.is_file():
+            sys.exit(f"❌  Source is not a regular file: {source}")
 
     # ------------------------------------------------------------------ #
     # 2. Determine output path

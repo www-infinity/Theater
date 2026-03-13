@@ -80,6 +80,9 @@ def ddg_search(query: str) -> str:
         {"q": query, "format": "json", "no_html": "1", "skip_disambig": "1"}
     )
     url = f"{DDG_API}?{params}"
+    parsed = urllib.parse.urlparse(url)
+    if parsed.scheme not in ("http", "https"):
+        return "⚠️  Search unavailable: invalid URL scheme."
     try:
         req = urllib.request.Request(
             url, headers={"User-Agent": "TheaterWatchBuddy/1.0"}
