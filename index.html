@@ -1,0 +1,806 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Theater — Video Gallery</title>
+  <style>
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+    :root {
+      --bg:        #0e0e0e;
+      --surface:   #1a1a1a;
+      --border:    #2e2e2e;
+      --accent:    #e8a020;
+      --accent2:   #d04040;
+      --text:      #e8e0d4;
+      --muted:     #8a8070;
+      --radius:    10px;
+    }
+
+    body {
+      background: var(--bg);
+      color: var(--text);
+      font-family: system-ui, -apple-system, "Segoe UI", sans-serif;
+      min-height: 100vh;
+    }
+
+    /* ── Header ─────────────────────────────────────────────────────── */
+    header {
+      background: linear-gradient(135deg, #111 0%, #1c1408 100%);
+      border-bottom: 2px solid var(--accent);
+      padding: 2.5rem 2rem 2rem;
+      text-align: center;
+    }
+
+    header .marquee-wrap {
+      font-size: 2.6rem;
+      font-weight: 800;
+      letter-spacing: .04em;
+    }
+
+    header .marquee-wrap .theater-icon { margin-right: .3em; }
+
+    header h1 {
+      font-size: 1.05rem;
+      font-weight: 400;
+      color: var(--accent);
+      letter-spacing: .12em;
+      text-transform: uppercase;
+      margin-top: .6rem;
+    }
+
+    header p.tagline {
+      font-size: .9rem;
+      color: var(--muted);
+      margin-top: .4rem;
+    }
+
+    /* ── Show section divider ────────────────────────────────────────── */
+    .show-section { border-bottom: 1px solid var(--border); }
+    .show-section:last-of-type { border-bottom: none; }
+
+    .show-header {
+      background: var(--surface);
+      border-bottom: 1px solid var(--border);
+      padding: 1.1rem 2rem;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 1rem;
+      flex-wrap: wrap;
+    }
+
+    .show-header-left { display: flex; flex-direction: column; gap: .3rem; }
+
+    .show-title {
+      font-size: 1.15rem;
+      font-weight: 700;
+      line-height: 1.2;
+    }
+
+    .show-title .show-year {
+      font-weight: 400;
+      color: var(--muted);
+      font-size: .9rem;
+    }
+
+    .show-sub {
+      font-size: .8rem;
+      color: var(--muted);
+      display: flex;
+      align-items: center;
+      gap: .5rem;
+      flex-wrap: wrap;
+    }
+
+    .show-sub .badge {
+      background: var(--accent);
+      color: #000;
+      padding: .15em .6em;
+      border-radius: 99px;
+      font-weight: 700;
+      font-size: .75rem;
+    }
+
+    .show-header a.source-link {
+      font-size: .8rem;
+      color: var(--accent);
+      text-decoration: none;
+      opacity: .8;
+      white-space: nowrap;
+      transition: opacity .15s;
+    }
+
+    .show-header a.source-link:hover { opacity: 1; text-decoration: underline; }
+
+    /* ── Gallery grid ────────────────────────────────────────────────── */
+    .gallery {
+      display: grid;
+      grid-template-columns: repeat(auto-fill, minmax(min(100%, 520px), 1fr));
+      gap: 2rem;
+      padding: 2rem;
+    }
+
+    /* ── Episode card ────────────────────────────────────────────────── */
+    .episode-card {
+      background: var(--surface);
+      border: 1px solid var(--border);
+      border-radius: var(--radius);
+      overflow: hidden;
+      display: flex;
+      flex-direction: column;
+      transition: border-color .2s, box-shadow .2s;
+    }
+
+    .episode-card:hover {
+      border-color: var(--accent);
+      box-shadow: 0 0 0 1px var(--accent), 0 4px 24px rgba(232,160,32,.12);
+    }
+
+    /* player wrapper keeps 4:3 aspect ratio */
+    .player-wrap {
+      position: relative;
+      width: 100%;
+      padding-top: 75%; /* 4:3 */
+      background: #000;
+    }
+
+    .player-wrap iframe {
+      position: absolute;
+      inset: 0;
+      width: 100%;
+      height: 100%;
+      border: none;
+    }
+
+    .episode-info {
+      padding: 1rem 1.1rem 1.2rem;
+      display: flex;
+      flex-direction: column;
+      gap: .45rem;
+      flex: 1;
+    }
+
+    .episode-num {
+      font-size: .72rem;
+      font-weight: 700;
+      letter-spacing: .12em;
+      text-transform: uppercase;
+      color: var(--accent);
+    }
+
+    .episode-title {
+      font-size: 1.05rem;
+      font-weight: 600;
+      line-height: 1.3;
+    }
+
+    .episode-meta {
+      font-size: .78rem;
+      color: var(--muted);
+      display: flex;
+      align-items: center;
+      gap: .5rem;
+      flex-wrap: wrap;
+    }
+
+    .episode-meta .dot { opacity: .4; }
+
+    .episode-link {
+      margin-top: .5rem;
+      display: inline-flex;
+      align-items: center;
+      gap: .3em;
+      font-size: .78rem;
+      color: var(--accent);
+      text-decoration: none;
+      opacity: .75;
+      transition: opacity .15s;
+    }
+
+    .episode-link:hover { opacity: 1; text-decoration: underline; }
+
+    /* ── Footer ──────────────────────────────────────────────────────── */
+    footer {
+      text-align: center;
+      padding: 2.5rem 2rem;
+      border-top: 1px solid var(--border);
+      font-size: .8rem;
+      color: var(--muted);
+      line-height: 1.8;
+    }
+
+    footer a { color: var(--accent); text-decoration: none; }
+    footer a:hover { text-decoration: underline; }
+
+    /* ── Responsive tweaks ───────────────────────────────────────────── */
+    @media (max-width: 600px) {
+      header .marquee-wrap { font-size: 2rem; }
+      .gallery { padding: 1rem; gap: 1.25rem; }
+      .episode-info { padding: .8rem .9rem 1rem; }
+      .show-header { padding: .9rem 1rem; }
+    }
+  </style>
+</head>
+<body>
+
+<header>
+  <div class="marquee-wrap">
+    <span class="theater-icon">🎬</span>Theater
+  </div>
+  <h1>Video Gallery</h1>
+  <p class="tagline">Public-domain archive · Each episode in its own viewer · Queued in broadcast order</p>
+</header>
+
+<main id="gallery">
+
+<!-- ═══════════════════════════════════════════════════════════════════
+     SHOW: Super Mario World (1991)
+═══════════════════════════════════════════════════════════════════ -->
+<section class="show-section" id="super-mario-world">
+  <div class="show-header">
+    <div class="show-header-left">
+      <h2 class="show-title">
+        Super Mario World <span class="show-year">(1991)</span>
+      </h2>
+      <div class="show-sub">
+        <span class="badge">13 episodes</span>
+        <span>Season 1 · NBC Saturday morning · DiC Entertainment × Nintendo</span>
+      </div>
+    </div>
+    <a class="source-link"
+       href="https://archive.org/details/supermarioworldcartoon"
+       target="_blank" rel="noopener">
+      archive.org collection ↗
+    </a>
+  </div>
+
+  <div class="gallery">
+
+  <!-- Episode 01 -->
+  <article class="episode-card" id="ep01">
+    <div class="player-wrap">
+      <iframe
+        src="https://archive.org/embed/supermarioworldcartoon/Super+Mario+World+-+01+-+Fire+Sale.mp4"
+        allowfullscreen
+        title="Super Mario World – Episode 01: Fire Sale"
+      ></iframe>
+    </div>
+    <div class="episode-info">
+      <div class="episode-num">Episode 01</div>
+      <div class="episode-title">Fire Sale</div>
+      <div class="episode-meta">
+        <span>1991</span><span class="dot">·</span>
+        <span>DiC Entertainment</span><span class="dot">·</span>
+        <span>NBC</span>
+      </div>
+      <a class="episode-link"
+         href="https://archive.org/details/supermarioworldcartoon/Super+Mario+World+-+01+-+Fire+Sale.mp4"
+         target="_blank" rel="noopener">
+        View on archive.org ↗
+      </a>
+    </div>
+  </article>
+
+  <!-- Episode 02 -->
+  <article class="episode-card" id="ep02">
+    <div class="player-wrap">
+      <iframe
+        src="https://archive.org/embed/supermarioworldcartoon/Super+Mario+World+-+02+-+The+Wheel+Thing.mp4"
+        allowfullscreen
+        title="Super Mario World – Episode 02: The Wheel Thing"
+      ></iframe>
+    </div>
+    <div class="episode-info">
+      <div class="episode-num">Episode 02</div>
+      <div class="episode-title">The Wheel Thing</div>
+      <div class="episode-meta">
+        <span>1991</span><span class="dot">·</span>
+        <span>DiC Entertainment</span><span class="dot">·</span>
+        <span>NBC</span>
+      </div>
+      <a class="episode-link"
+         href="https://archive.org/details/supermarioworldcartoon/Super+Mario+World+-+02+-+The+Wheel+Thing.mp4"
+         target="_blank" rel="noopener">
+        View on archive.org ↗
+      </a>
+    </div>
+  </article>
+
+  <!-- Episode 03 -->
+  <article class="episode-card" id="ep03">
+    <div class="player-wrap">
+      <iframe
+        src="https://archive.org/embed/supermarioworldcartoon/Super+Mario+World+-+03+-+Send+in+the+Clown.mp4"
+        allowfullscreen
+        title="Super Mario World – Episode 03: Send in the Clown"
+      ></iframe>
+    </div>
+    <div class="episode-info">
+      <div class="episode-num">Episode 03</div>
+      <div class="episode-title">Send in the Clown</div>
+      <div class="episode-meta">
+        <span>1991</span><span class="dot">·</span>
+        <span>DiC Entertainment</span><span class="dot">·</span>
+        <span>NBC</span>
+      </div>
+      <a class="episode-link"
+         href="https://archive.org/details/supermarioworldcartoon/Super+Mario+World+-+03+-+Send+in+the+Clown.mp4"
+         target="_blank" rel="noopener">
+        View on archive.org ↗
+      </a>
+    </div>
+  </article>
+
+  <!-- Episode 04 -->
+  <article class="episode-card" id="ep04">
+    <div class="player-wrap">
+      <iframe
+        src="https://archive.org/embed/supermarioworldcartoon/Super+Mario+World+-+04+-+Ghosts+R+Us.mp4"
+        allowfullscreen
+        title="Super Mario World – Episode 04: Ghosts 'R' Us"
+      ></iframe>
+    </div>
+    <div class="episode-info">
+      <div class="episode-num">Episode 04</div>
+      <div class="episode-title">Ghosts 'R' Us</div>
+      <div class="episode-meta">
+        <span>1991</span><span class="dot">·</span>
+        <span>DiC Entertainment</span><span class="dot">·</span>
+        <span>NBC</span>
+      </div>
+      <a class="episode-link"
+         href="https://archive.org/details/supermarioworldcartoon/Super+Mario+World+-+04+-+Ghosts+R+Us.mp4"
+         target="_blank" rel="noopener">
+        View on archive.org ↗
+      </a>
+    </div>
+  </article>
+
+  <!-- Episode 05 -->
+  <article class="episode-card" id="ep05">
+    <div class="player-wrap">
+      <iframe
+        src="https://archive.org/embed/supermarioworldcartoon/Super+Mario+World+-+05+-+The+Night+Before+Cave+Christmas.mp4"
+        allowfullscreen
+        title="Super Mario World – Episode 05: The Night Before Cave Christmas"
+      ></iframe>
+    </div>
+    <div class="episode-info">
+      <div class="episode-num">Episode 05</div>
+      <div class="episode-title">The Night Before Cave Christmas</div>
+      <div class="episode-meta">
+        <span>1991</span><span class="dot">·</span>
+        <span>DiC Entertainment</span><span class="dot">·</span>
+        <span>NBC</span>
+      </div>
+      <a class="episode-link"
+         href="https://archive.org/details/supermarioworldcartoon/Super+Mario+World+-+05+-+The+Night+Before+Cave+Christmas.mp4"
+         target="_blank" rel="noopener">
+        View on archive.org ↗
+      </a>
+    </div>
+  </article>
+
+  <!-- Episode 06 -->
+  <article class="episode-card" id="ep06">
+    <div class="player-wrap">
+      <iframe
+        src="https://archive.org/embed/supermarioworldcartoon/Super+Mario+World+-+06+-+King+Scoopa+Koopa.mp4"
+        allowfullscreen
+        title="Super Mario World – Episode 06: King Scoopa Koopa"
+      ></iframe>
+    </div>
+    <div class="episode-info">
+      <div class="episode-num">Episode 06</div>
+      <div class="episode-title">King Scoopa Koopa</div>
+      <div class="episode-meta">
+        <span>1991</span><span class="dot">·</span>
+        <span>DiC Entertainment</span><span class="dot">·</span>
+        <span>NBC</span>
+      </div>
+      <a class="episode-link"
+         href="https://archive.org/details/supermarioworldcartoon/Super+Mario+World+-+06+-+King+Scoopa+Koopa.mp4"
+         target="_blank" rel="noopener">
+        View on archive.org ↗
+      </a>
+    </div>
+  </article>
+
+  <!-- Episode 07 -->
+  <article class="episode-card" id="ep07">
+    <div class="player-wrap">
+      <iframe
+        src="https://archive.org/embed/supermarioworldcartoon/Super+Mario+World+-+07+-+Born+To+Ride.mp4"
+        allowfullscreen
+        title="Super Mario World – Episode 07: Born to Ride"
+      ></iframe>
+    </div>
+    <div class="episode-info">
+      <div class="episode-num">Episode 07</div>
+      <div class="episode-title">Born to Ride</div>
+      <div class="episode-meta">
+        <span>1991</span><span class="dot">·</span>
+        <span>DiC Entertainment</span><span class="dot">·</span>
+        <span>NBC</span>
+      </div>
+      <a class="episode-link"
+         href="https://archive.org/details/supermarioworldcartoon/Super+Mario+World+-+07+-+Born+To+Ride.mp4"
+         target="_blank" rel="noopener">
+        View on archive.org ↗
+      </a>
+    </div>
+  </article>
+
+  <!-- Episode 08 -->
+  <article class="episode-card" id="ep08">
+    <div class="player-wrap">
+      <iframe
+        src="https://archive.org/embed/supermarioworldcartoon/Super+Mario+World+-+08+-+Party+Line.mp4"
+        allowfullscreen
+        title="Super Mario World – Episode 08: Party Line"
+      ></iframe>
+    </div>
+    <div class="episode-info">
+      <div class="episode-num">Episode 08</div>
+      <div class="episode-title">Party Line</div>
+      <div class="episode-meta">
+        <span>1991</span><span class="dot">·</span>
+        <span>DiC Entertainment</span><span class="dot">·</span>
+        <span>NBC</span>
+      </div>
+      <a class="episode-link"
+         href="https://archive.org/details/supermarioworldcartoon/Super+Mario+World+-+08+-+Party+Line.mp4"
+         target="_blank" rel="noopener">
+        View on archive.org ↗
+      </a>
+    </div>
+  </article>
+
+  <!-- Episode 09 -->
+  <article class="episode-card" id="ep09">
+    <div class="player-wrap">
+      <iframe
+        src="https://archive.org/embed/supermarioworldcartoon/Super+Mario+World+-+09+-+Gopher+Bash.mp4"
+        allowfullscreen
+        title="Super Mario World – Episode 09: Gopher Bash"
+      ></iframe>
+    </div>
+    <div class="episode-info">
+      <div class="episode-num">Episode 09</div>
+      <div class="episode-title">Gopher Bash</div>
+      <div class="episode-meta">
+        <span>1991</span><span class="dot">·</span>
+        <span>DiC Entertainment</span><span class="dot">·</span>
+        <span>NBC</span>
+      </div>
+      <a class="episode-link"
+         href="https://archive.org/details/supermarioworldcartoon/Super+Mario+World+-+09+-+Gopher+Bash.mp4"
+         target="_blank" rel="noopener">
+        View on archive.org ↗
+      </a>
+    </div>
+  </article>
+
+  <!-- Episode 10 -->
+  <article class="episode-card" id="ep10">
+    <div class="player-wrap">
+      <iframe
+        src="https://archive.org/embed/supermarioworldcartoon/Super+Mario+World+-+10+-+Rock+TV.mp4"
+        allowfullscreen
+        title="Super Mario World – Episode 10: Rock TV"
+      ></iframe>
+    </div>
+    <div class="episode-info">
+      <div class="episode-num">Episode 10</div>
+      <div class="episode-title">Rock TV</div>
+      <div class="episode-meta">
+        <span>1991</span><span class="dot">·</span>
+        <span>DiC Entertainment</span><span class="dot">·</span>
+        <span>NBC</span>
+      </div>
+      <a class="episode-link"
+         href="https://archive.org/details/supermarioworldcartoon/Super+Mario+World+-+10+-+Rock+TV.mp4"
+         target="_blank" rel="noopener">
+        View on archive.org ↗
+      </a>
+    </div>
+  </article>
+
+  <!-- Episode 11 -->
+  <article class="episode-card" id="ep11">
+    <div class="player-wrap">
+      <iframe
+        src="https://archive.org/embed/supermarioworldcartoon/Super+Mario+World+-+11+-+The+Yoshi+Shuffle.mp4"
+        allowfullscreen
+        title="Super Mario World – Episode 11: The Yoshi Shuffle"
+      ></iframe>
+    </div>
+    <div class="episode-info">
+      <div class="episode-num">Episode 11</div>
+      <div class="episode-title">The Yoshi Shuffle</div>
+      <div class="episode-meta">
+        <span>1991</span><span class="dot">·</span>
+        <span>DiC Entertainment</span><span class="dot">·</span>
+        <span>NBC</span>
+      </div>
+      <a class="episode-link"
+         href="https://archive.org/details/supermarioworldcartoon/Super+Mario+World+-+11+-+The+Yoshi+Shuffle.mp4"
+         target="_blank" rel="noopener">
+        View on archive.org ↗
+      </a>
+    </div>
+  </article>
+
+  <!-- Episode 12 -->
+  <article class="episode-card" id="ep12">
+    <div class="player-wrap">
+      <iframe
+        src="https://archive.org/embed/supermarioworldcartoon/Super+Mario+World+-+12+-+A+Little+Learning.mp4"
+        allowfullscreen
+        title="Super Mario World – Episode 12: A Little Learning"
+      ></iframe>
+    </div>
+    <div class="episode-info">
+      <div class="episode-num">Episode 12</div>
+      <div class="episode-title">A Little Learning</div>
+      <div class="episode-meta">
+        <span>1991</span><span class="dot">·</span>
+        <span>DiC Entertainment</span><span class="dot">·</span>
+        <span>NBC</span>
+      </div>
+      <a class="episode-link"
+         href="https://archive.org/details/supermarioworldcartoon/Super+Mario+World+-+12+-+A+Little+Learning.mp4"
+         target="_blank" rel="noopener">
+        View on archive.org ↗
+      </a>
+    </div>
+  </article>
+
+  <!-- Episode 13 -->
+  <article class="episode-card" id="ep13">
+    <div class="player-wrap">
+      <iframe
+        src="https://archive.org/embed/supermarioworldcartoon/Super+Mario+World+-+13+-+Mama+Luigi.mp4"
+        allowfullscreen
+        title="Super Mario World – Episode 13: Mama Luigi"
+      ></iframe>
+    </div>
+    <div class="episode-info">
+      <div class="episode-num">Episode 13 — Series Finale</div>
+      <div class="episode-title">Mama Luigi</div>
+      <div class="episode-meta">
+        <span>1991</span><span class="dot">·</span>
+        <span>DiC Entertainment</span><span class="dot">·</span>
+        <span>NBC</span><span class="dot">·</span>
+        <span>Series finale</span>
+      </div>
+      <a class="episode-link"
+         href="https://archive.org/details/supermarioworldcartoon/Super+Mario+World+-+13+-+Mama+Luigi.mp4"
+         target="_blank" rel="noopener">
+        View on archive.org ↗
+      </a>
+    </div>
+  </article>
+
+  </div><!-- /.gallery (SMW) -->
+</section><!-- /#super-mario-world -->
+
+<!-- ═══════════════════════════════════════════════════════════════════
+     SHOW: Captain N: The Game Master — Season 3 (1991)
+═══════════════════════════════════════════════════════════════════ -->
+<section class="show-section" id="captain-n-s3">
+  <div class="show-header">
+    <div class="show-header-left">
+      <h2 class="show-title">
+        Captain N: The Game Master <span class="show-year">(Season 3, 1991)</span>
+      </h2>
+      <div class="show-sub">
+        <span class="badge">7 episodes</span>
+        <span>Season 3 · NBC Saturday morning · DiC Entertainment</span>
+      </div>
+    </div>
+    <a class="source-link"
+       href="https://archive.org/details/captain-n-the-game-master-season-3-avi"
+       target="_blank" rel="noopener">
+      archive.org collection ↗
+    </a>
+  </div>
+
+  <div class="gallery">
+
+    <!-- S03E01 -->
+    <article class="episode-card" id="cn-s03e01">
+      <div class="player-wrap">
+        <iframe
+          src="https://archive.org/embed/captain-n-the-game-master-season-3-avi/Captain+N+The+Game+Master+-+S03E01+-+Misadventures+in+Robin+Hood+Woods+.avi"
+          allowfullscreen
+          title="Captain N: The Game Master – S03E01: Misadventures in Robin Hood Woods"
+        ></iframe>
+      </div>
+      <div class="episode-info">
+        <div class="episode-num">Season 3 · Episode 01</div>
+        <div class="episode-title">Misadventures in Robin Hood Woods</div>
+        <div class="episode-meta">
+          <span>1991</span><span class="dot">·</span>
+          <span>DiC Entertainment</span><span class="dot">·</span>
+          <span>NBC</span>
+        </div>
+        <a class="episode-link"
+           href="https://archive.org/details/captain-n-the-game-master-season-3-avi/Captain+N+The+Game+Master+-+S03E01+-+Misadventures+in+Robin+Hood+Woods+.avi"
+           target="_blank" rel="noopener">
+          View on archive.org ↗
+        </a>
+      </div>
+    </article>
+
+    <!-- S03E02 -->
+    <article class="episode-card" id="cn-s03e02">
+      <div class="player-wrap">
+        <iframe
+          src="https://archive.org/embed/captain-n-the-game-master-season-3-avi/Captain+N+The+Game+Master+-+S03E02+-+Pursuit+of+the+Magic+Hoop+.avi"
+          allowfullscreen
+          title="Captain N: The Game Master – S03E02: Pursuit of the Magic Hoop"
+        ></iframe>
+      </div>
+      <div class="episode-info">
+        <div class="episode-num">Season 3 · Episode 02</div>
+        <div class="episode-title">Pursuit of the Magic Hoop</div>
+        <div class="episode-meta">
+          <span>1991</span><span class="dot">·</span>
+          <span>DiC Entertainment</span><span class="dot">·</span>
+          <span>NBC</span>
+        </div>
+        <a class="episode-link"
+           href="https://archive.org/details/captain-n-the-game-master-season-3-avi/Captain+N+The+Game+Master+-+S03E02+-+Pursuit+of+the+Magic+Hoop+.avi"
+           target="_blank" rel="noopener">
+          View on archive.org ↗
+        </a>
+      </div>
+    </article>
+
+    <!-- S03E03 -->
+    <article class="episode-card" id="cn-s03e03">
+      <div class="player-wrap">
+        <iframe
+          src="https://archive.org/embed/captain-n-the-game-master-season-3-avi/Captain+N+The+Game+Master+-+S03E03+-+Return+to+Castlevania+.avi"
+          allowfullscreen
+          title="Captain N: The Game Master – S03E03: Return to Castlevania"
+        ></iframe>
+      </div>
+      <div class="episode-info">
+        <div class="episode-num">Season 3 · Episode 03</div>
+        <div class="episode-title">Return to Castlevania</div>
+        <div class="episode-meta">
+          <span>1991</span><span class="dot">·</span>
+          <span>DiC Entertainment</span><span class="dot">·</span>
+          <span>NBC</span>
+        </div>
+        <a class="episode-link"
+           href="https://archive.org/details/captain-n-the-game-master-season-3-avi/Captain+N+The+Game+Master+-+S03E03+-+Return+to+Castlevania+.avi"
+           target="_blank" rel="noopener">
+          View on archive.org ↗
+        </a>
+      </div>
+    </article>
+
+    <!-- S03E04 -->
+    <article class="episode-card" id="cn-s03e04">
+      <div class="player-wrap">
+        <iframe
+          src="https://archive.org/embed/captain-n-the-game-master-season-3-avi/Captain+N+The+Game+Master+-+S03E04+-+Totally+Tetrisized+.avi"
+          allowfullscreen
+          title="Captain N: The Game Master – S03E04: Totally Tetrisized"
+        ></iframe>
+      </div>
+      <div class="episode-info">
+        <div class="episode-num">Season 3 · Episode 04</div>
+        <div class="episode-title">Totally Tetrisized</div>
+        <div class="episode-meta">
+          <span>1991</span><span class="dot">·</span>
+          <span>DiC Entertainment</span><span class="dot">·</span>
+          <span>NBC</span>
+        </div>
+        <a class="episode-link"
+           href="https://archive.org/details/captain-n-the-game-master-season-3-avi/Captain+N+The+Game+Master+-+S03E04+-+Totally+Tetrisized+.avi"
+           target="_blank" rel="noopener">
+          View on archive.org ↗
+        </a>
+      </div>
+    </article>
+
+    <!-- S03E05 -->
+    <article class="episode-card" id="cn-s03e05">
+      <div class="player-wrap">
+        <iframe
+          src="https://archive.org/embed/captain-n-the-game-master-season-3-avi/Captain+N+The+Game+Master+-+S03E05+-+Battle+of+the+Baseball+Know-It-Alls+.avi"
+          allowfullscreen
+          title="Captain N: The Game Master – S03E05: Battle of the Baseball Know-It-Alls"
+        ></iframe>
+      </div>
+      <div class="episode-info">
+        <div class="episode-num">Season 3 · Episode 05</div>
+        <div class="episode-title">Battle of the Baseball Know-It-Alls</div>
+        <div class="episode-meta">
+          <span>1991</span><span class="dot">·</span>
+          <span>DiC Entertainment</span><span class="dot">·</span>
+          <span>NBC</span>
+        </div>
+        <a class="episode-link"
+           href="https://archive.org/details/captain-n-the-game-master-season-3-avi/Captain+N+The+Game+Master+-+S03E05+-+Battle+of+the+Baseball+Know-It-Alls+.avi"
+           target="_blank" rel="noopener">
+          View on archive.org ↗
+        </a>
+      </div>
+    </article>
+
+    <!-- S03E06 -->
+    <article class="episode-card" id="cn-s03e06">
+      <div class="player-wrap">
+        <iframe
+          src="https://archive.org/embed/captain-n-the-game-master-season-3-avi/Captain+N+The+Game+Master+-+S03E06+-+A+Tale+of+Two+Dogs+.avi"
+          allowfullscreen
+          title="Captain N: The Game Master – S03E06: A Tale of Two Dogs"
+        ></iframe>
+      </div>
+      <div class="episode-info">
+        <div class="episode-num">Season 3 · Episode 06</div>
+        <div class="episode-title">A Tale of Two Dogs</div>
+        <div class="episode-meta">
+          <span>1991</span><span class="dot">·</span>
+          <span>DiC Entertainment</span><span class="dot">·</span>
+          <span>NBC</span>
+        </div>
+        <a class="episode-link"
+           href="https://archive.org/details/captain-n-the-game-master-season-3-avi/Captain+N+The+Game+Master+-+S03E06+-+A+Tale+of+Two+Dogs+.avi"
+           target="_blank" rel="noopener">
+          View on archive.org ↗
+        </a>
+      </div>
+    </article>
+
+    <!-- S03E07 -->
+    <article class="episode-card" id="cn-s03e07">
+      <div class="player-wrap">
+        <iframe
+          src="https://archive.org/embed/captain-n-the-game-master-season-3-avi/Captain+N+The+Game+Master+-+S03E07+-+The+Fractured+Fantasy+of+Captain+N+.avi"
+          allowfullscreen
+          title="Captain N: The Game Master – S03E07: The Fractured Fantasy of Captain N"
+        ></iframe>
+      </div>
+      <div class="episode-info">
+        <div class="episode-num">Season 3 · Episode 07 — Season Finale</div>
+        <div class="episode-title">The Fractured Fantasy of Captain N</div>
+        <div class="episode-meta">
+          <span>1991</span><span class="dot">·</span>
+          <span>DiC Entertainment</span><span class="dot">·</span>
+          <span>NBC</span><span class="dot">·</span>
+          <span>Season finale</span>
+        </div>
+        <a class="episode-link"
+           href="https://archive.org/details/captain-n-the-game-master-season-3-avi/Captain+N+The+Game+Master+-+S03E07+-+The+Fractured+Fantasy+of+Captain+N+.avi"
+           target="_blank" rel="noopener">
+          View on archive.org ↗
+        </a>
+      </div>
+    </article>
+
+  </div><!-- /.gallery (Captain N S3) -->
+</section><!-- /#captain-n-s3 -->
+
+</main>
+
+<footer>
+  <p>
+    🎬 <strong>Theater</strong> · Public-domain archive curation project
+  </p>
+  <p style="margin-top:.5rem">
+    <a href="https://archive.org/details/supermarioworldcartoon" target="_blank" rel="noopener">Super Mario World (1991)</a>
+    &nbsp;·&nbsp;
+    <a href="https://archive.org/details/captain-n-the-game-master-season-3-avi" target="_blank" rel="noopener">Captain N: The Game Master S3 (1991)</a>
+  </p>
+</footer>
+
+</body>
+</html>
