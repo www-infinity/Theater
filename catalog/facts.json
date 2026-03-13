@@ -328,5 +328,57 @@
       "offset_seconds": 2400,
       "fact": "Archive.org recordings of broadcast TV preserve not just the shows but the original commercials and station IDs — making them invaluable time capsules of what it felt like to watch live television in a specific era."
     }
+  ],
+  "Toon Disney Block": [
+    {
+      "offset_seconds": 30,
+      "fact": "Toon Disney was a US cable channel launched by The Walt Disney Company on April 18, 1998 — it was initially a 24-hour home for classic Disney animated series and films, replacing the older Disney Afternoon block."
+    },
+    {
+      "offset_seconds": 360,
+      "fact": "Toon Disney's late-night block 'Jetix' (launched 2004) rebranded the action-adventure programming previously known as 'Fox Kids' — it aired shows like Power Rangers, Rescue Heroes, and Yin Yang Yo!"
+    },
+    {
+      "offset_seconds": 720,
+      "fact": "The Disney Afternoon — the syndicated after-school block that preceded Toon Disney — ran from 1990 to 1997 and produced beloved shows like DuckTales, Chip 'n Dale Rescue Rangers, TaleSpin, and Darkwing Duck."
+    },
+    {
+      "offset_seconds": 1200,
+      "fact": "Toon Disney was shut down on September 2, 2009 and replaced by Disney XD — a rebrand targeting older boys with more live-action and sports content alongside animation."
+    },
+    {
+      "offset_seconds": 1800,
+      "fact": "Many Toon Disney programs originated from Disney's TV animation golden age of the 1990s, when the studio invested heavily in Saturday morning and afternoon animation to compete with Nickelodeon and Cartoon Network."
+    },
+    {
+      "offset_seconds": 2700,
+      "fact": "VHS recordings of cable blocks like Toon Disney are some of the few surviving records of the original broadcast experience — complete with interstitials, promos, and channel bumpers that were never officially released."
+    }
+  ],
+  "VHS Tape 1989 – Channel 3 WKYC: Quantum Leap & News": [
+    {
+      "offset_seconds": 30,
+      "fact": "Quantum Leap premiered on NBC on March 26, 1989 — the series starred Scott Bakula as Dr. Sam Beckett, a physicist who leaps into different people's bodies throughout history to 'put right what once went wrong.'"
+    },
+    {
+      "offset_seconds": 300,
+      "fact": "WKYC is the NBC affiliate for Cleveland, Ohio, serving the market since 1948 — Channel 3 has been a fixture of Northeast Ohio television for over 75 years."
+    },
+    {
+      "offset_seconds": 720,
+      "fact": "Quantum Leap's unique premise — a different setting and cast each episode — allowed it to tackle a wide range of historical events and social issues, from the Civil Rights Movement to Vietnam."
+    },
+    {
+      "offset_seconds": 1200,
+      "fact": "Local TV news in 1989 was still dominated by the 'happy talk' format pioneered in the 1970s — anchors were cast partly for on-air chemistry, and weather and sports segments were as important as hard news."
+    },
+    {
+      "offset_seconds": 1800,
+      "fact": "1989 was a seismic year for news: the Berlin Wall fell, Tiananmen Square protests occurred, and the Exxon Valdez oil spill dominated headlines — local affiliates like WKYC anchored national stories for their communities."
+    },
+    {
+      "offset_seconds": 2400,
+      "fact": "Home VHS recording — 'time-shifting' — was declared legal by the US Supreme Court in the landmark 1984 Sony v. Universal City Studios ('Betamax') case, opening the door for millions of Americans to tape their favorite shows."
+    }
   ]
 }

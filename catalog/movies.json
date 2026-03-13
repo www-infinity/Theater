@@ -139,5 +139,27 @@
         "url": "https://archive.org/details/turtlesscrubsandnbc"
       }
     ]
+  },
+  {
+    "title": "Toon Disney Block",
+    "year": null,
+    "type": "animation",
+    "sources": [
+      {
+        "label": "archive.org",
+        "url": "https://archive.org/details/toon-disney-block"
+      }
+    ]
+  },
+  {
+    "title": "VHS Tape 1989 – Channel 3 WKYC: Quantum Leap & News",
+    "year": 1989,
+    "type": "vhs-recording",
+    "sources": [
+      {
+        "label": "archive.org",
+        "url": "https://archive.org/details/vhs-tape-1989-channel-3-wkyc-several-quantum-leap-episodes-channel-3-news"
+      }
+    ]
   }
 ]
