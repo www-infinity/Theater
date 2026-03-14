@@ -3,57 +3,234 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Omni Theater — Video Gallery</title>
+  <title>∞ Omni Theater — Infinite Entertainment</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@700;900&family=Rajdhani:wght@600;700&display=swap" rel="stylesheet">
   <style>
     *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
 
     :root {
-      --bg:        #04101f;
-      --surface:   #0b1e36;
-      --border:    #163356;
-      --accent:    #f0b429;
-      --accent2:   #3b8eff;
-      --text:      #d8e8f8;
-      --muted:     #6a90b8;
-      --radius:    10px;
+      --bg:           #04101f;
+      --surface:      #0b1e36;
+      --border:       #163356;
+      --accent:       #f0b429;
+      --accent2:      #3b8eff;
+      --text:         #d8e8f8;
+      --muted:        #6a90b8;
+      --radius:       10px;
+      --font-display: 'Orbitron', system-ui, sans-serif;
+      --font-body:    'Rajdhani', system-ui, sans-serif;
+      --gold-glow:    0 0 18px rgba(240,180,41,.55), 0 0 36px rgba(240,180,41,.2);
+      --blue-glow:    0 0 18px rgba(59,142,255,.5),  0 0 36px rgba(59,142,255,.15);
     }
 
     body {
       background: var(--bg);
       color: var(--text);
-      font-family: system-ui, -apple-system, "Segoe UI", sans-serif;
+      font-family: var(--font-body), -apple-system, "Segoe UI", sans-serif;
       min-height: 100vh;
     }
 
     /* ── Header ─────────────────────────────────────────────────────── */
     header {
-      background: linear-gradient(135deg, #061428 0%, #0d2a55 60%, #0a1e40 100%);
-      border-bottom: 2px solid var(--accent);
-      padding: 2.5rem 2rem 2rem;
-      text-align: center;
+      background: linear-gradient(160deg, #020c1a 0%, #061428 30%, #0d2a55 65%, #06142c 100%);
+      border-bottom: 3px solid var(--accent);
+      padding: 0;
+      position: relative;
+      overflow: hidden;
     }
 
-    header .marquee-wrap {
-      font-size: 2.6rem;
-      font-weight: 800;
-      letter-spacing: .04em;
+    header::before {
+      content: '';
+      position: absolute;
+      inset: 0;
+      background:
+        radial-gradient(ellipse 60% 40% at 50% -10%, rgba(240,180,41,.18) 0%, transparent 70%),
+        radial-gradient(ellipse 30% 50% at 10% 50%,  rgba(59,142,255,.08) 0%, transparent 70%);
+      pointer-events: none;
     }
 
-    header .marquee-wrap .theater-icon { margin-right: .3em; }
+    .header-inner {
+      position: relative;
+      z-index: 1;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      padding: 1.5rem 2rem 1.2rem;
+      gap: 1rem;
+    }
 
-    header h1 {
-      font-size: 1.05rem;
-      font-weight: 400;
-      color: var(--accent);
-      letter-spacing: .12em;
+    .header-brand {
+      display: flex;
+      flex-direction: column;
+      align-items: flex-start;
+      gap: .15rem;
+    }
+
+    header .site-logo {
+      font-family: var(--font-display);
+      font-size: clamp(1.9rem, 5vw, 3.2rem);
+      font-weight: 900;
+      letter-spacing: .05em;
+      line-height: 1;
+      background: linear-gradient(90deg, #f0b429 0%, #ffe787 40%, #f0b429 70%, #fff5cc 100%);
+      -webkit-background-clip: text;
+      background-clip: text;
+      -webkit-text-fill-color: transparent;
+      text-shadow: none;
+      filter: drop-shadow(0 0 12px rgba(240,180,41,.6));
+    }
+
+    header .site-logo .infinity-mark {
+      font-size: 1.15em;
+      display: inline-block;
+      margin-right: .12em;
+    }
+
+    header .site-sub {
+      font-family: var(--font-display);
+      font-size: clamp(.55rem, 1.5vw, .75rem);
+      font-weight: 700;
+      letter-spacing: .22em;
       text-transform: uppercase;
-      margin-top: .6rem;
+      color: var(--accent2);
+      opacity: .9;
     }
 
     header p.tagline {
-      font-size: .9rem;
+      font-size: .88rem;
       color: var(--muted);
-      margin-top: .4rem;
+      margin-top: .15rem;
+      letter-spacing: .02em;
+    }
+
+    /* ── Hamburger / nav menu ────────────────────────────────────────── */
+    .hamburger-btn {
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      gap: 5px;
+      width: 42px;
+      height: 42px;
+      background: rgba(240,180,41,.08);
+      border: 1.5px solid var(--accent);
+      border-radius: 8px;
+      cursor: pointer;
+      padding: 9px 8px;
+      flex-shrink: 0;
+      transition: background .2s, box-shadow .2s;
+      z-index: 200;
+    }
+    .hamburger-btn:hover { background: rgba(240,180,41,.18); box-shadow: var(--gold-glow); }
+    .hamburger-btn span {
+      display: block;
+      height: 2.5px;
+      background: var(--accent);
+      border-radius: 2px;
+      transition: transform .3s, opacity .3s;
+    }
+    .hamburger-btn.open span:nth-child(1) { transform: translateY(7.5px) rotate(45deg); }
+    .hamburger-btn.open span:nth-child(2) { opacity: 0; }
+    .hamburger-btn.open span:nth-child(3) { transform: translateY(-7.5px) rotate(-45deg); }
+
+    .site-nav-overlay {
+      display: none;
+      position: fixed;
+      inset: 0;
+      background: rgba(2,10,24,.6);
+      z-index: 150;
+      backdrop-filter: blur(3px);
+    }
+    .site-nav-overlay.open { display: block; }
+
+    .site-nav {
+      position: fixed;
+      top: 0;
+      right: -320px;
+      width: 300px;
+      height: 100vh;
+      background: linear-gradient(180deg, #070f1c 0%, #0b1e36 100%);
+      border-left: 2px solid var(--accent);
+      z-index: 160;
+      transition: right .3s ease;
+      padding: 1.5rem 0 2rem;
+      overflow-y: auto;
+      box-shadow: -8px 0 40px rgba(0,0,0,.6);
+    }
+    .site-nav.open { right: 0; }
+
+    .nav-close-btn {
+      position: absolute;
+      top: 1rem;
+      right: 1rem;
+      background: none;
+      border: none;
+      color: var(--muted);
+      font-size: 1.4rem;
+      cursor: pointer;
+      line-height: 1;
+      padding: .3rem;
+    }
+    .nav-close-btn:hover { color: var(--accent); }
+
+    .nav-logo {
+      font-family: var(--font-display);
+      font-size: 1.1rem;
+      font-weight: 900;
+      color: var(--accent);
+      padding: 0 1.4rem 1.2rem;
+      border-bottom: 1px solid var(--border);
+      margin-bottom: .6rem;
+      letter-spacing: .08em;
+    }
+
+    .nav-section-title {
+      font-size: .65rem;
+      font-weight: 700;
+      letter-spacing: .16em;
+      text-transform: uppercase;
+      color: var(--muted);
+      padding: .9rem 1.4rem .3rem;
+    }
+
+    .site-nav a, .site-nav button.nav-tab-link {
+      display: flex;
+      align-items: center;
+      gap: .7rem;
+      padding: .65rem 1.4rem;
+      color: var(--text);
+      text-decoration: none;
+      font-size: .95rem;
+      font-weight: 600;
+      border: none;
+      background: none;
+      width: 100%;
+      text-align: left;
+      cursor: pointer;
+      transition: background .15s, color .15s, padding-left .15s;
+      border-radius: 0;
+    }
+    .site-nav a:hover, .site-nav button.nav-tab-link:hover {
+      background: rgba(240,180,41,.1);
+      color: var(--accent);
+      padding-left: 1.8rem;
+    }
+    .site-nav a .nav-icon, .site-nav button.nav-tab-link .nav-icon {
+      font-size: 1.1em;
+      width: 1.4em;
+      text-align: center;
+      flex-shrink: 0;
+    }
+    .site-nav a.nav-highlight {
+      color: var(--accent);
+      background: rgba(240,180,41,.06);
+      border-left: 3px solid var(--accent);
+    }
+    .site-nav a.nav-external::after { content: ' ↗'; opacity: .5; font-size: .8em; }
+
+    @media (max-width: 600px) {
+      .header-inner { padding: 1rem 1rem 1rem; }
     }
 
     /* ── Gamification legend ─────────────────────────────────────────── */
@@ -107,6 +284,7 @@
       display: flex;
       align-items: center;
       gap: .4em;
+      text-decoration: none;
     }
 
     .tab-btn:hover {
@@ -118,6 +296,21 @@
       color: var(--accent);
       border-bottom-color: var(--accent);
       background: rgba(240,180,41,.06);
+    }
+
+    .tab-btn-spin { color: var(--accent); }
+    .tab-btn-spin-direct {
+      color: #e74c3c;
+      border-bottom: 3px solid rgba(231,76,60,.5);
+      background: rgba(231,76,60,.05);
+      font-family: var(--font-display);
+      font-size: .8rem;
+      letter-spacing: .04em;
+    }
+    .tab-btn-spin-direct:hover {
+      background: rgba(231,76,60,.12);
+      color: #ff6b57;
+      border-bottom-color: #e74c3c;
     }
 
     /* ── Show section ────────────────────────────────────────────────── */
@@ -306,7 +499,6 @@
 
     /* ── Responsive tweaks ───────────────────────────────────────────── */
     @media (max-width: 600px) {
-      header .marquee-wrap { font-size: 2rem; }
       .gallery { padding: 1rem; gap: 1.25rem; }
       .episode-info { padding: .8rem .9rem 1rem; }
       .show-header { padding: .9rem 1rem; }
@@ -323,16 +515,66 @@
     .wheel-header {
       text-align: center;
       margin-bottom: 2rem;
+      background: linear-gradient(135deg, rgba(240,180,41,.06) 0%, transparent 80%);
+      border: 1px solid rgba(240,180,41,.2);
+      border-radius: 12px;
+      padding: 1.4rem 1.6rem 1.2rem;
+    }
+    .wheel-header-top {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 1rem;
+      flex-wrap: wrap;
     }
     .wheel-header h2 {
-      font-size: 2rem;
+      font-family: var(--font-display);
+      font-size: clamp(1.5rem, 4vw, 2.4rem);
+      font-weight: 900;
       color: var(--accent);
+      text-shadow: var(--gold-glow);
+      letter-spacing: .04em;
     }
     .wheel-tagline {
       color: var(--muted);
       font-size: .9rem;
-      margin-top: .4rem;
+      margin-top: .5rem;
     }
+
+    /* ── Live Watcher badge ─────────────────────────────────────────── */
+    .watcher-badge {
+      display: inline-flex;
+      align-items: center;
+      gap: .4em;
+      background: rgba(231,76,60,.12);
+      border: 1px solid rgba(231,76,60,.35);
+      border-radius: 99px;
+      padding: .28em .75em;
+      font-size: .82rem;
+      font-weight: 700;
+      color: #ff6b57;
+      white-space: nowrap;
+    }
+    .watcher-dot {
+      display: inline-block;
+      width: 8px;
+      height: 8px;
+      background: #e74c3c;
+      border-radius: 50%;
+      animation: pulse-red 1.4s ease-in-out infinite;
+    }
+    @keyframes pulse-red {
+      0%, 100% { box-shadow: 0 0 0 0 rgba(231,76,60,.6); }
+      50%       { box-shadow: 0 0 0 5px rgba(231,76,60,0); }
+    }
+    .watcher-link {
+      color: var(--muted);
+      text-decoration: none;
+      font-size: .85em;
+      transition: color .15s;
+    }
+    .watcher-link:hover { color: var(--accent); }
+
     .wheel-arena {
       display: flex;
       flex-direction: column;
@@ -348,7 +590,7 @@
       display: block;
       max-width: 100%;
       border-radius: 50%;
-      box-shadow: 0 0 32px rgba(240,180,41,0.25);
+      box-shadow: 0 0 40px rgba(240,180,41,.3), 0 0 80px rgba(240,180,41,.1);
     }
     .wheel-pointer {
       position: absolute;
@@ -363,25 +605,34 @@
       line-height: 1;
     }
     .spin-btn {
-      background: linear-gradient(135deg, #e74c3c, #c0392b);
+      font-family: var(--font-display);
+      background: linear-gradient(135deg, #e74c3c 0%, #ff6b35 50%, #c0392b 100%);
       color: #fff;
       border: none;
       border-radius: 50px;
-      padding: .9rem 2.8rem;
-      font-size: 1.3rem;
-      font-weight: 800;
+      padding: 1rem 3.2rem;
+      font-size: clamp(1.1rem, 2.5vw, 1.5rem);
+      font-weight: 900;
       cursor: pointer;
-      letter-spacing: .05em;
-      box-shadow: 0 4px 16px rgba(231,76,60,0.4);
+      letter-spacing: .08em;
+      box-shadow: 0 4px 20px rgba(231,76,60,.5), 0 0 0 0 rgba(231,76,60,.3);
       transition: transform .15s, box-shadow .15s;
+      text-transform: uppercase;
+      animation: spin-btn-pulse 2.5s ease-in-out infinite;
+    }
+    @keyframes spin-btn-pulse {
+      0%, 100% { box-shadow: 0 4px 20px rgba(231,76,60,.5), 0 0 0 0 rgba(231,76,60,.3); }
+      50%       { box-shadow: 0 4px 30px rgba(231,76,60,.7), 0 0 0 10px rgba(231,76,60,0); }
     }
     .spin-btn:hover:not(:disabled) {
-      transform: translateY(-2px);
-      box-shadow: 0 6px 22px rgba(231,76,60,0.55);
+      transform: translateY(-3px) scale(1.04);
+      box-shadow: 0 8px 30px rgba(231,76,60,.7);
+      animation: none;
     }
     .spin-btn:disabled {
       opacity: .6;
       cursor: not-allowed;
+      animation: none;
     }
     .spin-result {
       background: var(--surface);
@@ -811,12 +1062,41 @@
 <body>
 
 <header>
-  <div class="marquee-wrap">
-    <span class="theater-icon">🎬</span>Omni Theater
+  <div class="header-inner">
+    <div class="header-brand">
+      <div class="site-logo"><span class="infinity-mark">∞</span>Omni Theater</div>
+      <div class="site-sub">Infinite Entertainment · Public Domain Archive</div>
+      <p class="tagline">Premium video archive · Spin to earn · Every watch builds the treasury</p>
+    </div>
+    <button class="hamburger-btn" id="hamburgerBtn" aria-label="Open navigation menu" aria-expanded="false" aria-controls="siteNav">
+      <span></span><span></span><span></span>
+    </button>
   </div>
-  <h1>Video Gallery</h1>
-  <p class="tagline">Public-domain archive · Each show in its own tab · Click a show to browse its gallery</p>
 </header>
+
+<!-- ── Side-drawer navigation ─────────────────────────────────────── -->
+<div class="site-nav-overlay" id="navOverlay"></div>
+<nav class="site-nav" id="siteNav" aria-label="Site navigation">
+  <button class="nav-close-btn" id="navCloseBtn" aria-label="Close menu">✕</button>
+  <div class="nav-logo">∞ Omni Theater</div>
+
+  <div class="nav-section-title">🎬 Shows</div>
+  <button class="nav-tab-link" data-tab="legend-of-zelda"><span class="nav-icon">🗡️</span>The Legend of Zelda</button>
+  <button class="nav-tab-link" data-tab="super-mario-world"><span class="nav-icon">🍄</span>Super Mario World</button>
+  <button class="nav-tab-link" data-tab="captain-n-s3"><span class="nav-icon">🎮</span>Captain N: The Game Master</button>
+  <button class="nav-tab-link" data-tab="tmnt"><span class="nav-icon">🐢</span>TMNT</button>
+  <button class="nav-tab-link" data-tab="featured-video"><span class="nav-icon">📺</span>Featured Video</button>
+
+  <div class="nav-section-title">🎡 Spin &amp; Earn</div>
+  <button class="nav-tab-link nav-highlight" data-tab="marios-wheel"><span class="nav-icon">🎡</span>Mario's Wheel — Spin Now!</button>
+
+  <div class="nav-section-title">🔗 Pages &amp; Repos</div>
+  <a href="https://pewpi-infinity.github.io/Theater/" class="nav-external" target="_blank" rel="noopener"><span class="nav-icon">🌐</span>Live Website</a>
+  <a href="https://github.com/www-infinity/Theater" class="nav-external" target="_blank" rel="noopener"><span class="nav-icon">📦</span>Theater Repo (GitHub)</a>
+  <a href="https://github.com/www-infinity" class="nav-external" target="_blank" rel="noopener"><span class="nav-icon">∞</span>∞ Infinity Organization</a>
+  <a href="https://archive.org/details/the-legend-of-zelda-ep.-13-the-moblins-are-revolting-480p-dvdrip_202502" class="nav-external" target="_blank" rel="noopener"><span class="nav-icon">📼</span>Zelda Archive Collection</a>
+  <a href="https://archive.org/details/supermarioworldcartoon" class="nav-external" target="_blank" rel="noopener"><span class="nav-icon">📼</span>Mario World Archive</a>
+</nav>
 
 <nav class="game-legend" aria-label="Omni Theater legend">
   <div class="game-legend-item" aria-label="Watch and Earn"><span class="gl-icon">🟡</span><span class="gl-desc">Watch &amp; Earn</span></div>
@@ -836,7 +1116,8 @@
   <button class="tab-btn"        role="tab" aria-selected="false" aria-controls="captain-n-s3"      data-tab="captain-n-s3">🎮 Captain N: The Game Master</button>
   <button class="tab-btn"        role="tab" aria-selected="false" aria-controls="tmnt"              data-tab="tmnt">🐢 TMNT</button>
   <button class="tab-btn"        role="tab" aria-selected="false" aria-controls="featured-video"    data-tab="featured-video">📺 Featured Video</button>
-  <button class="tab-btn"        role="tab" aria-selected="false" aria-controls="marios-wheel"      data-tab="marios-wheel">🎡 Mario's Wheel</button>
+  <button class="tab-btn tab-btn-spin" role="tab" aria-selected="false" aria-controls="marios-wheel" data-tab="marios-wheel">🎡 Mario's Wheel</button>
+  <a class="tab-btn tab-btn-spin-direct" href="#marios-wheel" aria-label="Direct link to Spin Wheel">🔗 Spin Now ↓</a>
 </nav>
 
 <main id="gallery">
@@ -1562,8 +1843,15 @@
     </div>
 
     <!-- ── Header ───────────────────────────────────────────────── -->
-    <div class="wheel-header">
-      <h2>🎡 Mario's Wheel Of Fortune</h2>
+    <div class="wheel-header" id="spin-wheel-anchor">
+      <div class="wheel-header-top">
+        <h2>🎡 Mario's Wheel Of Fortune</h2>
+        <div class="watcher-badge" id="watcherBadge">
+          <span class="watcher-dot"></span>
+          <span id="watcherCount">—</span> watching
+          <a class="watcher-link" href="#marios-wheel" aria-label="Link to spinner">🔗</a>
+        </div>
+      </div>
       <p class="wheel-tagline">One token = one project seed · Spin or write research · 1 token per hour</p>
     </div>
 
@@ -1680,7 +1968,9 @@
 
 <footer>
   <p>
-    🎬 <strong>Omni Theater</strong> · Public-domain archive curation project
+    <span style="font-family:var(--font-display);font-size:1.05rem;font-weight:900;background:linear-gradient(90deg,#f0b429,#ffe787,#f0b429);-webkit-background-clip:text;background-clip:text;-webkit-text-fill-color:transparent;">∞ Omni Theater</span>
+    &nbsp;·&nbsp; Public-domain archive curation project &nbsp;·&nbsp;
+    <a href="https://github.com/www-infinity/Theater" target="_blank" rel="noopener" style="color:var(--accent);opacity:.8;">GitHub ↗</a>
   </p>
   <p style="margin-top:.5rem">
     <a href="https://archive.org/details/the-legend-of-zelda-ep.-13-the-moblins-are-revolting-480p-dvdrip_202502" target="_blank" rel="noopener">The Legend of Zelda (1989)</a>
@@ -1692,12 +1982,14 @@
     <a href="https://archive.org/details/tmnt-tape-1-btq-7-1990" target="_blank" rel="noopener">TMNT VHS Tape 1 (1990)</a>
     &nbsp;·&nbsp;
     <a href="https://archive.org/details/youtube-GlRMunEPAYg" target="_blank" rel="noopener">Featured Video</a>
+    &nbsp;·&nbsp;
+    <a href="https://github.com/www-infinity" target="_blank" rel="noopener">∞ www-infinity</a>
   </p>
 </footer>
 
 <script>
   // ── Tab switching ──────────────────────────────────────────────────
-  const tabBtns   = document.querySelectorAll('.tab-btn');
+  const tabBtns   = document.querySelectorAll('.tab-btn[data-tab]');
   const tabPanels = document.querySelectorAll('.show-section');
 
   function activateTab(btn) {
@@ -1709,6 +2001,87 @@
   }
 
   tabBtns.forEach(btn => btn.addEventListener('click', () => activateTab(btn)));
+
+  // ── Hamburger / side-nav ────────────────────────────────────────────
+  (function () {
+    const hamburgerBtn = document.getElementById('hamburgerBtn');
+    const siteNav      = document.getElementById('siteNav');
+    const navOverlay   = document.getElementById('navOverlay');
+    const navCloseBtn  = document.getElementById('navCloseBtn');
+
+    function openNav() {
+      siteNav.classList.add('open');
+      navOverlay.classList.add('open');
+      hamburgerBtn.classList.add('open');
+      hamburgerBtn.setAttribute('aria-expanded', 'true');
+      document.body.style.overflow = 'hidden';
+    }
+    function closeNav() {
+      siteNav.classList.remove('open');
+      navOverlay.classList.remove('open');
+      hamburgerBtn.classList.remove('open');
+      hamburgerBtn.setAttribute('aria-expanded', 'false');
+      document.body.style.overflow = '';
+    }
+
+    hamburgerBtn.addEventListener('click', () => siteNav.classList.contains('open') ? closeNav() : openNav());
+    navCloseBtn.addEventListener('click', closeNav);
+    navOverlay.addEventListener('click', closeNav);
+
+    // Nav tab links — activate tab and close nav
+    document.querySelectorAll('.nav-tab-link').forEach(link => {
+      link.addEventListener('click', () => {
+        const tabId  = link.dataset.tab;
+        const target = document.querySelector('.tab-btn[data-tab="' + tabId + '"]');
+        if (target) activateTab(target);
+        closeNav();
+        // Scroll to wheel anchor if spinning tab
+        if (tabId === 'marios-wheel') {
+          setTimeout(() => {
+            const el = document.getElementById('spin-wheel-anchor');
+            if (el) el.scrollIntoView({ behavior: 'smooth', block: 'start' });
+          }, 100);
+        }
+      });
+    });
+
+    // Direct "Spin Now" anchor in tab bar — also activate wheel tab
+    const spinDirectLink = document.querySelector('.tab-btn-spin-direct');
+    if (spinDirectLink) {
+      spinDirectLink.addEventListener('click', (e) => {
+        e.preventDefault();
+        const target = document.querySelector('.tab-btn[data-tab="marios-wheel"]');
+        if (target) activateTab(target);
+        setTimeout(() => {
+          const el = document.getElementById('spin-wheel-anchor');
+          if (el) el.scrollIntoView({ behavior: 'smooth', block: 'start' });
+        }, 60);
+      });
+    }
+  }());
+
+  // ── Live Watcher Counter (simulated engagement) ─────────────────────
+  (function () {
+    const watcherEl = document.getElementById('watcherCount');
+    if (!watcherEl) return;
+    // Simulate a realistic concurrent-viewer count.
+    // MIN_WATCHERS / MAX_WATCHERS define the display range.
+    // BASE is seeded from the current minute so it stays stable across reloads.
+    const MIN_WATCHERS = 8;
+    const MAX_WATCHERS = 99;
+    const BASE_MIN     = 24;   // minimum starting value
+    const BASE_VARIANCE = 30;  // additional variance based on current minute
+    const BASE = BASE_MIN + Math.floor((Date.now() / 60000) % BASE_VARIANCE);
+    let count = BASE;
+    function tick() {
+      // Drift ±1 every few seconds to simulate live fluctuation
+      const delta = Math.random() < .35 ? (Math.random() < .5 ? 1 : -1) : 0;
+      count = Math.max(MIN_WATCHERS, Math.min(MAX_WATCHERS, count + delta));
+      watcherEl.textContent = count;
+    }
+    tick();
+    setInterval(tick, 3800 + Math.random() * 2000);
+  }());
 
   // ── View More / View Less toggle ──────────────────────────────────
   document.querySelectorAll('.view-more-btn').forEach(btn => {
@@ -1863,34 +2236,66 @@
       // ⭐ Stars: Gold-tier spin tokens carry a trending boost flag
       const hasTrendingBoost = type === 'spin_token' && opts.seg.tier === 'Gold';
 
+      // Per-segment research content
+      const SEGMENT_RESEARCH = {
+        '🍄 Mushroom':    { theme: 'Growth & Power-Up Systems',    body: 'The Mushroom power-up is the foundational growth mechanic in game design — a minimal input that yields maximum capability expansion. Research this token by exploring growth loops: how small investments compound into large outputs. Apply to treasury systems, compounding interest models, and exponential research frameworks.\n\n**Research Directions:**\n- Compounding return models in token economies\n- Power-up mechanics as onboarding design patterns\n- Biological analogues: mycelial networks and distributed value' },
+        '🌟 Super Star':  { theme: 'Invincibility & Peak Performance', body: 'The Super Star represents a state of peak performance — temporary invincibility that enables aggressive exploration without risk. Research this token by studying high-leverage windows: market timing, sprint cycles, and zero-downside experimentation frames.\n\n**Research Directions:**\n- Temporal risk-free windows in system design\n- Flow states and cognitive invincibility analogues\n- Rare high-multiplier events in probability theory' },
+        '🪙 100 Coins':   { theme: 'Accumulation & Treasury Building', body: 'Collecting 100 coins is the classic accumulation-to-reward loop — consistent micro-actions building to macro-level gains. Research this token by modeling treasury accumulation strategies, dollar-cost averaging, and the mathematics of patience.\n\n**Research Directions:**\n- Micro-transaction aggregation and treasury growth\n- Behavioral economics of small consistent actions\n- Coin/ledger architectures in distributed systems' },
+        '🔥 Fire Flower': { theme: 'Offensive Capability & Range', body: 'The Fire Flower transforms the player from defensive to offensive — granting ranged capability and a new attack dimension. Research this token as an expansion of reach: distribution networks, API surface area, and tools that extend capability beyond close range.\n\n**Research Directions:**\n- Range expansion in distributed architectures\n- Offensive vs. defensive design philosophies\n- Projectile/event systems in reactive programming' },
+        '🐢 Koopa Shell': { theme: 'Momentum & Chain Reactions',      body: 'The Koopa Shell is a chain-reaction catalyst — one kick creates cascading effects. Research this token through viral mechanics, cascade failures in systems, and momentum transfer in network effects.\n\n**Research Directions:**\n- Cascade mechanics in system design\n- Chain-reaction marketing and viral coefficients\n- Momentum models in physics and economics' },
+        '⚡ Thunder':     { theme: 'Speed & Sudden Change',          body: 'Thunder represents instantaneous, high-energy state change — maximum impact in minimum time. Research this token through disruption theory, lightning-fast deployment pipelines, and the role of speed as a competitive moat.\n\n**Research Directions:**\n- Zero-downtime deployment and CI/CD velocity\n- Disruptive innovation speed curves\n- Energy density analogues in information systems' },
+        '👑 Princess':    { theme: 'Value, Sovereignty & Reward',    body: 'The Princess is the ultimate goal-state — a symbol of the highest-value outcome. Research this token as the capstone reward: what makes a project worth completing, how to define "done," and the psychology of achievement.\n\n**Research Directions:**\n- Goal-state definition in complex projects\n- Reward mechanics and variable reinforcement schedules\n- Sovereignty models in decentralized systems' },
+        '💀 Bowser':      { theme: 'Challenge, Risk & Resilience',   body: 'Bowser is the boss — the ultimate obstacle. A bust spin is not a loss; it is a resilience test. Research this token through adversarial system design: how systems are hardened, how setbacks become data, and how challenges define quality.\n\n**Research Directions:**\n- Adversarial testing and chaos engineering\n- Resilience and antifragility in software systems\n- Failure-as-data philosophies in iterative design' },
+        '🦖 Yoshi':       { theme: 'Partnership & Leverage',         body: 'Yoshi amplifies the rider — a force-multiplying partnership. Research this token through leverage frameworks: platforms that multiply individual effort, APIs that extend human capability, and symbiotic business models.\n\n**Research Directions:**\n- Platform leverage and ecosystem design\n- Symbiotic API architectures\n- Human-computer collaboration and co-pilot systems' },
+        '🍃 Cape Leaf':   { theme: 'Flight, Autonomy & Reach',       body: 'The Cape Leaf grants sustained flight — autonomy from the ground, freedom of movement, and aerial perspective. Research this token through remote systems, asynchronous work models, and the design of self-sustaining processes.\n\n**Research Directions:**\n- Autonomous agent design and self-sustaining loops\n- Asynchronous / remote-first system architectures\n- Bird\'s-eye analytical perspectives in complex systems' },
+        '🏆 Grand Prize': { theme: 'Maximum Value & Legacy',         body: 'The Grand Prize is the rarest, highest-value outcome — a Wraith-tier token representing exceptional research and legacy-level work. Research this token as a framework for excellence: what separates good from great, how to create durable value.\n\n**Research Directions:**\n- Excellence frameworks and 10x output models\n- Legacy architecture: designing for 10-year durability\n- Rare event theory and tail-risk value capture' },
+        '🎮 1-Up':        { theme: 'Resurrection, Retry & Iteration', body: 'The 1-Up is extra life — the ability to retry, iterate, and improve without penalty. Research this token through iterative design, fast-fail methodologies, and the compounding returns of rapid experimentation.\n\n**Research Directions:**\n- Iterative design and rapid prototyping methodologies\n- Fast-fail culture and psychological safety in teams\n- Retry logic and exponential backoff in distributed systems' },
+      };
+
       let articleTitle, articleText;
       if (type === 'spin_token') {
         const { seg } = opts;
-        articleTitle = 'Spin: ' + seg.label;
+        const segResearch = SEGMENT_RESEARCH[seg.label] || { theme: 'Open Research', body: 'This spin token opens a new research direction. Fill it with your own ideas, projects, and discoveries.' };
+        articleTitle = seg.label + ' — ' + segResearch.theme;
+        const tierDescriptions = {
+          Silver: 'Silver-tier tokens are solid research grants — steady, reliable, and foundational.',
+          Gold:   'Gold-tier tokens carry a trending boost — high-signal discoveries with above-average momentum.',
+          Wraith: 'Wraith-tier tokens are the rarest and most powerful — representing exceptional, economy-shaping research.',
+          Lose:   'A bust spin teaches resilience. This token documents the attempt and records the challenge for future study.',
+        };
         articleText  = [
-          '# Spin Research: ' + seg.label,
+          '# ' + seg.label + ': ' + segResearch.theme,
+          '',
+          '> *Generated by Mario\'s Wheel Of Fortune — ' + ts + '*',
           '',
           '| Field | Value |', '|-------|-------|',
+          '| Segment | ' + seg.label + ' |',
           '| Tier | ' + seg.tier + ' |',
           '| Multiplier | ×' + seg.value + ' |',
+          '| Theme | ' + segResearch.theme + ' |',
           '| Token ID | ' + tokenId + ' |',
           '| Wallet | ' + wid + ' |',
           '| Generated | ' + ts + ' |',
-          '| Source | Mario\'s Wheel Of Fortune — Spin |',
+          '| Source | ∞ Omni Theater — Mario\'s Wheel Of Fortune |',
           '',
-          '## Token as Project Seed',
+          '## Tier Context',
           '',
-          'This spin token is a **blank research grant** — a container for future work.',
-          'Segment: **' + seg.label + '**. Tier: **' + seg.tier + '** (×' + seg.value + ').',
+          tierDescriptions[seg.tier] || 'This tier represents unique research value.',
           '',
-          '## Growth Path',
-          '1. 🌱 Seed — Token printed, enters treasury queue',
-          '2. 🔬 Research — Article or project attached',
-          '3. 🛠️ Prototype — Something built on this token',
-          '4. 📚 Historical Record — Archived in treasury library',
+          '## Research Focus',
           '',
-          'This system never mines crypto, holds wallets, or trades markets.',
-          'All tokens represent: research work · system growth · symbolic energy.',
+          segResearch.body,
+          '',
+          '## Token Growth Path',
+          '1. 🌱 **Seed** — Token printed, enters treasury queue',
+          '2. 🔬 **Research** — Article or project attached; token claimed',
+          '3. 🛠️ **Prototype** — Something built on this token',
+          '4. 📚 **Historical Record** — Archived in treasury library',
+          '',
+          '---',
+          '_This system never mines crypto, holds wallets, or trades markets._',
+          '_All tokens represent: research work · system growth · symbolic energy._',
+          '_Site: https://pewpi-infinity.github.io/Theater/ · Repo: https://github.com/www-infinity/Theater_',
         ].join('\n');
       } else {
         const { topic, body } = opts;

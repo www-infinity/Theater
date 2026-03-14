@@ -124,34 +124,75 @@ def record_claim(wallet_id: str) -> None:
 
 # ── Article builders ───────────────────────────────────────────────────
 
+SEGMENT_RESEARCH: dict[str, dict] = {
+    "Mushroom":    {"theme": "Growth & Power-Up Systems",       "body": "The Mushroom power-up is the foundational growth mechanic in game design — a minimal input that yields maximum capability expansion. Research this token by exploring growth loops: how small investments compound into large outputs. Apply to treasury systems, compounding interest models, and exponential research frameworks.\n\n**Research Directions:**\n- Compounding return models in token economies\n- Power-up mechanics as onboarding design patterns\n- Biological analogues: mycelial networks and distributed value"},
+    "Super Star":  {"theme": "Invincibility & Peak Performance","body": "The Super Star represents a state of peak performance — temporary invincibility that enables aggressive exploration without risk. Research this token by studying high-leverage windows: market timing, sprint cycles, and zero-downside experimentation frames.\n\n**Research Directions:**\n- Temporal risk-free windows in system design\n- Flow states and cognitive invincibility analogues\n- Rare high-multiplier events in probability theory"},
+    "100 Coins":   {"theme": "Accumulation & Treasury Building", "body": "Collecting 100 coins is the classic accumulation-to-reward loop — consistent micro-actions building to macro-level gains. Research this token by modeling treasury accumulation strategies, dollar-cost averaging, and the mathematics of patience.\n\n**Research Directions:**\n- Micro-transaction aggregation and treasury growth\n- Behavioral economics of small consistent actions\n- Coin/ledger architectures in distributed systems"},
+    "Fire Flower": {"theme": "Offensive Capability & Range",    "body": "The Fire Flower transforms the player from defensive to offensive — granting ranged capability and a new attack dimension. Research this token as an expansion of reach: distribution networks, API surface area, and tools that extend capability beyond close range.\n\n**Research Directions:**\n- Range expansion in distributed architectures\n- Offensive vs. defensive design philosophies\n- Projectile/event systems in reactive programming"},
+    "Koopa Shell": {"theme": "Momentum & Chain Reactions",      "body": "The Koopa Shell is a chain-reaction catalyst — one kick creates cascading effects. Research this token through viral mechanics, cascade failures in systems, and momentum transfer in network effects.\n\n**Research Directions:**\n- Cascade mechanics in system design\n- Chain-reaction marketing and viral coefficients\n- Momentum models in physics and economics"},
+    "Thunder":     {"theme": "Speed & Sudden Change",           "body": "Thunder represents instantaneous, high-energy state change — maximum impact in minimum time. Research this token through disruption theory, lightning-fast deployment pipelines, and the role of speed as a competitive moat.\n\n**Research Directions:**\n- Zero-downtime deployment and CI/CD velocity\n- Disruptive innovation speed curves\n- Energy density analogues in information systems"},
+    "Princess":    {"theme": "Value, Sovereignty & Reward",     "body": "The Princess is the ultimate goal-state — a symbol of the highest-value outcome. Research this token as the capstone reward: what makes a project worth completing, how to define 'done,' and the psychology of achievement.\n\n**Research Directions:**\n- Goal-state definition in complex projects\n- Reward mechanics and variable reinforcement schedules\n- Sovereignty models in decentralized systems"},
+    "Bowser":      {"theme": "Challenge, Risk & Resilience",    "body": "Bowser is the boss — the ultimate obstacle. A bust spin is not a loss; it is a resilience test. Research this token through adversarial system design: how systems are hardened, how setbacks become data, and how challenges define quality.\n\n**Research Directions:**\n- Adversarial testing and chaos engineering\n- Resilience and antifragility in software systems\n- Failure-as-data philosophies in iterative design"},
+    "Yoshi":       {"theme": "Partnership & Leverage",          "body": "Yoshi amplifies the rider — a force-multiplying partnership. Research this token through leverage frameworks: platforms that multiply individual effort, APIs that extend human capability, and symbiotic business models.\n\n**Research Directions:**\n- Platform leverage and ecosystem design\n- Symbiotic API architectures\n- Human-computer collaboration and co-pilot systems"},
+    "Cape Leaf":   {"theme": "Flight, Autonomy & Reach",        "body": "The Cape Leaf grants sustained flight — autonomy from the ground, freedom of movement, and aerial perspective. Research this token through remote systems, asynchronous work models, and the design of self-sustaining processes.\n\n**Research Directions:**\n- Autonomous agent design and self-sustaining loops\n- Asynchronous / remote-first system architectures\n- Bird's-eye analytical perspectives in complex systems"},
+    "Grand Prize": {"theme": "Maximum Value & Legacy",          "body": "The Grand Prize is the rarest, highest-value outcome — a Wraith-tier token representing exceptional research and legacy-level work. Research this token as a framework for excellence: what separates good from great, how to create durable value.\n\n**Research Directions:**\n- Excellence frameworks and 10x output models\n- Legacy architecture: designing for 10-year durability\n- Rare event theory and tail-risk value capture"},
+    "1-Up":        {"theme": "Resurrection, Retry & Iteration", "body": "The 1-Up is extra life — the ability to retry, iterate, and improve without penalty. Research this token through iterative design, fast-fail methodologies, and the compounding returns of rapid experimentation.\n\n**Research Directions:**\n- Iterative design and rapid prototyping methodologies\n- Fast-fail culture and psychological safety in teams\n- Retry logic and exponential backoff in distributed systems"},
+}
+
+TIER_DESCRIPTIONS = {
+    "Silver": "Silver-tier tokens are solid research grants — steady, reliable, and foundational.",
+    "Gold":   "Gold-tier tokens carry a trending boost — high-signal discoveries with above-average momentum.",
+    "Wraith": "Wraith-tier tokens are the rarest and most powerful — representing exceptional, economy-shaping research.",
+    "Lose":   "A bust spin teaches resilience. This token documents the attempt and records the challenge for future study.",
+}
+
+
 def _spin_article(seg: str, tier: str, value: int,
                   wallet_id: str, ts: str, token_id: str) -> str:
+    # Strip leading non-ASCII characters (emoji) to find the plain-text segment key.
+    # e.g. "🍄 Mushroom" → "Mushroom", "Super Star" → "Super Star"
+    seg_key = seg.encode("ascii", errors="ignore").decode().strip(" :-|")
+    if not seg_key:
+        seg_key = seg  # fallback: keep original if everything was stripped
+    research = SEGMENT_RESEARCH.get(seg_key, {
+        "theme": "Open Research",
+        "body":  "This spin token opens a new research direction. Fill it with your own ideas, projects, and discoveries.",
+    })
+    tier_desc = TIER_DESCRIPTIONS.get(tier, "This tier represents unique research value.")
+
     return "\n".join([
-        f"# Spin Research: {seg}",
+        f"# {seg}: {research['theme']}",
+        "",
+        f"> *Generated by ∞ Omni Theater — Mario's Wheel Of Fortune — {ts}*",
         "",
         "| Field | Value |", "|-------|-------|",
+        f"| Segment | {seg} |",
         f"| Tier | {tier} |",
         f"| Multiplier | ×{value} |",
+        f"| Theme | {research['theme']} |",
         f"| Token ID | {token_id} |",
         f"| Wallet | {wallet_id} |",
         f"| Generated | {ts} |",
-        "| Source | Mario's Wheel Of Fortune — Spin |",
+        "| Source | ∞ Omni Theater — Mario's Wheel Of Fortune |",
         "",
-        "## Token as Project Seed",
+        "## Tier Context",
         "",
-        "This spin token is a **blank research grant** — a container for future work.",
-        f"Segment: **{seg}**. Tier: **{tier}** (×{value} multiplier).",
+        tier_desc,
         "",
-        "## Growth Path",
-        "1. 🌱 Seed — Token printed, enters treasury queue",
-        "2. 🔬 Research — Article or project attached",
-        "3. 🛠️ Prototype — Something built on this token",
-        "4. 📚 Historical Record — Archived in treasury library",
+        "## Research Focus",
         "",
-        "## Integrity",
+        research["body"],
         "",
-        "This system never mines crypto, holds wallets, or trades markets.",
-        "All tokens represent: research work · system growth · symbolic energy.",
+        "## Token Growth Path",
+        "1. 🌱 **Seed** — Token printed, enters treasury queue",
+        "2. 🔬 **Research** — Article or project attached; token claimed",
+        "3. 🛠️ **Prototype** — Something built on this token",
+        "4. 📚 **Historical Record** — Archived in treasury library",
+        "",
+        "---",
+        "_This system never mines crypto, holds wallets, or trades markets._",
+        "_All tokens represent: research work · system growth · symbolic energy._",
+        "_Site: https://pewpi-infinity.github.io/Theater/ · Repo: https://github.com/www-infinity/Theater_",
     ])
 
 
