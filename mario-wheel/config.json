@@ -1,0 +1,31 @@
+{
+  "name": "Mario's Wheel Of Fortune",
+  "version": "1.0.0",
+  "cooldown_hours": 1,
+  "token_types": {
+    "Silver": "Research",
+    "Gold": "Discovery",
+    "Wraith": "Economic"
+  },
+  "segments": [
+    { "label": "Mushroom",    "emoji": "🍄", "tier": "Silver", "value": 1  },
+    { "label": "Super Star",  "emoji": "🌟", "tier": "Wraith", "value": 50 },
+    { "label": "100 Coins",   "emoji": "🪙", "tier": "Silver", "value": 2  },
+    { "label": "Fire Flower", "emoji": "🔥", "tier": "Silver", "value": 3  },
+    { "label": "Koopa Shell", "emoji": "🐢", "tier": "Silver", "value": 1  },
+    { "label": "Thunder",     "emoji": "⚡", "tier": "Gold",   "value": 10 },
+    { "label": "Princess",    "emoji": "👑", "tier": "Gold",   "value": 20 },
+    { "label": "Bowser",      "emoji": "💀", "tier": "Lose",   "value": 0  },
+    { "label": "Yoshi",       "emoji": "🦖", "tier": "Gold",   "value": 5  },
+    { "label": "Cape Leaf",   "emoji": "🍃", "tier": "Silver", "value": 2  },
+    { "label": "Grand Prize", "emoji": "🏆", "tier": "Wraith", "value": 100},
+    { "label": "1-Up",        "emoji": "🎮", "tier": "Gold",   "value": 15 }
+  ],
+  "safety": {
+    "mines_crypto": false,
+    "holds_wallets": false,
+    "performs_trading": false,
+    "interacts_with_markets": false,
+    "tokens_represent": ["research work", "system growth", "symbolic energy"]
+  }
+}

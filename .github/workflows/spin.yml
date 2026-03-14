@@ -1,0 +1,66 @@
+name: Mario Wheel Spin (C13B0 Cart)
+
+on:
+  # Trigger manually with optional wallet ID
+  workflow_dispatch:
+    inputs:
+      wallet_id:
+        description: "Wallet ID (leave blank to auto-generate)"
+        required: false
+        default: ""
+      skip_cooldown:
+        description: "Skip 1-hour cooldown? (true/false)"
+        required: false
+        default: "false"
+
+  # Can also be triggered on a schedule (e.g. top of every hour)
+  # schedule:
+  #   - cron: '0 * * * *'
+
+jobs:
+  spin:
+    runs-on: ubuntu-latest
+
+    permissions:
+      contents: write   # needed to commit token artefacts back to the repo
+
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v4
+        with:
+          token: ${{ secrets.GHP_SECRET }}
+
+      - name: Set up Python
+        uses: actions/setup-python@v5
+        with:
+          python-version: "3.12"
+
+      - name: Configure git identity
+        run: |
+          git config user.name  "Mario Wheel Bot"
+          git config user.email "mario-wheel-bot@users.noreply.github.com"
+
+      - name: Run spin (C13B0 Cart)
+        env:
+          GHP_SECRET: ${{ secrets.GHP_SECRET }}
+        run: |
+          ARGS=""
+          if [[ -n "${{ inputs.wallet_id }}" ]]; then
+            ARGS="--wallet ${{ inputs.wallet_id }}"
+          fi
+          if [[ "${{ inputs.skip_cooldown }}" == "true" ]]; then
+            ARGS="$ARGS --skip-cooldown"
+          fi
+          bash run_spin.sh $ARGS
+
+      - name: Summary
+        run: |
+          echo "### 🎡 Mario Wheel Spin Complete" >> "$GITHUB_STEP_SUMMARY"
+          echo "" >> "$GITHUB_STEP_SUMMARY"
+          echo "| | |" >> "$GITHUB_STEP_SUMMARY"
+          echo "|---|---|" >> "$GITHUB_STEP_SUMMARY"
+          LATEST=$(ls tokens/spins/ 2>/dev/null | sort | tail -1 || echo "none")
+          echo "| Latest token | \`$LATEST\` |" >> "$GITHUB_STEP_SUMMARY"
+          WALLET=$(ls wallets/ | head -1 | sed 's/\.json//' || echo "unknown")
+          echo "| Wallet | \`$WALLET\` |" >> "$GITHUB_STEP_SUMMARY"
+          echo "| Live site | https://pewpi-infinity.github.io/Theater/ |" >> "$GITHUB_STEP_SUMMARY"
