@@ -728,6 +728,36 @@
     .claim-btn:disabled { opacity: .5; cursor: not-allowed; }
     .claim-sub { font-size: .78rem; color: var(--muted); margin-top: .45rem; }
 
+    /* ── Warp button ────────────────────────────────────────────────── */
+    .warp-btn {
+      background: transparent;
+      border: 2px solid #8e44ad;
+      color: #c39bd3;
+      border-radius: 8px;
+      padding: .55rem 1.2rem;
+      font-size: .9rem;
+      font-weight: 700;
+      cursor: pointer;
+      margin-top: .7rem;
+      transition: background .15s, color .15s, transform .12s;
+    }
+    .warp-btn:hover:not(:disabled) { background: #8e44ad; color: #fff; transform: translateY(-1px); }
+    .warp-btn:disabled { opacity: .45; cursor: not-allowed; }
+
+    /* ── Mushroom boost badge ────────────────────────────────────────── */
+    .mushroom-boost-badge {
+      display: inline-block;
+      background: #c0392b;
+      color: #fff;
+      padding: .3rem .75rem;
+      border-radius: 6px;
+      font-size: .78rem;
+      font-weight: 700;
+      margin-top: .55rem;
+      animation: pulse-badge .9s ease-in-out infinite alternate;
+    }
+    @keyframes pulse-badge { from { opacity: .85; } to { opacity: 1; } }
+
     /* ── Gallery (3-tab) ───────────────────────────────────────────── */
     .wheel-gallery {
       background: var(--surface);
@@ -796,7 +826,7 @@
   <div class="game-legend-item"><span class="gl-icon">🍄</span><span class="gl-desc">Mushroom</span><span class="gl-label">= doubles research</span></div>
   <div class="game-legend-item"><span class="gl-icon">🏆</span><span class="gl-desc">High Points</span><span class="gl-label">= unlocks new games</span></div>
   <div class="game-legend-item"><span class="gl-icon">👾</span><span class="gl-desc">Guys Stomped Out</span><span class="gl-label">= bugs fixed</span></div>
-  <div class="game-legend-item"><span class="gl-icon">⚪</span><span class="gl-desc">Warps</span><span class="gl-label">= spending / clone exit</span></div>
+  <div class="game-legend-item"><span class="gl-icon">⚪</span><span class="gl-desc">Warps</span><span class="gl-label">= spending / clone</span></div>
 </nav>
 
 <!-- ── Tab navigation ────────────────────────────────────────────────── -->
@@ -1556,6 +1586,7 @@
         <button id="printTokenBtn" class="print-token-btn" type="button">
           🖨️ Print Token → Treasury Queue
         </button>
+        <div id="mushroomBoostBadge" class="mushroom-boost-badge" hidden>🍄 Mushroom Boost Active! Next research token ×2</div>
         <div id="printFeedback" class="print-feedback"></div>
       </div>
 
@@ -1587,6 +1618,13 @@
         <div class="tstat"><span class="tstat-label">Wallet</span>   <span id="stat-wallet"   class="tstat-value">0</span></div>
         <div class="tstat"><span class="tstat-label">Research</span> <span id="stat-research" class="tstat-value">0</span></div>
         <div class="tstat"><span class="tstat-label">Archived</span> <span id="stat-archived" class="tstat-value">0</span></div>
+        <div class="tstat"><span class="tstat-label">👾 Stomped</span><span id="stat-bugs-fixed" class="tstat-value">0</span></div>
+        <div class="tstat"><span class="tstat-label">🏆 Points</span> <span id="stat-points"    class="tstat-value">0</span></div>
+      </div>
+      <div id="gamesUnlockedBanner" hidden
+           style="background:#1a0a2e;border:1px solid #8e44ad;border-radius:7px;padding:.5rem .9rem;
+                  margin-bottom:.8rem;font-size:.82rem;color:#c39bd3;font-weight:700;">
+        🔓 New game unlocked! Keep earning points for more.
       </div>
 
       <div id="queueList" class="queue-list">
@@ -1597,6 +1635,10 @@
         ⬇️ Claim Token to Wallet
       </button>
       <p id="claimSub" class="claim-sub"></p>
+      <button id="warpBtn" class="warp-btn" type="button" disabled>
+        ⚪ Use Warp — Clone Last Token to Queue
+      </button>
+      <p id="warpSub" class="claim-sub"></p>
     </div><!-- /.treasury-panel -->
 
     <!-- ── Gallery (4 tabs) ──────────────────────────────────────── -->
@@ -1707,6 +1749,7 @@
       RESEARCH  : 'mwof_research',         // research article metadata
       LAST_CLAIM: 'mwof_last_claim_',      // + walletId
       LAST_SPIN : 'mwof_last_spin_',       // + walletId
+      MUSHROOM  : 'mwof_mushroom_',        // + walletId — 🍄 Mushroom Boost active flag
     };
 
     // ── Wheel segments ─────────────────────────────────────────────
@@ -1793,6 +1836,10 @@
       return (h ? h + 'h ' : '') + String(m).padStart(2, '0') + 'm ' + String(s).padStart(2, '0') + 's';
     }
 
+    // ── 🍄 Mushroom Boost helpers ──────────────────────────────────
+    function mushroomBoostActive() { return lsGet(LS.MUSHROOM + getWalletId(), false); }
+    function setMushroomBoost(val) { lsSet(LS.MUSHROOM + getWalletId(), val); }
+
     // ── SHA-256 via Web Crypto (mirrors token_system.py) ──────────
     async function sha256hex(text) {
       const buf = await crypto.subtle.digest('SHA-256', new TextEncoder().encode(text));
@@ -1808,6 +1855,13 @@
       const tokenId  = 'token_' + stamp;
       const tokenType = type === 'spin_token' ? (TIER_TYPE[opts.seg.tier] || 'Archive') : 'Research';
       const emoji     = TYPE_EMOJI[tokenType] || '📜';
+
+      // 🍄 Mushroom Boost: doubles value for user_research tokens
+      const hasMushroomBoost = type === 'user_research' && mushroomBoostActive();
+      if (hasMushroomBoost) setMushroomBoost(false);   // consume boost
+
+      // ⭐ Stars: Gold-tier spin tokens carry a trending boost flag
+      const hasTrendingBoost = type === 'spin_token' && opts.seg.tier === 'Gold';
 
       let articleTitle, articleText;
       if (type === 'spin_token') {
@@ -1891,8 +1945,11 @@
         research_file:  'research/articles/article_' + stamp + '.md',
         ...(type === 'spin_token'
           ? { segment: opts.seg.label, tier: opts.seg.tier, value: opts.seg.value,
-              entropy: Math.random().toFixed(6) }
-          : { topic: opts.topic }),
+              entropy: Math.random().toFixed(6),
+              trending_boost: hasTrendingBoost }             // ⭐ Stars
+          : { topic: opts.topic,
+              value: hasMushroomBoost ? 2 : 1,               // 🍄 Mushroom
+              ...(hasMushroomBoost ? { mushroom_boost: true } : {}) }),
       };
 
       const [h1, h2, h3, h4] = await Promise.all([
@@ -1956,6 +2013,7 @@
         title:      tok.article_title,
         claimed_at: new Date().toISOString(),
       });
+      w.bugs_fixed = (w.bugs_fixed || 0) + 1;   // 👾 guy stomped out
       saveWallet(w);
       markNow(LS.LAST_CLAIM + getWalletId());
       return tok;
@@ -1987,11 +2045,27 @@
       document.getElementById('queueCountBadge').textContent  = queued + ' queued';
       document.getElementById('archiveCountBadge').textContent = archive.length + ' archived';
 
-      // Treasury stats
-      setEl('stat-queued',   queued);
-      setEl('stat-wallet',   claimed);
-      setEl('stat-research', research.length);
-      setEl('stat-archived', archive.length);
+      // Treasury stats (base + game mechanics)
+      setEl('stat-queued',     queued);
+      setEl('stat-wallet',     claimed);
+      setEl('stat-research',   research.length);
+      setEl('stat-archived',   archive.length);
+      setEl('stat-bugs-fixed', wallet.bugs_fixed || 0);         // 👾 Guys Stomped Out
+      setEl('stat-points',     wallet.total_points || 0);       // 🏆 High Points
+
+      // 🏆 High Points → games unlocked banner
+      const unlockBanner = document.getElementById('gamesUnlockedBanner');
+      if (unlockBanner) {
+        if (wallet.games_unlocked || (wallet.total_points || 0) >= 100) {
+          unlockBanner.removeAttribute('hidden');
+        } else {
+          unlockBanner.setAttribute('hidden', '');
+        }
+      }
+
+      // 🍄 Mushroom boost indicator
+      const mushroomBadge = document.getElementById('mushroomBoostBadge');
+      if (mushroomBadge) mushroomBadge.hidden = !mushroomBoostActive();
 
       // Claim button
       const claimRem = claimCooldownMs();
@@ -2011,6 +2085,18 @@
       } else {
         claimSub.textContent = queued + ' token(s) ready to claim!';
         claimInfo.setAttribute('hidden', '');
+      }
+
+      // ⚪ Warp button — requires at least one archived token
+      const warpBtn = document.getElementById('warpBtn');
+      const warpSub = document.getElementById('warpSub');
+      if (warpBtn) {
+        warpBtn.disabled = archive.length === 0;
+        if (!warpSub.dataset.used && archive.length === 0) {
+          warpSub.textContent = 'Archive a token first to unlock warp.';
+        } else if (!warpSub.dataset.used && archive.length > 0) {
+          warpSub.textContent = archive.length + ' token(s) available to warp.';
+        }
       }
 
       // Spin button
@@ -2054,10 +2140,16 @@
     }
 
     function cardHtml(tok) {
+      const trendingTag = tok.trending_boost
+        ? '<span style="background:#0d2a4a;color:#3b8eff;border-radius:8px;padding:.1em .45em;font-size:.68rem;font-weight:700;margin-left:.3em;">⭐ trending</span>'
+        : '';
+      const mushroomTag = tok.mushroom_boost
+        ? '<span style="background:#3d0d0d;color:#e74c3c;border-radius:8px;padding:.1em .45em;font-size:.68rem;font-weight:700;margin-left:.3em;">🍄 ×2</span>'
+        : '';
       return '<div class="research-card">' +
         '<div class="rc-header"><span class="rc-emoji">' + tok.emoji + '</span>' +
         '<span class="rc-title">' + esc(tok.title || tok.article_title || tok.token_id) + '</span>' +
-        stageTag(tok.stage) + '</div>' +
+        stageTag(tok.stage) + trendingTag + mushroomTag + '</div>' +
         '<div class="rc-meta">' +
         '<span>' + (tok.type === 'spin_token' ? '🎰 Spin' : '✏️ Research') + '</span>' +
         '<span>' + (tok.timestamp || tok.claimed_at || '').slice(0, 10) + '</span>' +
@@ -2147,9 +2239,15 @@
       resultDiv.classList.remove('hidden');
 
       if (seg.value > 0) {
+        // 🍄 Mushroom: activate research-doubling boost
+        if (seg.label.includes('Mushroom')) setMushroomBoost(true);
+
         await enqueue('spin_token', { seg });
         const w = getWallet();
-        w.spins_total = (w.spins_total || 0) + 1;
+        w.spins_total  = (w.spins_total  || 0) + 1;
+        // 🏆 High Points: accumulate spin value toward game unlock
+        w.total_points = (w.total_points || 0) + seg.value;
+        if (w.total_points >= 100 && !w.games_unlocked) w.games_unlocked = true;
         saveWallet(w);
         markNow(LS.LAST_SPIN + getWalletId());
         refresh();
@@ -2197,7 +2295,8 @@
         const w = getWallet();
         w.research_created = (w.research_created || 0) + 1;
         saveWallet(w);
-        feedback.textContent = '✅ ' + record.token_id + ' entered treasury queue! Claim it when your hour is up.';
+        const boostNote = record.mushroom_boost ? ' 🍄 Mushroom Boost applied — value ×2!' : '';
+        feedback.textContent = '✅ ' + record.token_id + ' entered treasury queue! Claim it when your hour is up.' + boostNote;
         document.getElementById('researchTopic').value = '';
         document.getElementById('researchBody').value  = '';
         refresh();
@@ -2217,6 +2316,45 @@
       const orig  = badge.style.background;
       badge.style.background = '#27ae60';
       setTimeout(() => { badge.style.background = orig; }, 1200);
+    });
+
+    // ── ⚪ Warp: clone last archived token → queue ─────────────────
+    function warpToken() {
+      const archive = getArchive();
+      if (!archive.length) return null;
+
+      const src   = archive[archive.length - 1];
+      const stamp = new Date().toISOString().replace(/[-:T.Z]/g, '').slice(0, 15);
+      const clone = {
+        ...src,
+        token_id:    'token_' + stamp,
+        status:      'pending_release',
+        stage:       'seed',
+        warped_from: src.token_id,
+        timestamp:   new Date().toISOString(),
+      };
+
+      const queue = getQueue();
+      queue.push(clone);
+      saveQueue(queue);
+
+      // Reset the claim cooldown so the cloned token can be claimed immediately
+      localStorage.removeItem(LS.LAST_CLAIM + getWalletId());
+
+      const w = getWallet();
+      w.warps_used = (w.warps_used || 0) + 1;
+      saveWallet(w);
+      return clone;
+    }
+
+    document.getElementById('warpBtn').addEventListener('click', () => {
+      const tok    = warpToken();
+      const warpSub = document.getElementById('warpSub');
+      if (tok) {
+        warpSub.dataset.used = '1';
+        warpSub.textContent  = '⚪ Warped! Clone of ' + tok.warped_from + ' is in the queue — claim cooldown reset.';
+        refresh();
+      }
     });
 
     // ── Gallery tab switching ──────────────────────────────────────
