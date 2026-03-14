@@ -193,9 +193,15 @@ def mint(
     segment: str = "",
     tier: str = "Silver",
     value: int = 0,
+    mushroom_boost: bool = False,
 ) -> dict:
     ts       = datetime.now(timezone.utc).isoformat()
     token_id = f"token_{stamp}"
+
+    # 🍄 Mushroom boost: doubles research value for user_research tokens
+    effective_value = value
+    if token_type == "user_research" and mushroom_boost:
+        effective_value = max(value, 1) * 2
 
     if token_type == "spin_token":
         type_name   = TIER_TO_TYPE.get(tier, "Archive")
@@ -222,6 +228,9 @@ def mint(
         and not l.startswith("-") and l.strip() != "---"
     )[:130]
 
+    # ⭐ Stars: Gold-tier spin tokens carry a trending boost flag
+    trending_boost = token_type == "spin_token" and tier == "Gold"
+
     metadata = {
         "token_id":       token_id,
         "type":           token_type,
@@ -234,8 +243,11 @@ def mint(
         "article_title":  art_title,
         "article_preview": preview,
         "research_file":  os.path.join(RESEARCH_ARTICLES, f"article_{stamp}.md"),
-        **({"segment": segment, "tier": tier, "value": value}
-           if token_type == "spin_token" else {"topic": topic}),
+        **({"segment": segment, "tier": tier, "value": value,
+            "trending_boost": trending_boost}
+           if token_type == "spin_token"
+           else {"topic": topic, "value": effective_value,
+                 **({"mushroom_boost": True} if mushroom_boost else {})}),
     }
 
     # 4-hash architecture (matches token_system.py & index.html)
@@ -287,13 +299,17 @@ def mint(
     return record
 
 
-def _update_wallet(wallet_id: str, record: dict) -> None:
+def _update_wallet(wallet_id: str, record: dict, *, bugs_fixed_delta: int = 0) -> None:
     wf   = os.path.join(WALLETS_DIR, f"{wallet_id}.json")
     data = load_json(wf, None) or {
         "wallet":            wallet_id,
         "tokens":            [],
         "research_created":  0,
         "spins_total":       0,
+        "total_points":      0,
+        "bugs_fixed":        0,
+        "warps_used":        0,
+        "games_unlocked":    False,
         "last_updated":      None,
     }
     queue_ids = [
@@ -311,6 +327,13 @@ def _update_wallet(wallet_id: str, record: dict) -> None:
         data["research_created"] = data.get("research_created", 0) + 1
     else:
         data["spins_total"] = data.get("spins_total", 0) + 1
+        # 🏆 High Points: accumulate spin token value toward game unlock
+        data["total_points"] = data.get("total_points", 0) + record.get("value", 0)
+        if data["total_points"] >= 100 and not data.get("games_unlocked"):
+            data["games_unlocked"] = True
+    # 👾 Guys Stomped Out: increment bugs_fixed counter on claim
+    if bugs_fixed_delta:
+        data["bugs_fixed"] = data.get("bugs_fixed", 0) + bugs_fixed_delta
     data["last_updated"] = datetime.now(timezone.utc).isoformat()
     save_json(wf, data)
 
@@ -361,13 +384,14 @@ def claim(wallet_id: str, skip_cooldown: bool = False) -> dict | None:
     save_json(archive_path, tok)
     os.remove(os.path.join(TREASURY_QUEUE, fn))
 
-    # Update wallet — mark as released
+    # Update wallet — mark as released + 👾 increment bugs_fixed (guy stomped)
     wf   = os.path.join(WALLETS_DIR, f"{wallet_id}.json")
     data = load_json(wf, {})
     for t in data.get("tokens", []):
         if isinstance(t, dict) and t.get("token_id") == tok["token_id"]:
             t["status"] = "released"
             t["stage"]  = "research"
+    data["bugs_fixed"] = data.get("bugs_fixed", 0) + 1
     data["last_updated"] = datetime.now(timezone.utc).isoformat()
     save_json(wf, data)
 
@@ -386,14 +410,18 @@ def cmd_user(args: argparse.Namespace) -> None:
         print("❌ Provide --topic and/or --body.")
         sys.exit(1)
     stamp  = args.stamp or _stamp_now()
+    boost  = getattr(args, "mushroom_boost", False)
     record = mint(
         "user_research", args.wallet, stamp,
         topic=args.topic or "", body=args.body or "",
+        mushroom_boost=boost,
     )
     print(f"🧱 User token minted:  {record['token_id']}")
     print(f"   Wallet:    {record['author_wallet']}")
     print(f"   Article:   {record['research_file']}")
     print(f"   Stage:     🌱 {record['stage']}")
+    if record.get("mushroom_boost"):
+        print(f"   🍄 Mushroom Boost!  value ×2 → {record.get('value')}")
     print(f"   Hash1:     {record['hashes']['HASH1_ARTICLE'][:16]}…")
 
 
@@ -410,6 +438,8 @@ def cmd_spin(args: argparse.Namespace) -> None:
     print(f"   Wallet:    {record['author_wallet']}")
     print(f"   Segment:   {record['segment']} (×{record['value']})")
     print(f"   Tier:      {record['tier']}")
+    if record.get("trending_boost"):
+        print(f"   ⭐ Trending Boost!  This Discovery token boosts visibility.")
     print(f"   Stage:     🌱 {record['stage']}")
     print(f"   Article:   {record['research_file']}")
 
@@ -420,6 +450,11 @@ def cmd_claim(args: argparse.Namespace) -> None:
         print(f"✅ Claimed:  {tok['token_id']}")
         print(f"   Stage:   🔬 research")
         print(f"   Archived: {os.path.join(TREASURY_ARCHIVE, tok['token_id'] + '.json')}")
+        # Read wallet to show updated bugs_fixed
+        wf   = os.path.join(WALLETS_DIR, f"{args.wallet}.json")
+        data = load_json(wf, {})
+        bf   = data.get("bugs_fixed", 0)
+        print(f"   👾 Guys Stomped Out (bugs fixed): {bf}")
 
 
 def cmd_queue(args: argparse.Namespace) -> None:
@@ -434,6 +469,52 @@ def cmd_queue(args: argparse.Namespace) -> None:
               f"[{data.get('status','?')}]  {data.get('article_title','')}")
 
 
+def cmd_warp(args: argparse.Namespace) -> None:
+    """⚪ Warp: spend an archived token to clone it back into the queue."""
+    if not os.path.exists(TREASURY_ARCHIVE):
+        print("⚪ No archive directory found.")
+        return
+
+    archive_files = sorted(
+        f for f in os.listdir(TREASURY_ARCHIVE)
+        if f.endswith(".json") and f != ".gitkeep"
+    )
+    wallet_tokens = [
+        fn for fn in archive_files
+        if load_json(os.path.join(TREASURY_ARCHIVE, fn), {}).get("author_wallet") == args.wallet
+    ]
+    if not wallet_tokens:
+        print(f"⚪ No archived tokens for wallet {args.wallet} — earn some tokens first!")
+        return
+
+    # Clone the most recent archived token back into the queue
+    fn  = wallet_tokens[-1]
+    src = load_json(os.path.join(TREASURY_ARCHIVE, fn))
+    stamp        = _stamp_now()
+    new_token_id = f"token_{stamp}"
+    clone = {
+        **src,
+        "token_id":    new_token_id,
+        "status":      "pending_release",
+        "stage":       "seed",
+        "warped_from": src["token_id"],
+        "timestamp":   datetime.now(timezone.utc).isoformat(),
+    }
+
+    save_json(os.path.join(TREASURY_QUEUE, f"{new_token_id}.json"), clone)
+
+    # Update wallet: track warps_used
+    wf   = os.path.join(WALLETS_DIR, f"{args.wallet}.json")
+    data = load_json(wf, {})
+    data["warps_used"]   = data.get("warps_used", 0) + 1
+    data["last_updated"] = datetime.now(timezone.utc).isoformat()
+    save_json(wf, data)
+
+    print(f"⚪ Warp! Cloned {src['token_id']} → {new_token_id}")
+    print(f"   Token queued — claim it with: python research_writer.py claim --wallet {args.wallet}")
+    print(f"   Total warps used: {data['warps_used']}")
+
+
 def main() -> None:
     parser = argparse.ArgumentParser(
         description="Mario's Wheel Of Fortune — Research Writer & Token Minter"
@@ -446,6 +527,8 @@ def main() -> None:
     p_user.add_argument("--body",   default="", help="Article body text")
     p_user.add_argument("--wallet", required=True, help="Wallet ID")
     p_user.add_argument("--stamp",  default="",  help="Timestamp stamp (auto if omitted)")
+    p_user.add_argument("--mushroom-boost", dest="mushroom_boost", action="store_true",
+                        help="🍄 Mushroom Boost: doubles this token's research value")
 
     # spin
     p_spin = sub.add_parser("spin", help="Mint a spin (system) token")
@@ -463,8 +546,19 @@ def main() -> None:
     # queue
     sub.add_parser("queue", help="List treasury queue")
 
+    # warp
+    p_warp = sub.add_parser("warp",
+                             help="⚪ Warp: clone last archived token back to queue (spending/clone)")
+    p_warp.add_argument("--wallet", required=True)
+
     args = parser.parse_args()
-    {"user": cmd_user, "spin": cmd_spin, "claim": cmd_claim, "queue": cmd_queue}[args.cmd](args)
+    {
+        "user":  cmd_user,
+        "spin":  cmd_spin,
+        "claim": cmd_claim,
+        "queue": cmd_queue,
+        "warp":  cmd_warp,
+    }[args.cmd](args)
 
 
 if __name__ == "__main__":

@@ -85,6 +85,17 @@ echo "   Entropy:  $ENTROPY"
 echo "   Segment:  $SEG_LABEL  ($SEG_TIER · ×$SEG_VALUE)"
 echo ""
 
+# ── Game mechanic hints ────────────────────────────────────────────────
+if [[ "$SEG_LABEL" == "Mushroom" ]]; then
+  echo "🍄 Mushroom Boost activated! Your next 'user' token gets ×2 value:"
+  echo "   python3 research_writer.py user --mushroom-boost --topic \"...\" --wallet \"$WALLET_ID\""
+  echo ""
+fi
+if [[ "$SEG_TIER" == "Gold" ]]; then
+  echo "⭐ Stars — Discovery token minted with trending boost!"
+  echo ""
+fi
+
 # ── Mint spin token → treasury/queue/ ─────────────────────────────────
 python3 research_writer.py spin \
   --segment "$SEG_LABEL" \
